@@ -11,4 +11,5 @@
 *.aab
 *.jks
 *.keystore
+keystore.properties
 .hermes/plans/

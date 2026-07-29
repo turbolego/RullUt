@@ -5,6 +5,16 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization")
 }
 
+// Load keystore configuration for Play Store release builds.
+// Create app/keystore.properties with signing credentials.
+// This file is .gitignore'd — keep a secure backup offline.
+val keystorePropertiesFile = rootProject.file("app/keystore.properties")
+val keystoreProperties = java.util.Properties().apply {
+    if (keystorePropertiesFile.exists()) {
+        load(keystorePropertiesFile.inputStream())
+    }
+}
+
 android {
     namespace = "com.turbolego.rullut"
     compileSdk = 35
@@ -19,6 +29,17 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            if (keystoreProperties.containsKey("storeFile")) {
+                storeFile = rootProject.file("app/${keystoreProperties["storeFile"]}")
+                storePassword = keystoreProperties["storePassword"] as String
+                keyAlias = keystoreProperties["keyAlias"] as String
+                keyPassword = keystoreProperties["storePassword"] as String
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
@@ -27,6 +48,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 
@@ -41,6 +63,13 @@ android {
 
     buildFeatures {
         compose = true
+    }
+
+    // Generate an AAB (Android App Bundle) by default for Play Store
+    bundle {
+        language {
+            enableSplit = false
+        }
     }
 }
 

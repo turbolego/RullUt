@@ -6,21 +6,29 @@ import com.turbolego.rullut.map.MapConfig
 import com.turbolego.rullut.model.*
 import org.json.JSONArray
 import org.json.JSONObject
-import java.io.File
+import kotlin.math.min
 
 /**
- * Route engine: tries WFS graph → Overpass → Valhalla.
- * Ported from the Expo app's routing pipeline:
- *   graph-utils.ts -> osm-route.ts -> valhalla-route.ts
+ * Route engine: tries Overpass OSM → Valhalla pedestrian API.
+ *
+ * The original Expo app had a pre-compiled WFS routing graph (norge-routing-graph.dat)
+ * as the first tier. We skip it because:
+ * 1. The ~14MB file requires periodic regeneration from Geonorge WFS
+ * 2. Overpass + Valhalla always use live OSM data (fresher routes)
+ * 3. Users get better results without waiting for graph rebuilds
+ * 4. App size stays small (<5MB)
+ *
+ * Fallback chain:
+ *   1. Overpass API — fetches OSM roads, builds graph, runs Dijkstra
+ *   2. Valhalla — production pedestrian routing with proper turn-by-turn
  */
 object RouteEngine {
 
     private const val TAG = "RouteEngine"
-    private var cachedGraph: RoutingGraph? = null
 
     /**
      * Find an accessible route between two points.
-     * Tries WFS (local graph) first, then OSM Overpass, then Valhalla.
+     * Tries Overpass OSM first, then falls back to Valhalla.
      * After finding a route, runs accessibility assessment.
      */
     suspend fun findRoute(
@@ -30,34 +38,30 @@ object RouteEngine {
         toLat: Double,
         toLon: Double,
     ): RouteResult? {
-        // 1) Try local WFS graph
-        var path: Dijkstra.RoutePath? = try {
-            routeOnLocalGraph(context, fromLat, fromLon, toLat, toLon)
-        } catch (_: Exception) { null }
-
-        var source = "wfs"
-
-        // 2) Fall back to Overpass OSM
-        if (path == null) {
-            try {
-                path = OsmRouteApi.computeRoute(fromLat, fromLon, toLat, toLon)
-                source = "osm"
-            } catch (_: Exception) { null }
+        // 1) Try Overpass OSM (custom Dijkstra on live OSM road data)
+        var path: Dijkstra.RoutePath? = null
+        var source = "osm"
+        try {
+            path = OsmRouteApi.computeRoute(fromLat, fromLon, toLat, toLon)
+        } catch (e: Exception) {
+            Log.w(TAG, "Overpass routing failed", e)
         }
 
-        // 3) Final fallback to Valhalla
+        // 2) Fall back to Valhalla pedestrian API
         if (path == null) {
             try {
                 path = ValhallaRouteApi.computeRoute(fromLat, fromLon, toLat, toLon)
                 source = "valhalla"
-            } catch (_: Exception) { null }
+            } catch (e: Exception) {
+                Log.w(TAG, "Valhalla routing failed", e)
+            }
         }
 
         if (path == null || path.coordinates.size < 2) {
             return null
         }
 
-        // Build GeoJSON
+        // Build GeoJSON for map rendering
         val geojson = buildGeoJson(path.coordinates)
 
         // Compute stats
@@ -84,68 +88,6 @@ object RouteEngine {
             unknownPct = assessment.unknownPct,
             routeSource = source,
         )
-    }
-
-    /**
-     * Route on the local WFS graph (loaded from assets).
-     * The graph is a compact JSON file: { la: int[], lo: int[], e: int[] }
-     */
-    private suspend fun routeOnLocalGraph(
-        context: Context,
-        fromLat: Double,
-        fromLon: Double,
-        toLat: Double,
-        toLon: Double,
-    ): Dijkstra.RoutePath? {
-        val graph = loadLocalGraph(context) ?: return null
-
-        val start = Dijkstra.findNearestNode(graph, fromLat, fromLon)
-        val end = Dijkstra.findNearestNode(graph, toLat, toLon)
-        if (start < 0 || end < 0) return null
-
-        return Dijkstra.compute(graph, start, end)
-    }
-
-    /**
-     * Load the compact routing graph from assets JSON.
-     * Format: { la: int[], lo: int[], e: int[] } (lat/lon × 10000, flat edges)
-     */
-    private fun loadLocalGraph(context: Context): RoutingGraph? {
-        if (cachedGraph != null) return cachedGraph
-
-        try {
-            val json = context.assets.open("norge-routing-graph.dat")
-                .bufferedReader().use { it.readText() }
-            val raw = org.json.JSONObject(json)
-
-            val la = raw.getJSONArray("la")
-            val lo = raw.getJSONArray("lo")
-            val e = raw.getJSONArray("e")
-
-            val nodeCount = la.length()
-            val nodes = List(nodeCount) { i ->
-                GraphNode(
-                    lat = la.getInt(i) / 10000.0,
-                    lon = lo.getInt(i) / 10000.0,
-                )
-            }
-            val edges = List(nodeCount) { mutableListOf<GraphEdge>() }
-            for (i in 0 until e.length() step 3) {
-                val from = e.getInt(i)
-                val to = e.getInt(i + 1)
-                val dist = e.getInt(i + 2)
-                if (from >= 0 && from < nodeCount && to >= 0 && to < nodeCount) {
-                    edges[from].add(GraphEdge(to = to, weight = dist.toDouble()))
-                }
-            }
-
-            val graph = RoutingGraph(nodes = nodes, edges = edges)
-            cachedGraph = graph
-            return graph
-        } catch (e: Exception) {
-            Log.w(TAG, "Failed to load local graph", e)
-            return null
-        }
     }
 
     /**
@@ -190,17 +132,9 @@ object RouteEngine {
         val hours = totalSec / 3600
         val mins = (totalSec % 3600) / 60
         return when {
-            hours > 0 -> "${h}t ${m}m"
-            else -> "${m}m"
+            hours > 0 -> "${hours}t ${mins}m"
+            mins > 0 -> "${mins}m"
+            else -> "< 1m"
         }
     }
-
-    /**
-     * Internal struct for passing route coordinate data.
-     */
-    data class RouteSegmentData(
-        val coordinates: List<Pair<Double, Double>>,
-        val distanceMeters: Double,
-        val routeSource: String,
-    )
 }
