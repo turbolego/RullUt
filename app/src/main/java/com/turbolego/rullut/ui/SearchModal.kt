@@ -16,11 +16,12 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.turbolego.rullut.i18n.Strings
 import com.turbolego.rullut.model.PlaceResult
 
 /**
  * Search modal — search Norwegian place names via Kartverket Stedsnavn API.
- * Text input with debounced search, results list, tap to select.
+ * All text via [Strings] for i18n support.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,7 +37,6 @@ fun SearchModal(
     var results by remember { mutableStateOf<List<PlaceResult>>(emptyList()) }
     var searching by remember { mutableStateOf(false) }
 
-    // Debounce search: 300ms after last keystroke
     LaunchedEffect(query) {
         if (query.length < 3) {
             results = emptyList()
@@ -57,7 +57,7 @@ fun SearchModal(
         containerColor = MaterialTheme.colorScheme.surface,
         title = {
             Text(
-                "Stedsøk",
+                Strings.searchTitle,
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary,
@@ -69,7 +69,7 @@ fun SearchModal(
                 OutlinedTextField(
                     value = query,
                     onValueChange = { query = it },
-                    placeholder = { Text("Søk etter sted (minst 3 tegn)") },
+                    placeholder = { Text(Strings.searchPlaceholder) },
                     leadingIcon = {
                         if (searching) {
                             CircularProgressIndicator(
@@ -83,21 +83,21 @@ fun SearchModal(
                     trailingIcon = {
                         if (query.isNotEmpty()) {
                             IconButton(onClick = { query = "" }) {
-                                Icon(Icons.Default.Close, contentDescription = "Tøm søk")
+                                Icon(Icons.Default.Close, contentDescription = Strings.searchClose)
                             }
                         }
                     },
                     singleLine = true,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .semantics { contentDescription = "Søk etter stedsnavn" },
+                        .semantics { contentDescription = Strings.searchTitle },
                 )
 
                 Spacer(Modifier.height(8.dp))
 
                 if (results.isEmpty() && query.length >= 3 && !searching) {
                     Text(
-                        "Ingen treff.",
+                        Strings.searchNoResults,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -140,7 +140,7 @@ fun SearchModal(
         },
         confirmButton = {
             TextButton(onClick = onDismiss) {
-                Text("Lukk", color = MaterialTheme.colorScheme.primary)
+                Text(Strings.settingsCloseLabel, color = MaterialTheme.colorScheme.primary)
             }
         },
     )

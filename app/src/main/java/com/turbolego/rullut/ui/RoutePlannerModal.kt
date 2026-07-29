@@ -3,25 +3,21 @@ package com.turbolego.rullut.ui
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.MyLocation
-import androidx.compose.material.icons.filled.Route
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.turbolego.rullut.i18n.Strings
 import com.turbolego.rullut.model.RouteResult
 
 /**
  * Route planner modal — enter origin/destination, find accessible route.
- *
- * Layout: two text inputs for origin/destination coordinates,
- * a "Finn rute" button, and result display with color-coded segments.
+ * All text via [Strings] for i18n support.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,7 +36,6 @@ fun RoutePlannerModal(
     var loading by remember { mutableStateOf(false) }
     var routeResult by remember { mutableStateOf<RouteResult?>(null) }
 
-    // Pre-fill origin with myLocation if available
     LaunchedEffect(myLocation) {
         if (fromLat.isEmpty() && myLocation != null) {
             fromLat = myLocation.first.toString().take(8)
@@ -59,7 +54,7 @@ fun RoutePlannerModal(
                 .verticalScroll(rememberScrollState())
         ) {
             Text(
-                "Ruteplanlegger",
+                Strings.routeTitle,
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary,
@@ -67,13 +62,13 @@ fun RoutePlannerModal(
             Spacer(Modifier.height(16.dp))
 
             // FROM
-            Text("Fra", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
+            Text(Strings.routeFrom, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
             Spacer(Modifier.height(4.dp))
             Row {
                 OutlinedTextField(
                     value = fromLat,
                     onValueChange = { fromLat = it },
-                    label = { Text("Bredde (lat)") },
+                    label = { Text(Strings.routeFromLocation) },
                     modifier = Modifier.weight(1f),
                     singleLine = true,
                 )
@@ -81,7 +76,7 @@ fun RoutePlannerModal(
                 OutlinedTextField(
                     value = fromLng,
                     onValueChange = { fromLng = it },
-                    label = { Text("Lengde (lon)") },
+                    label = { Text("Lon") },
                     modifier = Modifier.weight(1f),
                     singleLine = true,
                 )
@@ -90,13 +85,13 @@ fun RoutePlannerModal(
             Spacer(Modifier.height(12.dp))
 
             // TO
-            Text("Til", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
+            Text(Strings.routeTo, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
             Spacer(Modifier.height(4.dp))
             Row {
                 OutlinedTextField(
                     value = toLat,
                     onValueChange = { toLat = it },
-                    label = { Text("Latrde (lat)") },
+                    label = { Text("Lat") },
                     modifier = Modifier.weight(1f),
                     singleLine = true,
                 )
@@ -104,7 +99,7 @@ fun RoutePlannerModal(
                 OutlinedTextField(
                     value = toLng,
                     onValueChange = { toLng = it },
-                    label = { Text("Lngde (lon)") },
+                    label = { Text("Lon") },
                     modifier = Modifier.weight(1f),
                     singleLine = true,
                 )
@@ -128,7 +123,7 @@ fun RoutePlannerModal(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp)
-                    .semantics { contentDescription = "Finn tilgjengelig rute" },
+                    .semantics { contentDescription = Strings.routeCalculate },
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
             ) {
                 if (loading) {
@@ -139,12 +134,15 @@ fun RoutePlannerModal(
                     )
                     Spacer(Modifier.width(8.dp))
                 }
-                Text("Finn tilgjengelig rute", color = MaterialTheme.colorScheme.onPrimary)
+                if (loading) {
+                    Text(Strings.routeCalculating, color = MaterialTheme.colorScheme.onPrimary)
+                } else {
+                    Text(Strings.routeCalculate, color = MaterialTheme.colorScheme.onPrimary)
+                }
             }
 
-            // Route result
             if (routeResult != null) {
-                RouteResultDisplay(routeResult!!, loading)
+                RouteResultDisplay(routeResult!!)
             }
 
             Spacer(Modifier.height(24.dp))
@@ -153,36 +151,33 @@ fun RoutePlannerModal(
 }
 
 @Composable
-private fun RouteResultDisplay(result: RouteResult, loading: Boolean) {
+private fun RouteResultDisplay(result: RouteResult) {
     Spacer(Modifier.height(16.dp))
     HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
     Spacer(Modifier.height(12.dp))
 
     Text(
-        "Resultat",
+        Strings.routeTitle,
         style = MaterialTheme.typography.titleSmall,
         fontWeight = FontWeight.Bold,
-        modifier = Modifier.semantics { contentDescription = "Ruteresultat" }
     )
     Spacer(Modifier.height(8.dp))
 
-    // Summary
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-        StatBox("Avstand", result.distanceLabel)
-        StatBox("Tid", result.durationLabel)
-        StatBox("Kilde", result.routeSource.uppercase())
+        StatBox(Strings.routeDistance, result.distanceLabel)
+        StatBox(Strings.routeDuration, result.durationLabel)
+        StatBox(Strings.routeSource, result.routeSource.uppercase())
     }
 
     Spacer(Modifier.height(12.dp))
 
-    // Accessibility breakdown
-    Text("Tilgjengelighet", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
+    Text(Strings.routeAccessibility, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
     Spacer(Modifier.height(8.dp))
 
-    AccessibilityBar("Tilgjengelig", result.accessiblePct, Color(0xFF00C853))
-    AccessibilityBar("Delvis tilgjengelig", result.partiallyAccessiblePct, Color(0xFFFFC107))
-    AccessibilityBar("Ikke tilgjengelig", result.notAccessiblePct, Color(0xFFD32F2F))
-    AccessibilityBar("Ingen data", result.unknownPct, Color(0xFF8B949E))
+    AccessibilityBar(Strings.routeAccessible(result.accessiblePct), result.accessiblePct, Color(0xFF00C853))
+    AccessibilityBar(Strings.routePartially(result.partiallyAccessiblePct), result.partiallyAccessiblePct, Color(0xFFFFC107))
+    AccessibilityBar(Strings.routeNotAccessible(result.notAccessiblePct), result.notAccessiblePct, Color(0xFFD32F2F))
+    AccessibilityBar(Strings.routeUnknown(result.unknownPct), result.unknownPct, Color(0xFF8B949E))
 }
 
 @Composable

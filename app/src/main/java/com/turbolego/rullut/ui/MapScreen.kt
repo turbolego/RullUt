@@ -2,21 +2,12 @@ package com.turbolego.rullut.ui
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.os.Looper
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.GpsFixed
-import androidx.compose.material.icons.filled.Layers
-import androidx.compose.material.icons.filled.Route
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Wc
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -25,41 +16,53 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.turbolego.rullut.api.*
+import com.turbolego.rullut.i18n.Lang
+import com.turbolego.rullut.i18n.LanguageManager
+import com.turbolego.rullut.i18n.Strings
 import com.turbolego.rullut.map.MapConfig
 import com.turbolego.rullut.map.MapStyleBuilder
 import com.turbolego.rullut.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.maplibre.android.annotations.MarkerOptions
 import org.maplibre.android.camera.CameraPosition
 import org.maplibre.android.camera.CameraUpdateFactory
 import org.maplibre.android.geometry.LatLng
-import org.maplibre.android.maps.MapView
 import org.maplibre.android.maps.MapLibreMap
+import org.maplibre.android.maps.MapView
 import org.maplibre.android.maps.Style
+import org.maplibre.android.style.layers.LineLayer
+import org.maplibre.android.style.layers.Property
+import org.maplibre.android.style.layers.PropertyFactory
+import org.maplibre.android.style.sources.GeoJsonSource
 
 /**
  * Main screen — MapLibre map with overlay UI controls.
  *
- * Integrates:
- * - MapLibre MapView with WMS + basemap
- * - GPS location (blue dot + center button)
- * - GetFeatureInfo on tap (FeaturePopup)
- * - Settings panel (basemap + layer toggle)
- * - Route planner (RoutePlannerModal)
- * - Search (SearchModal)
- * - Toilet search
+ * Integrates map, GPS, feature info, settings, routing, search, toilets.
+ * All text is localised via [Strings] — switch language in settings.
  */
 @Composable
 fun MapScreen(modifier: Modifier = Modifier) {
     val context = LocalContext.current
 
-    // State
+    // ── Language state ──
+    var currentLang by remember { mutableStateOf(Lang.NB) }
+
+    // Load persisted language on first composition
+    LaunchedEffect(Unit) {
+        val code = LanguageManager.getLanguage(context)
+        currentLang = LanguageManager.langFromCode(code)
+    }
+
+    // ── Map state ──
     var map by remember { mutableStateOf<MapLibreMap?>(null) }
     var style by remember { mutableStateOf<Style?>(null) }
     var currentLocation by remember { mutableStateOf<android.location.Location?>(null) }
@@ -84,14 +87,24 @@ fun MapScreen(modifier: Modifier = Modifier) {
     val coroutineScope = rememberCoroutineScope()
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    // Permission launcher
+    // ── Dynamic content description for root Box ──
+    val mapContentDescription = Strings.mapContentDescription
+
+    // ── Language change handler ──
+    fun switchLanguage(newLang: Lang) {
+        currentLang = newLang
+        coroutineScope.launch {
+            LanguageManager.setLanguage(context, newLang.code)
+        }
+    }
+
+    // ── Permission launcher ──
     val locationPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
         if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true ||
             permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
         ) {
-            // Permission granted — get location
             coroutineScope.launch {
                 val loc = withContext(Dispatchers.IO) {
                     LocationService.getCurrentLocation(context)
@@ -100,8 +113,7 @@ fun MapScreen(modifier: Modifier = Modifier) {
                 loc?.let {
                     map?.moveCamera(
                         CameraUpdateFactory.newLatLngZoom(
-                            LatLng(it.latitude, it.longitude),
-                            14.0,
+                            LatLng(it.latitude, it.longitude), 14.0,
                         )
                     )
                 }
@@ -109,7 +121,7 @@ fun MapScreen(modifier: Modifier = Modifier) {
         }
     }
 
-    // Load capabilities on first composition
+    // ── Load capabilities on first composition ──
     LaunchedEffect(Unit) {
         try {
             layersLoading = true
@@ -121,12 +133,12 @@ fun MapScreen(modifier: Modifier = Modifier) {
         layersLoading = false
     }
 
-    // MapView lifecycle
+    // ── MapView lifecycle ──
     val mapView = remember {
         MapView(context).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT,
+            layoutParams = android.view.ViewGroup.LayoutParams(
+                android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+                android.view.ViewGroup.LayoutParams.MATCH_PARENT,
             )
             cameraPosition = CameraPosition.Builder()
                 .target(LatLng(MapConfig.NORWAY_CENTER_LAT, MapConfig.NORWAY_CENTER_LNG))
@@ -148,23 +160,19 @@ fun MapScreen(modifier: Modifier = Modifier) {
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
-
-        onDispose {
-            lifecycleOwner.lifecycle.removeObserver(observer)
-        }
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
     }
 
-    // Initialize map
+    // ── Initialize map ──
     LaunchedEffect(Unit) {
         mapView.getMapAsync { nativeMap ->
             map = nativeMap
             nativeMap.setStyle(MapConfig.BASEMAP_LIBERTY) { loadedStyle ->
                 style = loadedStyle
-                // Add WMS raster source + layer
                 val source = MapStyleBuilder.buildRasterSource()
                 loadedStyle.addSource(source)
                 val layer = MapStyleBuilder.buildRasterLayer()
-                loadedStyle.addLayer(layer) // below road labels
+                loadedStyle.addLayer(layer)
             }
 
             // Tap → GetFeatureInfo
@@ -172,7 +180,7 @@ fun MapScreen(modifier: Modifier = Modifier) {
                 coroutineScope.launch {
                     featureLoading = true
                     showFeaturePopup = true
-                    featureTitle = "Undersøker..."
+                    featureTitle = Strings.featureLoading
 
                     try {
                         val features = withContext(Dispatchers.IO) {
@@ -187,26 +195,25 @@ fun MapScreen(modifier: Modifier = Modifier) {
                                 ?: features.first().props["navn"]
                                 ?: "${features.size} treff"
                         } else {
-                            "Ingen data her"
+                            Strings.featureNoInfo
                         }
                     } catch (_: Exception) {
-                        featureTitle = "Feil ved søk"
+                        featureTitle = Strings.featureError
                         featureList = emptyList()
                     }
                     featureLoading = false
                 }
             }
 
-            // Long press for quick info
+            // Long press → announce for TalkBack
             nativeMap.addOnMapLongClickListener { latLng ->
                 nativeMap.moveCamera(
                     CameraUpdateFactory.newLatLngZoom(
                         latLng, nativeMap.cameraPosition.zoom
                     )
                 )
-                // Announce for TalkBack
                 com.turbolego.rullut.a11y.AccessibilityUtils.announce(
-                    context, "Kartpunkt markert"
+                    context, mapContentDescription
                 )
             }
         }
@@ -214,16 +221,12 @@ fun MapScreen(modifier: Modifier = Modifier) {
 
     // Content
     Box(modifier = modifier.fillMaxSize()
-        .semantics {
-            contentDescription = "Tilgjengelighetskart over Norge. Viser rullestol-ruter og universell utforming."
-        }) {
-        // Map
-        AndroidView(
-            factory = { mapView },
-            modifier = Modifier.fillMaxSize(),
-        )
+        .semantics { contentDescription = mapContentDescription }) {
 
-        // Floating action buttons (bottom-right stack)
+        // Map
+        AndroidView(factory = { mapView }, modifier = Modifier.fillMaxSize())
+
+        // ── Floating action buttons (bottom-right stack) ──
         Column(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
@@ -241,7 +244,6 @@ fun MapScreen(modifier: Modifier = Modifier) {
                             )
                         )
                     } else {
-                        // Get location
                         if (ContextCompat.checkSelfPermission(
                                 context, Manifest.permission.ACCESS_FINE_LOCATION
                             ) == PackageManager.PERMISSION_GRANTED
@@ -271,7 +273,7 @@ fun MapScreen(modifier: Modifier = Modifier) {
                 },
                 modifier = Modifier
                     .size(48.dp)
-                    .semantics { contentDescription = "Senter på min posisjon" },
+                    .semantics { contentDescription = Strings.fabLocation },
                 containerColor = MaterialTheme.colorScheme.surface,
                 contentColor = MaterialTheme.colorScheme.primary,
             ) {
@@ -283,7 +285,7 @@ fun MapScreen(modifier: Modifier = Modifier) {
             // Search
             SmallFloatingActionButton(
                 onClick = { showSearch = true },
-                modifier = Modifier.semantics { contentDescription = "Søk etter sted" },
+                modifier = Modifier.semantics { contentDescription = Strings.fabSearch },
                 containerColor = MaterialTheme.colorScheme.surface,
                 contentColor = MaterialTheme.colorScheme.onSurface,
             ) {
@@ -307,7 +309,7 @@ fun MapScreen(modifier: Modifier = Modifier) {
             // Route planner
             SmallFloatingActionButton(
                 onClick = { showRoutePlanner = true },
-                modifier = Modifier.semantics { contentDescription = "Ruteplanlegger" },
+                modifier = Modifier.semantics { contentDescription = Strings.fabRoute },
                 containerColor = MaterialTheme.colorScheme.surface,
                 contentColor = MaterialTheme.colorScheme.onSurface,
             ) {
@@ -319,7 +321,7 @@ fun MapScreen(modifier: Modifier = Modifier) {
             // Settings
             SmallFloatingActionButton(
                 onClick = { showSettings = true },
-                modifier = Modifier.semantics { contentDescription = "Innstillinger" },
+                modifier = Modifier.semantics { contentDescription = Strings.fabSettings },
                 containerColor = MaterialTheme.colorScheme.surface,
                 contentColor = MaterialTheme.colorScheme.onSurface,
             ) {
@@ -327,7 +329,7 @@ fun MapScreen(modifier: Modifier = Modifier) {
             }
         }
 
-        // Feature info popup
+        // ── Feature info popup ──
         FeaturePopup(
             visible = showFeaturePopup,
             loading = featureLoading,
@@ -336,7 +338,7 @@ fun MapScreen(modifier: Modifier = Modifier) {
             onDismiss = { showFeaturePopup = false },
         )
 
-        // Settings panel
+        // ── Settings panel ──
         SettingsPanel(
             visible = showSettings,
             layers = layers,
@@ -365,14 +367,14 @@ fun MapScreen(modifier: Modifier = Modifier) {
                         val layer = MapStyleBuilder.buildRasterLayer()
                         loadedStyle.addLayer(layer)
                     }
-                } else {
-                    // Remove style completely
                 }
             },
+            currentLang = currentLang,
+            onLanguageChange = { newLang -> switchLanguage(newLang) },
             onDismiss = { showSettings = false },
         )
 
-        // Route planner
+        // ── Route planner ──
         RoutePlannerModal(
             visible = showRoutePlanner,
             myLocation = currentLocation?.let {
@@ -387,17 +389,16 @@ fun MapScreen(modifier: Modifier = Modifier) {
                     }
                     routeResult = result
                     if (result != null) {
-                        // Draw the route on the map
                         drawRouteOnMap(map, style, result)
                         Toast.makeText(
                             context,
-                            "Rute funnet: ${result.distanceLabel}, ${result.durationLabel}",
+                            "${Strings.routeTitle}: ${result.distanceLabel}, ${result.durationLabel}",
                             Toast.LENGTH_SHORT,
                         ).show()
                     } else {
                         Toast.makeText(
                             context,
-                            "Fant ingen rute",
+                            Strings.routeNoRoute,
                             Toast.LENGTH_SHORT,
                         ).show()
                     }
@@ -406,7 +407,7 @@ fun MapScreen(modifier: Modifier = Modifier) {
             onDismiss = { showRoutePlanner = false },
         )
 
-        // Search modal
+        // ── Search modal ──
         SearchModal(
             visible = showSearch,
             onSearchPlace = { query ->
@@ -417,12 +418,11 @@ fun MapScreen(modifier: Modifier = Modifier) {
             onSelectPlace = { place ->
                 map?.moveCamera(
                     CameraUpdateFactory.newLatLngZoom(
-                        LatLng(place.lat, place.lon),
-                        12.0,
+                        LatLng(place.lat, place.lon), 12.0,
                     )
                 )
                 map?.addMarker(
-                    org.maplibre.android.annotations.MarkerOptions()
+                    MarkerOptions()
                         .title(place.name)
                         .snippet(place.municipality)
                         .position(LatLng(place.lat, place.lon))
@@ -444,36 +444,18 @@ private fun drawRouteOnMap(
     if (map == null || style == null) return
 
     try {
-        // Remove previous route if exists
         style.removeLayer("route-layer")
         style.removeSource("route-source")
 
-        // Add GeoJSON source
-        val source = org.maplibre.android.style.sources.GeoJsonSource(
-            "route-source",
-            result.geojson,
-        )
+        val source = GeoJsonSource("route-source", result.geojson)
         style.addSource(source)
 
-        // Add line layer with accessibility-friendly colour (high contrast amber)
-        val layer = org.maplibre.android.style.layers.LineLayer(
-            "route-layer",
-            "route-source",
-        ).withProperties(
-            org.maplibre.android.style.layers.PropertyFactory.lineColor(
-                android.graphics.Color.parseColor("#E8A020")
-            ),
-            org.maplibre.android.style.layers.PropertyFactory.lineWidth(4f),
-            org.maplibre.android.style.layers.PropertyFactory.lineCap(
-                org.maplibre.android.style.layers.Property.LINE_CAP_ROUND
-            ),
-            org.maplibre.android.style.layers.PropertyFactory.lineJoin(
-                org.maplibre.android.style.layers.Property.LINE_JOIN_ROUND
-            ),
+        val layer = LineLayer("route-layer", "route-source").withProperties(
+            PropertyFactory.lineColor(android.graphics.Color.parseColor("#E8A020")),
+            PropertyFactory.lineWidth(4f),
+            PropertyFactory.lineCap(Property.LINE_CAP_ROUND),
+            PropertyFactory.lineJoin(Property.LINE_JOIN_ROUND),
         )
         style.addLayer(layer)
-
-    } catch (_: Exception) {
-        // Route layer is non-critical
-    }
+    } catch (_: Exception) { }
 }

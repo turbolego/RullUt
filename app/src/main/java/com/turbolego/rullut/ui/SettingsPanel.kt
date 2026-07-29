@@ -3,8 +3,6 @@ package com.turbolego.rullut.ui
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -14,17 +12,13 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.turbolego.rullut.i18n.Lang
+import com.turbolego.rullut.i18n.Strings
 import com.turbolego.rullut.model.LayerInfo
 
-private val BASEMAP_OPTIONS = listOf(
-    "osm" to "OpenStreetMap (Liberty)",
-    "topo" to "Topografisk",
-    "none" to "Ingen bakgrunn",
-)
-
 /**
- * Settings panel: basemap selector + layer toggle checkboxes.
- * ModalBottomSheet, WCAG accessible (Norwegian content descriptions).
+ * Settings panel: basemap selector, layer toggles, and language picker.
+ * ModalBottomSheet, WCAG accessible with translated content descriptions.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,6 +30,8 @@ fun SettingsPanel(
     onLayerToggle: (String) -> Unit,
     basemap: String,
     onBasemapChange: (String) -> Unit,
+    currentLang: Lang,
+    onLanguageChange: (Lang) -> Unit,
     onDismiss: () -> Unit,
 ) {
     if (!visible) return
@@ -51,23 +47,56 @@ fun SettingsPanel(
                 .verticalScroll(rememberScrollState())
                 .semantics { heading() }
         ) {
+            // ── Header ──
             Text(
-                "Innstillinger",
+                Strings.settingsTitle,
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.semantics { contentDescription = "Innstillinger for kartet" }
+                modifier = Modifier.semantics { contentDescription = Strings.settingsMapTitleDesc }
             )
             Spacer(Modifier.height(16.dp))
 
-            // Basemap picker
+            // ── Language picker ──
             Text(
-                "Bakgrunnskart",
+                Strings.settingsLanguage,
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.SemiBold,
             )
             Spacer(Modifier.height(8.dp))
-            BASEMAP_OPTIONS.forEach { (id, label) ->
+            Lang.entries.forEach { lang ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 2.dp)
+                        .semantics { contentDescription = lang.displayName },
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    RadioButton(
+                        selected = currentLang == lang,
+                        onClick = { onLanguageChange(lang) }
+                    )
+                    Text(lang.displayName, style = MaterialTheme.typography.bodyMedium)
+                }
+            }
+
+            HorizontalDivider(
+                modifier = Modifier.padding(vertical = 12.dp),
+                color = MaterialTheme.colorScheme.outlineVariant
+            )
+
+            // ── Basemap picker ──
+            Text(
+                Strings.settingsBasemap,
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Spacer(Modifier.height(8.dp))
+            listOf(
+                "osm" to Strings.basemapLiberty,
+                "topo" to Strings.basemapTopo,
+                "none" to Strings.basemapNone,
+            ).forEach { (id, label) ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -88,9 +117,9 @@ fun SettingsPanel(
                 color = MaterialTheme.colorScheme.outlineVariant
             )
 
-            // Layer toggles
+            // ── Layer toggles ──
             Text(
-                "Kartlag",
+                Strings.settingsLayers,
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.SemiBold,
             )
@@ -103,7 +132,7 @@ fun SettingsPanel(
                 )
             } else if (layers.isEmpty()) {
                 Text(
-                    "Ingen kartlag funnet.",
+                    Strings.settingsNoLayers,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -120,9 +149,9 @@ fun SettingsPanel(
                 ),
                 modifier = Modifier
                     .align(Alignment.End)
-                    .semantics { contentDescription = "Lukk innstillinger" }
+                    .semantics { contentDescription = Strings.settingsClose }
             ) {
-                Text("Lukk", color = MaterialTheme.colorScheme.onPrimary)
+                Text(Strings.settingsCloseLabel, color = MaterialTheme.colorScheme.onPrimary)
             }
 
             Spacer(Modifier.height(24.dp))
@@ -148,7 +177,7 @@ private fun LayerList(
                 checked = activeLayers.contains(layer.name),
                 onCheckedChange = { onLayerToggle(layer.name) },
                 modifier = Modifier.semantics {
-                    contentDescription = "Slå på/av lag: ${layer.title}"
+                    contentDescription = Strings.settingsToggleLayer(layer.title)
                 }
             )
             Text(

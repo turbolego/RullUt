@@ -88,6 +88,43 @@ The AAB will be at `app/build/outputs/bundle/release/app-release.aab`.
 
 ### Ongoing costs: **$0/year**
 
+## Play Store descriptions
+
+### Short descriptions
+
+| Language | Text (max 80 chars) |
+|---|---|
+| **NB** | `Finn rullestolvennlige ruter i hele Norge` |
+| **EN** | `Find wheelchair-accessible routes all over Norway` |
+
+### Full description (English)
+
+```
+RullUt finds accessible routes for wheelchair users across Norway,
+based on Kartverket's Geonorge WMS universal design data.
+
+Features:
+• Route planner — find wheelchair-friendly paths between two locations
+• Accessibility assessment — colour-coded breakdown of how accessible the
+  route is, with percentages for accessible, partially accessible, and
+  inaccessible sections
+• Real-time GPS positioning — see your location on the map
+• Toilet finder — locate nearby public toilets
+• Place search — search Norwegian place names via Kartverket
+• Multiple map layers — switch basemaps and toggle accessibility data layers
+• Language support — Norsk Bokmål and English
+
+How it works:
+• Map data from Geonorge (Kartverket) and OpenFreeMap — no API keys or
+  billing account required
+• Routing via OpenStreetMap and Valhalla
+• GPS is processed locally on your device only
+• The app collects no personal data
+• Open source under MIT License (turbolego/RullUt)
+
+RullUt is free, ad-free, and has no in-app purchases.
+```
+
 | Item | Cost |
 |---|---|
 | Google Play Developer account | **$25 once** |
