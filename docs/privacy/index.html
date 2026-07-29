@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personvernerklæring — RullUt</title>
+    <style>
+        :root {
+            --bg: #0D1117;
+            --text: #E6EDF3;
+            --primary: #E8A020;
+            --accent: #3A5068;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 2rem 1rem;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+        h1 { color: var(--primary); font-size: 1.6rem; margin-bottom: 0.5rem; }
+        h2 { color: var(--primary); font-size: 1.2rem; margin: 1.5rem 0 0.5rem; }
+        p, li { margin-bottom: 0.6rem; }
+        ul { padding-left: 1.2rem; }
+        a { color: var(--primary); }
+        hr { border: none; border-top: 1px solid var(--accent); margin: 1.5rem 0; }
+        .updated { color: var(--accent); font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+    <h1>Personvernerklæring for RullUt</h1>
+    <p class="updated">Sist oppdatert: 29. juli 2026</p>
+
+    <p>RullUt ("appen") er utviklet av Turbolego. Denne personvernerklæringen forklarer hvordan vi håndterer dine data når du bruker appen.</p>
+
+    <h2>1. Data vi samler inn</h2>
+    <p><strong>RullUt samler ikke inn, lagrer eller deler personopplysninger.</strong> Appen er designet slik at dine data blir på din enhet.</p>
+    <p>Følgende data håndteres <em>lokalt</em> på din enhet og sendes ikke til oss:</p>
+    <ul>
+        <li><strong>Posisjon (GPS)</strong> — brukes kun for å vise din plassering på kartet og som utgangspunkt for ruteplanlegging. Posisjonen behandles lokalt og deles ikke med tredjeparter.</li>
+        <li><strong>Rutesøk</strong> — start- og målpunkt for ruteplanlegging behandles kun i sanntid og lagres ikke.</li>
+    </ul>
+
+    <h2>2. Tredjepartstjenester</h2>
+    <p>RullUt bruker følgende eksterne API-er for å fungere. Disse mottar kun data som er nødvendig for å utføre din forespørsel:</p>
+    <ul>
+        <li><strong>Norgeskart.no (Geonorge WMS)</strong> — offentlig karttjeneste fra Kartverket. Viser tilgjengelighetsdata (rullestolruter og universell utforming). Ingenting av din posisjon eller identitet sendes.</li>
+        <li><strong>OpenFreeMap</strong> — gratis bakgrunnskart. Ingen data om deg sendes.</li>
+        <li><strong>Overpass API (OpenStreetMap)</strong> — offentlig API for å hente vei- og toalettdata. Kun koordinater i sanntid sendes.</li>
+        <li><strong>Valhalla (OpenStreetMap.de)</strong> — offentlig ruteplanlegger. Kun start- og målpunkt sendes for å beregne ruten.</li>
+        <li><strong>Kartverket Stedsnavn</strong> — offentlig API for stedsøk. Kun søketeksten din sendes.</li>
+    </ul>
+    <p>Alle disse tjenestene er <strong>offentlige og gratis</strong> API-er. Ingen av dem mottar personlig identifiserbar informasjon om deg.</p>
+
+    <h2>3. Informasjonskapsler (cookies)</h2>
+    <p>RullUt bruker ikke informasjonskapsler eller lignende sporingsteknologi.</p>
+
+    <h2>4. Lagring av data</h2>
+    <p>RullUt lagrer kun dine innstillinger (valgt bakgrunnskart og aktive kartlag) lokalt på enheten via Android DataStore. Disse dataene deles ikke med noen.</p>
+
+    <h2>5. Tredjeparts overføringer</h2>
+    <p>Vi overfører ikke dine data til tredjeparter. Vi bruker ingen analyseverktøy, ingen annonsenettverk og ingen sporingsbiblioteker.</p>
+
+    <h2>6. Dine rettigheter</h2>
+    <p>Siden vi ikke samler inn personopplysninger, har vi ingen slike data om deg å slette eller eksporterere. Posisjonstilgang kan du når som helst slå av i enhetens innstillinger under <strong>Innstillinger → Apper → RullUt → Tillatelser</strong>.</p>
+
+    <h2>7. Endringer i denne erklæringen</h2>
+    <p>Ved vesentlige endringer vil vi oppdatere denne siden og versjonen av appen. Sjekk denne siden jevnlig for oppdatert informasjon.</p>
+
+    <h2>8. Kontakt</h2>
+    <p>Spørsmål om denne personvernerklæringen kan rettes til:<br>
+    <a href="mailto:turbolego+privacy@users.noreply.github.com">turbolego+privacy@users.noreply.github.com</a></p>
+
+    <hr>
+    <p><a href="https://github.com/turbolego/RullUt">RullUt på GitHub</a></p>
+</body>
+</html>

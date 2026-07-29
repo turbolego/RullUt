@@ -82,8 +82,9 @@ The AAB will be at `app/build/outputs/bundle/release/app-release.aab`.
    - Screenshots: 2+ phone screenshots (use emulator)
    - Category: Maps & Navigation
    - Content rating: Everyone
-7. Complete the "App content" questionnaire
-8. Set pricing: **Free** (no cost to users)
+8. Complete the "App content" questionnaire
+9. Set pricing: **Free** (no cost to users)
+10. **Privacy Policy URL**: Set to `https://turbolego.github.io/RullUt/privacy/`
 
 ### Ongoing costs: **$0/year**
 
