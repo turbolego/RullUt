@@ -81,10 +81,16 @@ dependencies {
     // Core KTX
     implementation("androidx.core:core-ktx:1.16.0")
 
+    // Google Play Services (location — FusedLocationProviderClient)
+    implementation("com.google.android.gms:play-services-location:21.3.0")
+
     // Tests
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.json:json:20250107")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.1")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
     androidTestImplementation(composeBom)
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    androidTestImplementation("androidx.test.rules:rules:1.6.1")
 }
