@@ -23,13 +23,28 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Generate deterministic signing keystore
+      - name: Deterministic keystore cache key
+        id: keystore_hash
+        env:
+          KEY_SECRET: ${{ secrets.KEY_SECRET }}
+        run: |
+          echo "hash=$(echo -n "$KEY_SECRET" | sha256sum | cut -c1-16)" >> "$GITHUB_OUTPUT"
+
+      - name: Restore cached keystore
+        id: cache_keystore
+        uses: actions/cache@v4
+        with:
+          path: app/keystore/rullut-upload-keystore.jks
+          key: rullut-keystore-${{ steps.keystore_hash.outputs.hash }}
+
+      - name: Generate keystore (if not cached)
+        if: steps.cache_keystore.outputs.cache-hit != 'true'
         env:
           KEY_SECRET: ${{ secrets.KEY_SECRET }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
         run: |
-          pip3 install pycryptodome
+          pip3 install pycryptodome cryptography
           mkdir -p app/keystore
           python3 scripts/keystore_gen.py app/keystore/rullut-upload-keystore.jks
 

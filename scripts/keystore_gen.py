@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """
-Deterministic Android upload keystore generator.
+Deterministic Android upload keystore generator — FULLY deterministic.
 
 Given the same text secrets, produces the IDENTICAL JKS keystore and
 SHA1 certificate fingerprint every CI run — no upload key resets ever.
+
+Fixed-code approach for the X.509 certificate: uses cryptography library
+with hardcoded serial=1 and fixed Jan 1 2025 start date, so the cert
+is byte-identical regardless of when it's generated.
 
 Usage:
     KEY_SECRET="..." python3 scripts/keystore_gen.py app/keystore/rullut-upload-keystore.jks
@@ -18,9 +22,9 @@ Environment variables (set as GitHub Secrets):
 How it works:
     HMAC-SHA512(key=KEY_SECRET, msg=KEY_ALIAS + counter64) produces an
     unlimited deterministic byte stream fed into PyCryptodome RSA.generate()
-    as randfunc. Combined with fixed serial=1 and fixed validity dates via
-    OpenSSL, every artefact (RSA primes, PEM, X.509 cert, PKCS12, JKS cert)
-    is identical across runs.
+    as randfunc. The X.509 certificate is built via cryptography library with
+    fixed serial (#1), fixed notBefore (2025-01-01), and a 30-year validity.
+    Every artifact is byte-identical across runs.
 """
 
 import base64
@@ -30,10 +34,10 @@ import os
 import struct
 import subprocess
 import sys
+from datetime import datetime, timedelta, timezone
 
 from Crypto.PublicKey import RSA
 from Crypto.Hash import SHA1
-
 
 # ═══════════════════════════════════════════
 # Config (from environment — GitHub Secrets)
@@ -100,9 +104,82 @@ print(f"RSA public key SHA1: {fp}", flush=True)
 
 
 # ═══════════════════════════════════════════
-# Step 2: X.509 self-signed certificate (deterministic serial + dates)
+# Step 2: X.509 self-signed cert (cryptography library)
+# Fully deterministic: serial=1, fixed notBefore, fixed subject
 # ═══════════════════════════════════════════
 
+try:
+    from cryptography import x509
+    from cryptography.x509.oid import NameOID
+    from cryptography.hazmat.primitives import hashes, serialization as crypto_ser
+    from cryptography.hazmat.primitives.asymmetric import rsa as crypto_rsa, padding
+    from cryptography.hazmat.backends import default_backend
+except ImportError:
+    # Fallback: install if missing (CI)
+    sys.exit("cryptography library not found. Run: pip3 install cryptography && re-run")
+
+# Build X.500 Name from DNAME string
+oid_map = {
+    "CN": NameOID.COMMON_NAME,
+    "OU": NameOID.ORGANIZATIONAL_UNIT_NAME,
+    "O": NameOID.ORGANIZATION_NAME,
+    "L": NameOID.LOCALITY_NAME,
+    "ST": NameOID.STATE_OR_PROVINCE_NAME,
+    "C": NameOID.COUNTRY_NAME,
+}
+name_parts = []
+for part in DNAME.split(","):
+    k, v = part.strip().split("=", 1)
+    k, v = k.strip(), v.strip()
+    oid = oid_map.get(k)
+    if oid:
+        name_parts.append(x509.NameAttribute(oid, v))
+subject = issuer = x509.Name(name_parts)
+
+# Convert PyCryptodome key to cryptography key
+pub_numbers = crypto_rsa.RSAPublicNumbers(e=65537, n=key.n)
+# Private key components
+priv_numbers = crypto_rsa.RSAPrivateNumbers(
+    p=key.p,
+    q=key.q,
+    d=key.d,
+    dmp1=key.d % (key.p - 1),  # d mod (p-1)
+    dmq1=key.d % (key.q - 1),  # d mod (q-1)
+    iqmp=pow(key.q, -1, key.p),  # q^-1 mod p
+    public_numbers=pub_numbers,
+)
+crypto_key = priv_numbers.private_key(default_backend())
+
+# Build certificate with FIXED dates
+not_before = datetime(2025, 1, 1, 0, 0, 0, tzinfo=timezone.utc)
+not_after = not_before + timedelta(days=10950)  # 30 years
+
+cert_builder = (
+    x509.CertificateBuilder()
+    .subject_name(subject)
+    .issuer_name(issuer)
+    .public_key(crypto_key.public_key())
+    .serial_number(1)
+    .not_valid_before(not_before)
+    .not_valid_after(not_after)
+    # Add basic constraints: CA=false
+    .add_extension(
+        x509.BasicConstraints(ca=False, path_length=None),
+        critical=True,
+    )
+    # Add subject key identifier
+    .add_extension(
+        x509.SubjectKeyIdentifier.from_public_key(crypto_key.public_key()),
+        critical=False,
+    )
+)
+certificate = cert_builder.sign(
+    private_key=crypto_key,
+    algorithm=hashes.SHA256(),
+    backend=default_backend(),
+)
+
+# Write key PEM
 key_pem = key.export_key(
     format="PEM",
     passphrase=PASS,
@@ -111,32 +188,13 @@ key_pem = key.export_key(
 with open("/tmp/det-key.pem", "wb") as f:
     f.write(key_pem)
 
-# Convert DN "CN=X, OU=Y" → "/CN=X/OU=Y" format for OpenSSL
-dn_slash = "/" + DNAME.replace(", ", "/").replace(",", "/")
+# Write cert PEM
+cert_pem = certificate.public_bytes(crypto_ser.Encoding.PEM)
+with open("/tmp/det-cert.pem", "wb") as f:
+    f.write(cert_pem)
 
-# -set_serial 1 is critical — without it OpenSSL generates a random serial
-subprocess.run(
-    [
-        "openssl",
-        "req",
-        "-new",
-        "-x509",
-        "-key",
-        "/tmp/det-key.pem",
-        "-out",
-        "/tmp/det-cert.pem",
-        "-days",
-        "10950",
-        "-subj",
-        dn_slash,
-        "-set_serial",
-        "1",
-        "-passin",
-        f"pass:{PASS}",
-    ],
-    check=True,
-    capture_output=True,
-)
+print(f"Certificate serial: {certificate.serial_number}", flush=True)
+print(f"Valid: {not_before.strftime('%Y-%m-%d')} → {not_after.strftime('%Y-%m-%d')}", flush=True)
 
 # ═══════════════════════════════════════════
 # Step 3: PKCS12 → JKS
