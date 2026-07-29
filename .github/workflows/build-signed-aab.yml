@@ -26,17 +26,10 @@ jobs:
         with:
           gradle-version: 8.11.1
 
-      - name: Generate upload keystore
+      - name: Decode keystore from secret
         run: |
           mkdir -p app/keystore
-          keytool -genkey -v \
-            -keystore app/keystore/rullut-upload-keystore.jks \
-            -alias "${{ secrets.KEY_ALIAS }}" \
-            -keyalg RSA \
-            -keysize 2048 \
-            -validity 18250 \
-            -storepass "${{ secrets.STORE_PASSWORD }}" \
-            -dname "${{ secrets.KEY_DNAME }}"
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > app/keystore/rullut-upload-keystore.jks
 
       - name: Build signed release AAB
         run: gradle bundleRelease --no-daemon
