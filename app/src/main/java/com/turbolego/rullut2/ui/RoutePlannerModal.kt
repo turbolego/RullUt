@@ -5,12 +5,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.MyLocation
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.turbolego.rullut2.i18n.Strings
@@ -77,8 +78,8 @@ fun RoutePlannerModal(
             // ── FROM ──
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
-                    Icons.AutoMirrored.Filled.MyLocation,
-                    contentDescription = null,
+                    Icons.Filled.LocationOn,
+                    contentDescription = Strings.routeFrom,
                     modifier = Modifier.size(18.dp),
                     tint = MaterialTheme.colorScheme.primary,
                 )
