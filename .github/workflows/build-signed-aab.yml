@@ -37,7 +37,6 @@ jobs:
             -keysize 2048 \
             -validity 18250 \
             -storepass "${{ secrets.KEYSTORE_PASSWORD }}" \
-            -keypass "${{ secrets.KEYSTORE_PASSWORD }}" \
             -dname "${{ secrets.KEY_DNAME }}"
 
       - name: Create keystore.properties
