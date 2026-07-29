@@ -26,15 +26,6 @@ jobs:
         with:
           gradle-version: 8.11.1
 
-      - name: Install Android SDK platform
-        run: |
-          echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager \
-            --sdk_root=$ANDROID_HOME \
-            "platforms;android-35" \
-            "build-tools;35.0.1" \
-            "platform-tools" \
-            2>&1 | tail -5
-
       - name: Generate upload keystore
         run: |
           mkdir -p app/keystore
@@ -44,19 +35,15 @@ jobs:
             -keyalg RSA \
             -keysize 2048 \
             -validity 18250 \
-            -storepass "${{ secrets.KEYSTORE_PASSWORD }}" \
+            -storepass "${{ secrets.STORE_PASSWORD }}" \
             -dname "${{ secrets.KEY_DNAME }}"
-
-      - name: Create keystore.properties
-        run: |
-          cat > app/keystore.properties <<EOF
-          storePassword=${{ secrets.KEYSTORE_PASSWORD }}
-          keyAlias=${{ secrets.KEY_ALIAS }}
-          storeFile=keystore/rullut-upload-keystore.jks
-          EOF
 
       - name: Build signed release AAB
         run: gradle bundleRelease --no-daemon
+        env:
+          STORE_FILE: app/keystore/rullut-upload-keystore.jks
+          STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
 
       - name: Upload signed AAB
         uses: actions/upload-artifact@v4

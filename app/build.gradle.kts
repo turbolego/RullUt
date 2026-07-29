@@ -5,15 +5,6 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization")
 }
 
-// Load keystore configuration for Play Store release builds.
-// Create app/keystore.properties with signing credentials.
-// This file is .gitignore'd — keep a secure backup offline.
-val keystorePropertiesFile = rootProject.file("app/keystore.properties")
-val keystoreProperties = java.util.Properties()
-if (keystorePropertiesFile.exists()) {
-    keystorePropertiesFile.inputStream().use { keystoreProperties.load(it) }
-}
-
 android {
     namespace = "com.turbolego.rullut"
     compileSdk = 35
@@ -30,12 +21,15 @@ android {
 
     signingConfigs {
         create("release") {
-            if (keystoreProperties.containsKey("storeFile")) {
-                storeFile = rootProject.file("app/${keystoreProperties["storeFile"]}")
-                storePassword = keystoreProperties["storePassword"] as String
-                keyAlias = keystoreProperties["keyAlias"] as String
-                keyPassword = keystoreProperties["storePassword"] as String
-            }
+            // CI: read from environment variables (set by workflow)
+            // Local: falls back to app/keystore.properties (gitignored)
+            storeFile = providers.environmentVariable("STORE_FILE")
+                .map { rootProject.file(it) }
+                .orElse(rootProject.file("app/keystore/rullut-upload-keystore.jks"))
+                .orNull
+            storePassword = providers.environmentVariable("STORE_PASSWORD").orElse("").orNull
+            keyAlias = providers.environmentVariable("KEY_ALIAS").orElse("").orNull
+            keyPassword = providers.environmentVariable("STORE_PASSWORD").orElse("").orNull
         }
     }
 
