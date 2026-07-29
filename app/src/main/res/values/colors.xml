@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Dark theme colors (WCAG-consistent with Expo app) -->
+    <color name="deep_bg">#FF0D1117</color>
+    <color name="amber_accent">#FFE8A020</color>
+    <color name="steel_blue">#FF3A5068</color>
+    <color name="text_primary">#FFE6EDF3</color>
+    <color name="text_secondary">#FF8B949E</color>
+</resources>
