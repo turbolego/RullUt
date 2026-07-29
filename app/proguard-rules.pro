@@ -14,10 +14,10 @@
 -keepclasseswithmembers class kotlinx.serialization.json.** {
     kotlinx.serialization.KSerializer serializer(...);
 }
--keep,includedescriptorclasses class com.turbolego.rullut.**$$serializer { *; }
--keepclassmembers class com.turbolego.rullut.** {
+-keep,includedescriptorclasses class com.turbolego.rullut2.**$$serializer { *; }
+-keepclassmembers class com.turbolego.rullut2.** {
     *** Companion;
 }
--keepclasseswithmembers class com.turbolego.rullut.** {
+-keepclasseswithmembers class com.turbolego.rullut2.** {
     kotlinx.serialization.KSerializer serializer(...);
 }

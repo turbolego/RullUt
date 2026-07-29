@@ -24,7 +24,7 @@
 ## Pre-Phase: Android project creation — no plan, raw Android Studio/scaffold
 
 **Step 1: Create the canonical project**
-- `com.turbolego.rullut`, min SDK 24, Kotlin, Compose enabled, Gradle KTS
+- `com.turbolego.rullut2`, min SDK 24, Kotlin, Compose enabled, Gradle KTS
 - git init already done; add .gitignore via Android Studio defaults, then add files step-by-step
 
 ---

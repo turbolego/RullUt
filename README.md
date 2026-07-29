@@ -18,7 +18,7 @@
 ## Architecture
 
 ```
-com.turbolego.rullut/
+com.turbolego.rullut2/
 ├── a11y/          — Accessibility utilities (TalkBack announcements)
 ├── api/           — Network layer (FeatureInfo, routing, search, location)
 ├── map/           — MapLibre Native setup (WMS interceptor, style builder,

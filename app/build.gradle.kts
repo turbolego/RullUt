@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.turbolego.rullut"
+    namespace = "com.turbolego.rullut2"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.turbolego.rullut"
+        applicationId = "com.turbolego.rullut2"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
