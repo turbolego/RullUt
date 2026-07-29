@@ -38,7 +38,7 @@ fun SearchModal(
     var searching by remember { mutableStateOf(false) }
 
     LaunchedEffect(query) {
-        if (query.length < 3) {
+        if (query.length < 2) {
             results = emptyList()
             return@LaunchedEffect
         }
@@ -95,7 +95,7 @@ fun SearchModal(
 
                 Spacer(Modifier.height(8.dp))
 
-                if (results.isEmpty() && query.length >= 3 && !searching) {
+                if (results.isEmpty() && query.length >= 2 && !searching) {
                     Text(
                         Strings.searchNoResults,
                         style = MaterialTheme.typography.bodyMedium,

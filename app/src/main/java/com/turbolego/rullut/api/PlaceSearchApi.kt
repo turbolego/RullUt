@@ -26,10 +26,10 @@ object PlaceSearchApi {
 
     /**
      * Search for places matching a query string.
-     * Minimum 3 characters (API requirement).
+     * Minimum 2 characters (API requires 1, but we want reasonable results).
      */
     suspend fun search(query: String): List<PlaceResult> {
-        if (query.length < 3) return emptyList()
+        if (query.length < 2) return emptyList()
 
         val url = buildString {
             append(MapConfig.PLACES_SEARCH_URL)
@@ -57,12 +57,12 @@ object PlaceSearchApi {
 
     /**
      * Parse Kartverket stedsnavn API response.
-     * JSON structure:
+     * Actual JSON structure (verified against live API):
      * {
-     *   "stedsnavn": [{
-     *     "skrivemaaate": [{"skrivemaaate": "..."}],
-     *     "kommuner": [{"kommuneNavn": "..."}],
-     *     "representasjonspunkt": {"nord": 123.4, "aust": 123.4}
+     *   "navn": [{
+     *     "skrivemåte": "Burudvann",
+     *     "kommuner": [{"kommunenavn": "Bærum"}],
+     *     "representasjonspunkt": {"nord": 59.97469, "øst": 10.51401}
      *   }]
      * }
      */
@@ -70,28 +70,25 @@ object PlaceSearchApi {
         val results = mutableListOf<PlaceResult>()
         try {
             val root = JSONObject(json)
-            val navnArray = root.optJSONArray("stedsnavn") ?: return emptyList()
+            // The API returns "navn" (not "stedsnavn")
+            val navnArray = root.optJSONArray("navn") ?: return emptyList()
 
             for (i in 0 until navnArray.length()) {
                 val item = navnArray.getJSONObject(i)
 
-                // Name (first skrivemate)
-                val name = item.optJSONArray("skrivemaaater")
-                    ?.optJSONObject(0)
-                    ?.optString("skrivemaaate", "")
-                    ?: ""
+                // Name — direct string field, not an array of skrivemåter
+                val name = item.optString("skrivemåte", "")
 
                 // Municipality
                 val kommune = item.optJSONArray("kommuner")
                     ?.optJSONObject(0)
-                    ?.optString("kommuneNavn", "")
+                    ?.optString("kommunenavn", "")
                     ?: ""
 
-                // Coordinates
-                val point = item.optJSONObject("representasjonspunkt")
-                    ?: continue
+                // Coordinates — use "øst" (east) and "nord" (north)
+                val point = item.optJSONObject("representasjonspunkt") ?: continue
                 val lat = point.optDouble("nord", 0.0)
-                val lon = point.optDouble("aust", 0.0)
+                val lon = point.optDouble("øst", 0.0)
                 if (lat == 0.0 || lon == 0.0) continue
 
                 results.add(PlaceResult(
