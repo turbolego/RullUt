@@ -27,10 +27,18 @@ jobs:
           gradle-version: 8.11.1
           cache-disabled: false
 
-      - name: Decode keystore
+      - name: Generate upload keystore
         run: |
           mkdir -p app/keystore
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > app/keystore/rullut-upload-keystore.jks
+          keytool -genkey -v \
+            -keystore app/keystore/rullut-upload-keystore.jks \
+            -alias "${{ secrets.KEY_ALIAS }}" \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 18250 \
+            -storepass "${{ secrets.KEYSTORE_PASSWORD }}" \
+            -keypass "${{ secrets.KEYSTORE_PASSWORD }}" \
+            -dname "${{ secrets.KEY_DNAME }}"
 
       - name: Create keystore.properties
         run: |
