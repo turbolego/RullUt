@@ -402,6 +402,11 @@ fun MapScreen(modifier: Modifier = Modifier) {
                     }
                 }
             },
+            onSearchPlace = { query ->
+                withContext(Dispatchers.IO) {
+                    PlaceSearchApi.search(query)
+                }
+            },
             onDismiss = { showRoutePlanner = false },
         )
 
@@ -449,6 +454,36 @@ fun MapScreen(modifier: Modifier = Modifier) {
                         .position(LatLng(toilet.lat, toilet.lon))
                 )
                 showToilets = false
+            },
+            onRouteToToilet = { toilet ->
+                showToilets = false
+                val loc = currentLocation
+                if (loc != null) {
+                    coroutineScope.launch {
+                        val result = withContext(Dispatchers.IO) {
+                            RouteEngine.findRoute(
+                                context,
+                                loc.latitude, loc.longitude,
+                                toilet.lat, toilet.lon,
+                            )
+                        }
+                        if (result != null) {
+                            routeResult = result
+                            drawRouteOnMap(map, style, result)
+                            Toast.makeText(
+                                context,
+                                "Rute til ${toilet.name}: ${result.distanceLabel}, ${result.durationLabel}",
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                        } else {
+                            Toast.makeText(
+                                context,
+                                Strings.routeNoRoute,
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                        }
+                    }
+                }
             },
             onDismiss = { showToilets = false },
         )

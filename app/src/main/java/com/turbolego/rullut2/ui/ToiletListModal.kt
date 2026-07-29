@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DirectionsWalk
 import androidx.compose.material.icons.filled.Wc
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -19,8 +20,7 @@ import com.turbolego.rullut2.i18n.Strings
 import com.turbolego.rullut2.model.ToiletResult
 
 /**
- * Toilet search results modal — shows accessible toilets near current location.
- * Passes all text via [Strings] for i18n support.
+ * Toilet search results modal with "Route to" action.
  */
 @Composable
 fun ToiletListModal(
@@ -28,6 +28,7 @@ fun ToiletListModal(
     loading: Boolean,
     toilets: List<ToiletResult>,
     onSelectToilet: (ToiletResult) -> Unit,
+    onRouteToToilet: (ToiletResult) -> Unit,
     onDismiss: () -> Unit,
 ) {
     if (!visible) return
@@ -71,37 +72,45 @@ fun ToiletListModal(
                     ) {
                         items(toilets) { toilet ->
                             Surface(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .clickable { onSelectToilet(toilet) }
-                                    .semantics {
-                                        contentDescription = "${toilet.name}, ${(toilet.distanceKm * 1000).toInt()} m"
-                                    },
+                                modifier = Modifier.fillMaxWidth(),
                                 color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
                                 shape = MaterialTheme.shapes.small,
                             ) {
-                                Row(
-                                    modifier = Modifier.padding(12.dp),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                ) {
-                                    Icon(
-                                        Icons.Default.Wc,
-                                        contentDescription = null,
-                                        modifier = Modifier.size(20.dp),
-                                        tint = MaterialTheme.colorScheme.primary,
-                                    )
-                                    Spacer(Modifier.width(12.dp))
-                                    Column {
-                                        Text(
-                                            toilet.name,
-                                            style = MaterialTheme.typography.bodyLarge,
-                                            fontWeight = FontWeight.Medium,
+                                Column {
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .clickable { onSelectToilet(toilet) }
+                                            .padding(12.dp),
+                                        verticalAlignment = Alignment.CenterVertically,
+                                    ) {
+                                        Icon(
+                                            Icons.Default.Wc,
+                                            contentDescription = null,
+                                            modifier = Modifier.size(20.dp),
+                                            tint = MaterialTheme.colorScheme.primary,
                                         )
-                                        Text(
-                                            "${(toilet.distanceKm * 1000).toInt()} m",
-                                            style = MaterialTheme.typography.bodySmall,
-                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                        )
+                                        Spacer(Modifier.width(12.dp))
+                                        Column(modifier = Modifier.weight(1f)) {
+                                            Text(
+                                                toilet.name,
+                                                style = MaterialTheme.typography.bodyLarge,
+                                                fontWeight = FontWeight.Medium,
+                                            )
+                                            Text(
+                                                "${(toilet.distanceKm * 1000).toInt()} m",
+                                                style = MaterialTheme.typography.bodySmall,
+                                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                            )
+                                        }
+                                        IconButton(onClick = { onRouteToToilet(toilet) }) {
+                                            Icon(
+                                                Icons.Default.DirectionsWalk,
+                                                contentDescription = "Route til toalett",
+                                                modifier = Modifier.size(24.dp),
+                                                tint = MaterialTheme.colorScheme.primary,
+                                            )
+                                        }
                                     }
                                 }
                             }
