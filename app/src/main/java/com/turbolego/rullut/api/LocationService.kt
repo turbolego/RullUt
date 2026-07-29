@@ -124,7 +124,7 @@ object LocationService {
             Priority.PRIORITY_HIGH_ACCURACY,
             UPDATE_INTERVAL_MS,
         ).setMinUpdateIntervalMillis(FASTEST_INTERVAL_MS)
-            .setMaxUpdates(Int.MAX_VALUE.toLong())
+            .setMaxUpdates(Int.MAX_VALUE)
             .build()
 
         try {

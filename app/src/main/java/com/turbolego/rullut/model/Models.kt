@@ -119,9 +119,9 @@ object CoordinateUtils {
         val R = 6371.0
         val dLat = Math.toRadians(lat2 - lat1)
         val dLon = Math.toRadians(lon2 - lon1)
-        val a = Math.sin(dLat / 2).pow(2) +
+        val a = Math.sin(dLat / 2).let { it * it } +
                 Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
-                Math.sin(dLon / 2).pow(2)
+                Math.sin(dLon / 2).let { it * it }
         return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
     }
 

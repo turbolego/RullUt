@@ -140,10 +140,6 @@ fun MapScreen(modifier: Modifier = Modifier) {
                 android.view.ViewGroup.LayoutParams.MATCH_PARENT,
                 android.view.ViewGroup.LayoutParams.MATCH_PARENT,
             )
-            cameraPosition = CameraPosition.Builder()
-                .target(LatLng(MapConfig.NORWAY_CENTER_LAT, MapConfig.NORWAY_CENTER_LNG))
-                .zoom(MapConfig.NORWAY_ZOOM)
-                .build()
         }
     }
 
@@ -203,6 +199,7 @@ fun MapScreen(modifier: Modifier = Modifier) {
                     }
                     featureLoading = false
                 }
+                true
             }
 
             // Long press → announce for TalkBack
@@ -215,6 +212,7 @@ fun MapScreen(modifier: Modifier = Modifier) {
                 com.turbolego.rullut.a11y.AccessibilityUtils.announce(
                     context, mapContentDescription
                 )
+                true
             }
         }
     }

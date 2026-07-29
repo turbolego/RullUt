@@ -170,7 +170,7 @@ private fun LayerList(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = (indent * 16).dp, vertical = 2.dp),
+                .padding(start = (indent * 16).dp, top = 2.dp, bottom = 2.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Checkbox(

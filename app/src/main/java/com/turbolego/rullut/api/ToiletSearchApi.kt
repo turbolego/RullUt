@@ -39,7 +39,7 @@ object ToiletSearchApi {
         lon: Double,
         limit: Int = 10,
     ): List<ToiletResult> {
-        val bbox = buildBbox(lat, lon, SEARCH_RADIUS)
+        val bbox = buildBbox(lat, lon, SEARCH_RADIUS.toDouble())
 
         val query = buildString {
             append("[out:json][timeout:15];\n")

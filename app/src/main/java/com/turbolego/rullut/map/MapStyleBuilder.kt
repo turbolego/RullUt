@@ -1,7 +1,6 @@
 package com.turbolego.rullut.map
 
 import org.maplibre.android.style.layers.RasterLayer
-import org.maplibre.android.style.layers.PropertyFactory
 import org.maplibre.android.style.sources.RasterSource
 import org.maplibre.android.style.sources.TileSet
 
@@ -30,7 +29,8 @@ object MapStyleBuilder {
             WMS_SOURCE_ID,
             TileSet(
                 "tileset",
-                listOf(MapConfig.WMS_TILE_PATTERN)
+                // TileSet tiles constructor takes a String (the tile pattern), not List<String>
+                MapConfig.WMS_TILE_PATTERN
             ),
             MapConfig.TILE_SIZE
         )
@@ -41,9 +41,6 @@ object MapStyleBuilder {
      * The WMS tiles are transparent PNGs, so we lay them over the basemap.
      */
     fun buildRasterLayer(sourceId: String = WMS_SOURCE_ID): RasterLayer {
-        return RasterLayer(WMS_LAYER_ID, sourceId).apply {
-            // Position above basemap but below labels
-            // (slot names are style-dependent; use "middle" as safe default)
-        }
+        return RasterLayer(WMS_LAYER_ID, sourceId)
     }
 }

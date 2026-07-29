@@ -3,6 +3,7 @@ package com.turbolego.rullut.map
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.Response
 import org.maplibre.android.module.http.HttpRequestUtil
 import java.io.IOException
 import java.util.concurrent.TimeUnit
@@ -19,8 +20,6 @@ import java.util.concurrent.TimeUnit
  * Usage: Call `WmsInterceptorManager.install()` once after MapLibre.getInstance().
  */
 object WmsInterceptorManager {
-
-    private const val TAG = "WmsInterceptor"
 
     // EPSG:3857 / Web Mercator constants
     private const val ORIGIN_X = -20037508.342789244
