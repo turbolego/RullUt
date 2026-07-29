@@ -273,6 +273,16 @@ object Strings {
     // ──────────────────────────────────────────────
     // Toilets
     // ──────────────────────────────────────────────
+    val toiletTitle get() = when (lang) {
+        Lang.NB -> "Toaletter i nærheten"
+        Lang.EN -> "Nearby toilets"
+    }
+
+    val toiletNoResults get() = when (lang) {
+        Lang.NB -> "Ingen toaletter funnet i nærheten."
+        Lang.EN -> "No toilets found nearby."
+    }
+
     val toiletsLoading get() = when (lang) {
         Lang.NB -> "Søker etter toaletter..."
         Lang.EN -> "Searching for toilets..."

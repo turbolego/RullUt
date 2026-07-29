@@ -428,6 +428,51 @@ fun MapScreen(modifier: Modifier = Modifier) {
             },
             onDismiss = { showSearch = false },
         )
+
+        // ── Toilet list modal ──
+        var toiletList by remember { mutableStateOf<List<ToiletResult>>(emptyList()) }
+        var toiletLoading by remember { mutableStateOf(false) }
+        ToiletListModal(
+            visible = showToilets,
+            loading = toiletLoading,
+            toilets = toiletList,
+            onSelectToilet = { toilet ->
+                map?.moveCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        LatLng(toilet.lat, toilet.lon), 15.0,
+                    )
+                )
+                map?.addMarker(
+                    MarkerOptions()
+                        .title(toilet.name)
+                        .snippet("${(toilet.distanceKm * 1000).toInt()} m")
+                        .position(LatLng(toilet.lat, toilet.lon))
+                )
+                showToilets = false
+            },
+            onDismiss = { showToilets = false },
+        )
+
+        // Load toilets when modal opens
+        LaunchedEffect(showToilets) {
+            if (!showToilets) return@LaunchedEffect
+            val loc = currentLocation ?: run {
+                val fresh = withContext(Dispatchers.IO) {
+                    LocationService.getCurrentLocation(context)
+                }
+                fresh
+            }
+            if (loc == null) return@LaunchedEffect
+            toiletLoading = true
+            try {
+                toiletList = withContext(Dispatchers.IO) {
+                    ToiletSearchApi.findNearestToilets(loc.latitude, loc.longitude)
+                }
+            } catch (_: Exception) {
+                toiletList = emptyList()
+            }
+            toiletLoading = false
+        }
     }
 }
 
