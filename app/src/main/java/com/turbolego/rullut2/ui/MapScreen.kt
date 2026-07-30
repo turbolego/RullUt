@@ -29,6 +29,8 @@ import com.turbolego.rullut2.map.MapConfig
 import com.turbolego.rullut2.map.MapStyleBuilder
 import com.turbolego.rullut2.map.MarkerManager
 import com.turbolego.rullut2.model.*
+import com.turbolego.rullut2.api.HighscoreResult
+import com.turbolego.rullut2.api.HighscoreScanner
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -92,6 +94,11 @@ fun MapScreen(modifier: Modifier = Modifier) {
     var viewportFeatures by remember { mutableStateOf<List<ViewportFeature>>(emptyList()) }
     var viewportScanning by remember { mutableStateOf(false) }
     var viewportError by remember { mutableStateOf<String?>(null) }
+
+    // ── Highscore state ──
+    var showHighscore by remember { mutableStateOf(false) }
+    var highscoreResult by remember { mutableStateOf<HighscoreResult?>(null) }
+    var highscoreScanning by remember { mutableStateOf(false) }
 
     // ── Dynamic content description for root Box ──
     val mapContentDescription = Strings.mapContentDescription
@@ -381,6 +388,44 @@ fun MapScreen(modifier: Modifier = Modifier) {
             ) {
                 Icon(Icons.Default.FormatListBulleted, contentDescription = null)
             }
+
+            Spacer(Modifier.size(8.dp))
+
+            // Highscore
+            SmallFloatingActionButton(
+                onClick = {
+                    showHighscore = true
+                    highscoreScanning = true
+                    highscoreResult = null
+                    coroutineScope.launch {
+                        try {
+                            val mapRef = map
+                            if (mapRef == null) return@launch
+                            val result = withContext(Dispatchers.IO) {
+                                HighscoreScanner.scan(mapRef)
+                            }
+                            highscoreResult = result
+                        } catch (_: Exception) {
+                            highscoreResult = HighscoreResult(
+                                segmentsFound = 0,
+                                totalKm = 0.0,
+                                averageSlope = 0.0,
+                                longest = emptyList(),
+                                steepest = emptyList(),
+                                widest = emptyList(),
+                                flattest = emptyList(),
+                            )
+                        } finally {
+                            highscoreScanning = false
+                        }
+                    }
+                },
+                modifier = Modifier.semantics { contentDescription = "Highscore" },
+                containerColor = MaterialTheme.colorScheme.surface,
+                contentColor = MaterialTheme.colorScheme.onSurface,
+            ) {
+                Icon(Icons.Default.Stars, contentDescription = null)
+            }
         }
 
         // ── Feature info popup ──
@@ -582,6 +627,31 @@ fun MapScreen(modifier: Modifier = Modifier) {
                 showViewportFeatures = false
             },
         )
+
+        // ── Highscore modal ──
+        if (highscoreResult != null) {
+            HighscoreModal(
+                result = highscoreResult!!,
+                onDismiss = {
+                    showHighscore = false
+                    highscoreResult = null
+                },
+                onZoomToFeature = { road ->
+                    val mapRef = map ?: return@HighscoreModal
+                    val lat = road.centerLat ?: return@HighscoreModal
+                    val lon = road.centerLon ?: return@HighscoreModal
+                    mapRef.moveCamera(
+                        CameraUpdateFactory.newLatLngZoom(
+                            LatLng(lat, lon), 16.0,
+                        )
+                    )
+                    MarkerManager.clear()
+                    MarkerManager.addMarker(lat, lon, road.roadType, road.sourceLayer, "highscore-1")
+                    MarkerManager.apply()
+                    showHighscore = false
+                },
+            )
+        }
 
         // Load toilets when modal opens
         LaunchedEffect(showToilets) {

@@ -1,5 +1,7 @@
 package com.turbolego.rullut2.api
 
+import com.turbolego.rullut2.model.RoadSegmentFeature
+
 /**
  * Highscore data models and filtering/sorting logic for the
  * tilgjengelighet3 road-segment scan.

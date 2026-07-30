@@ -54,7 +54,7 @@ import androidx.compose.ui.unit.sp
 import com.turbolego.rullut2.api.HighscoreCategory
 import com.turbolego.rullut2.api.HighscoreEntry
 import com.turbolego.rullut2.api.HighscoreResult
-import com.turbolego.rullut2.api.RoadSegmentFeature
+import com.turbolego.rullut2.model.RoadSegmentFeature
 import kotlinx.coroutines.launch
 
 // ── Colour palette (dark theme optimised) ────────────────────────────────

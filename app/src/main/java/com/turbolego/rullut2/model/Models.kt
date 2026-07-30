@@ -146,3 +146,22 @@ object CoordinateUtils {
         return Pair(lon, lat)
     }
 }
+
+/**
+ * A single road segment from the tilgjengelighet3 WMS.
+ * Used by the Highscore feature for ranking longest/steepest/widest/flattest roads.
+ */
+data class RoadSegmentFeature(
+    val objid: String,
+    val sourceLayer: String = "",
+    val roadType: String = "",
+    val widthCm: Double? = null,
+    val slopePercent: Double? = null,
+    val municipality: String = "",
+    val surfaceMaterial: String = "",
+    val surfaceCondition: String = "",
+    val comment: String = "",
+    val estimatedLengthMetres: Double? = null,
+    val centerLat: Double? = null,
+    val centerLon: Double? = null,
+)
