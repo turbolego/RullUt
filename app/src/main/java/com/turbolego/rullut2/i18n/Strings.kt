@@ -10,6 +10,39 @@ enum class Lang(val code: String, val displayName: String) {
 }
 
 /**
+ * Base URL for WFS building/entrance images on Geonorge.
+ * Images are referenced by filename from FeatureInfo bildefil properties.
+ */
+const val WFS_IMAGE_BASE_URL = "https://wfs.geonorge.no/skwfs/tilgjengelighet/bilder/"
+
+/**
+ * Maps raw WMS property keys to user-friendly Norwegian display labels
+ * for accessibility feature properties used in popups.
+ */
+val PROPERTY_LABELS_NB = mapOf(
+    "tilgjengvurderingrulleman" to "Manuell rullestol",
+    "tilgjengvurderingrulleauto" to "Elektrisk rullestol",
+    "tilgjengvurderingelrullestol" to "El-rullator",
+    "tilgjengvurderingsyn" to "Synshemmede",
+    "rampe" to "Rampe",
+    "rampetilgjengelig" to "Rampe tilgjengelig",
+    "rampebredde" to "Rampe bredde",
+    "breddeinngang" to "Inngangsbredde",
+    "kontrastinngang" to "Kontrast inngang",
+    "byggtype" to "Type",
+    "navn" to "Navn",
+    "objid" to "Objekt-ID",
+    "lokalid" to "Objekt-ID",
+    "datafangstdato" to "Datafangstdato",
+    "opphav" to "Kilde",
+    "kommune" to "Kommune",
+    "veitype" to "Veitype",
+    "segmentlengde" to "Segmentlengde",
+    "stigning" to "Stigning",
+    "bredde" to "Bredde",
+)
+
+/**
  * App-wide string table. Add new strings to ALL language blocks.
  * To add a language: add a new Lang enum entry + a block in each lazy value below.
  */
@@ -98,6 +131,16 @@ object Strings {
     fun featureProperty(key: String, value: String) = when (lang) {
         Lang.NB -> "$key: $value"
         Lang.EN -> "$key: $value"
+    }
+
+    /**
+     * Look up a user-friendly Norwegian label for a WMS property key.
+     * Falls back to the raw key if no translation exists.
+     * Used by [com.turbolego.rullut2.ui.formatPropertyForDisplay].
+     */
+    fun propertyLabel(key: String): String = when (lang) {
+        Lang.NB -> PROPERTY_LABELS_NB[key.lowercase()] ?: key
+        Lang.EN -> key
     }
 
     // ──────────────────────────────────────────────

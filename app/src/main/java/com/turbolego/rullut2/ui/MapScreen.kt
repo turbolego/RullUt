@@ -27,11 +27,11 @@ import com.turbolego.rullut2.i18n.LanguageManager
 import com.turbolego.rullut2.i18n.Strings
 import com.turbolego.rullut2.map.MapConfig
 import com.turbolego.rullut2.map.MapStyleBuilder
+import com.turbolego.rullut2.map.MarkerManager
 import com.turbolego.rullut2.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.maplibre.android.annotations.MarkerOptions
 import org.maplibre.android.camera.CameraPosition
 import org.maplibre.android.camera.CameraUpdateFactory
 import org.maplibre.android.geometry.LatLng
@@ -86,6 +86,12 @@ fun MapScreen(modifier: Modifier = Modifier) {
 
     val coroutineScope = rememberCoroutineScope()
     val lifecycleOwner = LocalLifecycleOwner.current
+
+    // ── Viewport feature scan state ──
+    var showViewportFeatures by remember { mutableStateOf(false) }
+    var viewportFeatures by remember { mutableStateOf<List<ViewportFeature>>(emptyList()) }
+    var viewportScanning by remember { mutableStateOf(false) }
+    var viewportError by remember { mutableStateOf<String?>(null) }
 
     // ── Dynamic content description for root Box ──
     val mapContentDescription = Strings.mapContentDescription
@@ -165,6 +171,7 @@ fun MapScreen(modifier: Modifier = Modifier) {
             map = nativeMap
             nativeMap.setStyle(MapConfig.BASEMAP_LIBERTY) { loadedStyle ->
                 style = loadedStyle
+                MarkerManager.initialize(loadedStyle)
                 val source = MapStyleBuilder.buildRasterSource()
                 loadedStyle.addSource(source)
                 val layer = MapStyleBuilder.buildRasterLayer()
@@ -325,6 +332,55 @@ fun MapScreen(modifier: Modifier = Modifier) {
             ) {
                 Icon(Icons.Default.Layers, contentDescription = null)
             }
+
+            Spacer(Modifier.size(8.dp))
+
+            // Viewport objects scan
+            SmallFloatingActionButton(
+                onClick = {
+                    showViewportFeatures = true
+                    viewportScanning = true
+                    viewportError = null
+                    viewportFeatures = emptyList()
+                    coroutineScope.launch {
+                        try {
+                            val mapRef = map
+                            if (mapRef == null) {
+                                viewportError = "Kartet er ikke klart"
+                                return@launch
+                            }
+                            val region = mapRef.projection.visibleRegion
+                            val latLngBounds = region.latLngBounds
+                            val sw = latLngBounds.southwest
+                            val ne = latLngBounds.northeast
+                            val (swX, swY) = CoordinateUtils.lonLatToMercator(sw.longitude, sw.latitude)
+                            val (neX, neY) = CoordinateUtils.lonLatToMercator(ne.longitude, ne.latitude)
+                            val minX = minOf(swX, neX)
+                            val minY = minOf(swY, neY)
+                            val maxX = maxOf(swX, neX)
+                            val maxY = maxOf(swY, neY)
+                            val result = withContext(Dispatchers.IO) {
+                                ViewportFeatureScanner.scanViewport(
+                                    bboxMinX = minX,
+                                    bboxMinY = minY,
+                                    bboxMaxX = maxX,
+                                    bboxMaxY = maxY,
+                                )
+                            }
+                            viewportFeatures = result
+                        } catch (e: Exception) {
+                            viewportError = "Kunne ikke skanne: ${e.message}"
+                        } finally {
+                            viewportScanning = false
+                        }
+                    }
+                },
+                modifier = Modifier.semantics { contentDescription = "Objekter i visning" },
+                containerColor = MaterialTheme.colorScheme.surface,
+                contentColor = MaterialTheme.colorScheme.onSurface,
+            ) {
+                Icon(Icons.Default.FormatListBulleted, contentDescription = null)
+            }
         }
 
         // ── Feature info popup ──
@@ -360,10 +416,18 @@ fun MapScreen(modifier: Modifier = Modifier) {
                 if (styleUrl != null) {
                     map?.setStyle(styleUrl) { loadedStyle ->
                         style = loadedStyle
+                        MarkerManager.initialize(loadedStyle)
                         val source = MapStyleBuilder.buildRasterSource()
                         loadedStyle.addSource(source)
                         val layer = MapStyleBuilder.buildRasterLayer()
                         loadedStyle.addLayer(layer)
+                    }
+                } else {
+                    map?.setStyle(org.maplibre.android.style.Style.Builder().fromJson(
+                        org.maplibre.android.style.Style.Builder().build().rawJson!!
+                    )) { loadedStyle ->
+                        style = loadedStyle
+                        MarkerManager.initialize(loadedStyle)
                     }
                 }
             },
@@ -424,12 +488,9 @@ fun MapScreen(modifier: Modifier = Modifier) {
                         LatLng(place.lat, place.lon), 12.0,
                     )
                 )
-                map?.addMarker(
-                    MarkerOptions()
-                        .title(place.name)
-                        .snippet(place.municipality)
-                        .position(LatLng(place.lat, place.lon))
-                )
+                MarkerManager.clear()
+                MarkerManager.addMarker(place.lat, place.lon, place.name, place.municipality, "search-1")
+                MarkerManager.apply()
             },
             onDismiss = { showSearch = false },
         )
@@ -447,19 +508,22 @@ fun MapScreen(modifier: Modifier = Modifier) {
                         LatLng(toilet.lat, toilet.lon), 15.0,
                     )
                 )
-                map?.addMarker(
-                    MarkerOptions()
-                        .title(toilet.name)
-                        .snippet("${(toilet.distanceKm * 1000).toInt()} m")
-                        .position(LatLng(toilet.lat, toilet.lon))
-                )
+                MarkerManager.clear()
+                MarkerManager.addMarker(toilet.lat, toilet.lon, toilet.name, "${(toilet.distanceKm * 1000).toInt()} m", "toilet-1")
+                MarkerManager.apply()
                 showToilets = false
             },
             onRouteToToilet = { toilet ->
                 showToilets = false
-                val loc = currentLocation
-                if (loc != null) {
-                    coroutineScope.launch {
+                coroutineScope.launch {
+                    // Ensure we have GPS — try to get it if not already cached
+                    val loc = currentLocation ?: withContext(Dispatchers.IO) {
+                        LocationService.getCurrentLocation(context)
+                    }
+                    if (loc != null) {
+                        // Cache the fresh location
+                        currentLocation = loc
+                        
                         val result = withContext(Dispatchers.IO) {
                             RouteEngine.findRoute(
                                 context,
@@ -482,16 +546,41 @@ fun MapScreen(modifier: Modifier = Modifier) {
                                 Toast.LENGTH_SHORT,
                             ).show()
                         }
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Slå på GPS for å finne rute",
+                            Toast.LENGTH_SHORT,
+                        ).show()
                     }
-                } else {
-                    Toast.makeText(
-                        context,
-                        "Slå på GPS for å finne rute",
-                        Toast.LENGTH_SHORT,
-                    ).show()
                 }
             },
             onDismiss = { showToilets = false },
+        )
+
+        // ── Viewport feature modal ──
+        ViewportFeatureModal(
+            isVisible = showViewportFeatures,
+            features = viewportFeatures,
+            isLoading = viewportScanning,
+            errorMessage = viewportError,
+            onDismiss = {
+                showViewportFeatures = false
+                viewportError = null
+            },
+            onFeatureClick = { feature ->
+                val mapRef = map ?: return@ViewportFeatureModal
+                val (lon, lat) = CoordinateUtils.mercatorToLonLat(feature.centreX, feature.centreY)
+                mapRef.moveCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        LatLng(lat, lon), 16.0,
+                    )
+                )
+                MarkerManager.clear()
+                MarkerManager.addMarker(lat, lon, feature.name, feature.typeLabel, "viewport-1")
+                MarkerManager.apply()
+                showViewportFeatures = false
+            },
         )
 
         // Load toilets when modal opens

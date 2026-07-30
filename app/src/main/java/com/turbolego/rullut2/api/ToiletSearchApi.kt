@@ -74,7 +74,7 @@ object ToiletSearchApi {
      */
     private fun buildWfsUrl(bbox: String): String {
         return (
-            "https://wfs.geonorge.no/skwms1/wfs.tilgjengelighet" +
+            MapConfig.WFS_BASE_URL +
                 "?service=WFS" +
                 "&version=2.0.0" +
                 "&request=GetFeature" +

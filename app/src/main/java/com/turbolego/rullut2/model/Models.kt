@@ -136,4 +136,13 @@ object CoordinateUtils {
                 (Math.PI / 180.0) * (20037508.34 / 180.0)
         return Pair(x, y)
     }
+
+    /** Inverse: EPSG:3857 metres → WGS-84 lon/lat. */
+    fun mercatorToLonLat(x: Double, y: Double): Pair<Double, Double> {
+        val lon = x * 180.0 / 20037508.34
+        val lat = Math.toDegrees(
+            2.0 * Math.atan(Math.exp(y * Math.PI / 20037508.34)) - Math.PI / 2.0
+        )
+        return Pair(lon, lat)
+    }
 }

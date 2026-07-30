@@ -60,4 +60,14 @@ object MapConfig {
 
     // Walking speed used in the Expo app
     const val WALKING_SPEED_MS = 1.3
+
+    // Viewport feature grid-scan (4×4 grid, 16 parallel requests)
+    const val GRID_COLS = 4
+    const val GRID_ROWS = 4
+    const val GRID_BATCH_SIZE = 4
+    const val FEATURE_COUNT_PER_CELL = 50
+    const val TILGJENGELIGHET_QUERY_LAYERS = "tilgjengelighet3"
+
+    // WFS base for toilet search
+    const val WFS_BASE_URL = "https://wfs.geonorge.no/skwms1/wfs.tilgjengelighet"
 }

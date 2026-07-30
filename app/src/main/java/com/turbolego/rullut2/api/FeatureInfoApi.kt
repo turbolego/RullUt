@@ -98,4 +98,52 @@ object FeatureInfoApi {
         }
         return results
     }
+
+    /**
+     * Bbox-based GetFeatureInfo query.
+     * Uses a 1×1 pixel image covering the full bbox to harvest all features.
+     * Returns raw text/plain GML response.
+     */
+    suspend fun fetchBboxFeatures(
+        bboxMinX: Double,
+        bboxMinY: Double,
+        bboxMaxX: Double,
+        bboxMaxY: Double,
+        queryLayers: String = MapConfig.WMS_FEATURE_LAYERS.first(),
+        featureCount: Int = 50,
+    ): String {
+        val bbox = "${listOf(bboxMinX, bboxMinY, bboxMaxX, bboxMaxY).joinToString(",")}"
+
+        val url = buildString {
+            append(MapConfig.WMS_BASE_URL)
+            append("?service=WMS")
+            append("&request=GetFeatureInfo")
+            append("&version=1.1.1")
+            append("&layers=$queryLayers")
+            append("&query_layers=$queryLayers")
+            append("&styles=")
+            append("&srs=EPSG:3857")
+            append("&crs=EPSG:3857")
+            append("&bbox=$bbox")
+            append("&width=1")
+            append("&height=1")
+            append("&x=0")
+            append("&y=0")
+            append("&format=image/png")
+            append("&transparent=true")
+            append("&feature_count=$featureCount")
+            append("&info_format=text/plain")
+        }
+
+        val request = Request.Builder()
+            .url(url)
+            .header("User-Agent", MapConfig.USER_AGENT)
+            .build()
+
+        val response = client.newCall(request).execute()
+        if (!response.isSuccessful) {
+            throw RuntimeException("GetFeatureInfo HTTP ${response.code}: ${response.message}")
+        }
+        return response.body?.string() ?: ""
+    }
 }
