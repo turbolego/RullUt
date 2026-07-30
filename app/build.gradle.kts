@@ -13,8 +13,9 @@ android {
         applicationId = "com.turbolego.rullut3"
         minSdk = 24
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0.0"
+        // versionCode: derived from GITHUB_RUN_NUMBER in CI, falls back to 1 locally
+        versionCode = (System.getenv("GITHUB_RUN_NUMBER") ?: "1").toInt()
+        versionName = System.getenv("GITHUB_REF_NAME")?.removePrefix("v") ?: "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
