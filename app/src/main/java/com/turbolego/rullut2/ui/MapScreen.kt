@@ -483,6 +483,12 @@ fun MapScreen(modifier: Modifier = Modifier) {
                             ).show()
                         }
                     }
+                } else {
+                    Toast.makeText(
+                        context,
+                        "Slå på GPS for å finne rute",
+                        Toast.LENGTH_SHORT,
+                    ).show()
                 }
             },
             onDismiss = { showToilets = false },
@@ -491,20 +497,21 @@ fun MapScreen(modifier: Modifier = Modifier) {
         // Load toilets when modal opens
         LaunchedEffect(showToilets) {
             if (!showToilets) return@LaunchedEffect
-            val loc = currentLocation ?: run {
-                val fresh = withContext(Dispatchers.IO) {
-                    LocationService.getCurrentLocation(context)
-                }
-                fresh
-            }
-            if (loc == null) return@LaunchedEffect
+            // Show loading immediately so we never flash "no toilets"
             toiletLoading = true
-            try {
-                toiletList = withContext(Dispatchers.IO) {
+            val loc = currentLocation ?: withContext(Dispatchers.IO) {
+                LocationService.getCurrentLocation(context)
+            }
+            if (loc == null) {
+                toiletLoading = false
+                return@LaunchedEffect
+            }
+            toiletList = withContext(Dispatchers.IO) {
+                try {
                     ToiletSearchApi.findNearestToilets(loc.latitude, loc.longitude)
+                } catch (_: Exception) {
+                    emptyList()
                 }
-            } catch (_: Exception) {
-                toiletList = emptyList()
             }
             toiletLoading = false
         }
