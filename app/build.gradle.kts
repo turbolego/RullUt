@@ -29,7 +29,10 @@ android {
                 .orNull
             storePassword = providers.environmentVariable("STORE_PASSWORD").orElse("").orNull
             keyAlias = providers.environmentVariable("KEY_ALIAS").orElse("").orNull
-            keyPassword = providers.environmentVariable("STORE_PASSWORD").orElse("").orNull
+            keyPassword = providers.environmentVariable("KEY_PASSWORD")
+                .orElse(providers.environmentVariable("STORE_PASSWORD"))
+                .orElse("")
+                .orNull
         }
     }
 
