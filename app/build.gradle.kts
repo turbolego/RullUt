@@ -10,7 +10,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.turbolego.rullut2"
+        applicationId = "com.turbolego.rullut3"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
