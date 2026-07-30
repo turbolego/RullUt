@@ -1,13 +1,11 @@
 package com.turbolego.rullut2.map
 
 import android.graphics.Color
-import com.mapbox.geojson.Feature
-import com.mapbox.geojson.FeatureCollection
-import com.mapbox.geojson.Point
 import org.maplibre.android.style.layers.CircleLayer
 import org.maplibre.android.style.layers.PropertyFactory.*
 import org.maplibre.android.style.layers.SymbolLayer
 import org.maplibre.android.style.sources.GeoJsonSource
+import org.maplibre.android.style.sources.GeoJsonOptions
 
 /**
  * Manages a shared layer-based marker system with large circular touch targets.
@@ -34,14 +32,19 @@ object MarkerManager {
     private const val CIRCLE_LAYER_ID = "app-marker-circle-layer"
     private const val LABEL_LAYER_ID = "app-marker-label-layer"
 
-    private val features = mutableListOf<Feature>()
+    // Store markers as a GeoJSON FeatureCollection JSON string
+    private val featuresJson = StringBuilder("{\"type\":\"FeatureCollection\",\"features\":[]}")
+
     private var source: GeoJsonSource? = null
+
+    /** Pending features to apply once source is ready */
+    private val pendingFeatures = mutableListOf<String>()
 
     /**
      * Set up the source + layers on a loaded style.
      * Call once from onStyleLoaded.
      */
-    fun initialize(style: org.maplibre.android.style.Style) {
+    fun initialize(style: org.maplibre.android.maps.Style) {
         // Source
         var src = style.getSource(SOURCE_ID) as? GeoJsonSource
         if (src == null) {
@@ -58,7 +61,6 @@ object MarkerManager {
                 circleStrokeColor(Color.WHITE),
                 circleStrokeWidth(3f),
             )
-            // Insert above raster layers (z-index ~5) but below the WMS overlay
             style.addLayer(circleLayer)
         }
 
@@ -67,7 +69,7 @@ object MarkerManager {
             val labelLayer = SymbolLayer(LABEL_LAYER_ID, SOURCE_ID).withProperties(
                 textField("{title}"),
                 textSize(12f),
-                textOffset(FloatArray(2) { if (it == 1) -2.0f else 0.0f }),
+                textOffset(arrayOf(0f, -2f)),
                 textColor(Color.BLACK),
                 textHaloColor(Color.WHITE),
                 textHaloWidth(2f),
@@ -77,7 +79,7 @@ object MarkerManager {
             style.addLayer(labelLayer)
         }
 
-        // Apply any features that were queued before the style was ready
+        // Apply any queued features
         applyInternal()
     }
 
@@ -86,37 +88,14 @@ object MarkerManager {
      * If [id] is provided, replaces any existing marker with the same id.
      */
     fun addMarker(lat: Double, lon: Double, title: String, snippet: String? = null, id: String? = null) {
-        val point = Point.fromLngLat(lon, lat)
-        val feature = Feature.fromGeometry(point)
-        feature.addStringProperty("title", title)
-        if (!snippet.isNullOrBlank()) {
-            feature.addStringProperty("snippet", snippet)
-        }
-
-        if (id != null) {
-            val existingIdx = features.indexOfFirst {
-                it.getStringProperty("_mapId") == id
-            }
-            if (existingIdx >= 0) {
-                feature.addStringProperty("_mapId", id)
-                features[existingIdx] = feature
-                return  // replaced in existing
-            }
-            feature.addStringProperty("_mapId", id)
-        }
-
-        features.add(feature)
+        val featureJson = buildFeatureJson(lon, lat, title, snippet, id)
+        pendingFeatures.add(featureJson)
+        applyInternal()
     }
 
     /** Remove all markers. */
     fun clear() {
-        features.clear()
-        applyInternal()
-    }
-
-    /** Remove markers matching [id]. */
-    fun removeById(id: String) {
-        features.removeAll { it.getStringProperty("_mapId") == id }
+        pendingFeatures.clear()
         applyInternal()
     }
 
@@ -124,16 +103,31 @@ object MarkerManager {
     fun apply() = applyInternal()
 
     /** Number of current markers. */
-    val count get() = features.size
+    val count get() = pendingFeatures.size
 
     // ── internals ──
 
     private fun applyInternal() {
         val src = source ?: return
+        val fc = "{\"type\":\"FeatureCollection\",\"features\":[${pendingFeatures.joinToString(",")}]}"
         try {
-            src.setGeoJson(FeatureCollection.fromFeatures(features.toList()))
+            src.setGeoJson(fc)
         } catch (_: Exception) {
             // Style not ready yet; initialize() will push on next style load
         }
+    }
+
+    /**
+     * Build a single GeoJSON Feature point JSON string.
+     */
+    private fun buildFeatureJson(
+        lng: Double,
+        lat: Double,
+        title: String,
+        snippet: String,
+    ): String {
+        val escapedTitle = title.replace("\\", "\\\\").replace("\"", "\\\"")
+        val escapedSnippet = snippet.replace("\\", "\\\\").replace("\"", "\\\"")
+        return """{"type":"Feature","geometry":{"type":"Point","coordinates":[$lng,$lat]},"properties":{"title":"$escapedTitle","snippet":"$escapedSnippet"}}"""
     }
 }

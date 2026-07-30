@@ -28,8 +28,8 @@ object HighscoreScanner {
     ): HighscoreResult = withContext(Dispatchers.IO) {
         val region = map.projection.visibleRegion
         val latLngBounds = region.latLngBounds
-        val sw = latLngBounds.southwest
-        val ne = latLngBounds.northeast
+        val sw = latLngBounds.southWest
+        val ne = latLngBounds.northEast
 
         // Convert viewport corners to EPSG:3857 for the grid scan
         val (swX, swY) = CoordinateUtils.lonLatToMercator(sw.longitude, sw.latitude)

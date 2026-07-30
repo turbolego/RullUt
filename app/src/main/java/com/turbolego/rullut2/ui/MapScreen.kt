@@ -358,8 +358,8 @@ fun MapScreen(modifier: Modifier = Modifier) {
                             }
                             val region = mapRef.projection.visibleRegion
                             val latLngBounds = region.latLngBounds
-                            val sw = latLngBounds.southwest
-                            val ne = latLngBounds.northeast
+                            val sw = latLngBounds.southWest
+                            val ne = latLngBounds.northEast
                             val (swX, swY) = CoordinateUtils.lonLatToMercator(sw.longitude, sw.latitude)
                             val (neX, neY) = CoordinateUtils.lonLatToMercator(ne.longitude, ne.latitude)
                             val minX = minOf(swX, neX)
@@ -468,9 +468,7 @@ fun MapScreen(modifier: Modifier = Modifier) {
                         loadedStyle.addLayer(layer)
                     }
                 } else {
-                    map?.setStyle(org.maplibre.android.style.Style.Builder().fromJson(
-                        org.maplibre.android.style.Style.Builder().build().rawJson!!
-                    )) { loadedStyle ->
+                    map?.setStyle(MapConfig.BASEMAP_LIBERTY) { loadedStyle ->
                         style = loadedStyle
                         MarkerManager.initialize(loadedStyle)
                     }
