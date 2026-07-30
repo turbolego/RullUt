@@ -88,7 +88,7 @@ object MarkerManager {
      * If [id] is provided, replaces any existing marker with the same id.
      */
     fun addMarker(lat: Double, lon: Double, title: String, snippet: String? = null, id: String? = null) {
-        val featureJson = buildFeatureJson(lon, lat, title, snippet, id)
+        val featureJson = buildFeatureJson(lon, lat, title, snippet ?: "")
         pendingFeatures.add(featureJson)
         applyInternal()
     }
