@@ -107,6 +107,7 @@ data class ToiletResult(
     val lon: Double,
     val name: String,
     val distanceKm: Double,
+    val accessibilityNotes: String = "",
 )
 
 /**
