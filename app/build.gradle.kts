@@ -120,3 +120,11 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation("androidx.test:rules:1.6.1")
 }
+
+// UTP may keep a transient .lck file under connected test outputs while Gradle
+// snapshots task outputs, which causes unreadable output-property failures.
+tasks
+    .matching { it.name.startsWith("connected") && it.name.endsWith("AndroidTest") }
+    .configureEach {
+        doNotTrackState("UTP lock files can make connected test output snapshots unreadable")
+    }
