@@ -145,10 +145,10 @@ class AccessibilityTests {
     fun dynamicStrings_formatCorrectly() {
         Strings.lang = Lang.NB
         val dist = Strings.routeAccessible(75)
-        assertTrue(dist.contains("75"), "routeAccessible should contain the number")
+        assertTrue("routeAccessible should contain the number", dist.contains("75"))
 
         val toilet = Strings.toiletDistance(200)
-        assertTrue(toilet.contains("200"), "toiletDistance should contain the number")
+        assertTrue("toiletDistance should contain the number", toilet.contains("200"))
     }
 
     // ── Helpers ──
