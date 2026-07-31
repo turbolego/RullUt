@@ -1,6 +1,5 @@
 package com.turbolego.rullut2
 
-import com.turbolego.rullut2.api.ValhallaRouteApi
 import com.turbolego.rullut2.api.AccessibilityAssessment
 import com.turbolego.rullut2.model.RouteAccessibilitySegment
 import org.junit.Assert.*
@@ -14,17 +13,18 @@ class RouteUtilsTest {
 
     @Test
     fun `decode simple polyline`() {
-        // Test polyline for a straight line from (0, 0) to (10, 10) at {8}
-        // This is the Google-encoded polyline for a basic path
+        // Standard polyline example from Google's reference docs.
         val encoded = "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
 
         val decoded = decodePolylineReflectively(encoded)
 
-        assertTrue("Decoded polyline should have coordinates", decoded.isNotEmpty())
-        decoded.forEach { (lng, lat) ->
-            assertFalse("Lat should not be NaN", lat.isNaN())
-            assertFalse("Lng should not be NaN", lng.isNaN())
-        }
+        assertEquals("Should decode three coordinates", 3, decoded.size)
+        assertEquals("First point lng", -120.2, decoded[0].first, 1e-6)
+        assertEquals("First point lat", 38.5, decoded[0].second, 1e-6)
+        assertEquals("Second point lng", -120.95, decoded[1].first, 1e-6)
+        assertEquals("Second point lat", 40.7, decoded[1].second, 1e-6)
+        assertEquals("Third point lng", -126.453, decoded[2].first, 1e-6)
+        assertEquals("Third point lat", 43.252, decoded[2].second, 1e-6)
     }
 
     @Test
@@ -33,9 +33,6 @@ class RouteUtilsTest {
         assertTrue("Empty polyline should return empty list", decoded.isEmpty())
     }
 
-    /**
-     * Test that accessibility scoring correctly identifies "ikke tilgjengelig" text.
-     */
     @Test
     fun `scoreFromResponse detects not accessible`() {
         val response = """
@@ -45,10 +42,8 @@ class RouteUtilsTest {
             tilgjengvurderingrulleauto: Ikke tilgjengelig
         """.trimIndent()
 
-        // We test via AccessibilityAssessment which parses this
-        // The scoring method is private, so we test indirectly
-        assertTrue("Response contains negative text",
-            response.lowercase().contains("ikke"))
+        val score = scoreFromResponseReflectively(response)
+        assertEquals("Should score as not accessible", 1, score)
     }
 
     @Test
@@ -59,15 +54,32 @@ class RouteUtilsTest {
             tilgjengvurderingrulleauto: Fullt tilgjengelig
         """.trimIndent()
 
-        assertFalse("No negative text in response",
-            response.lowercase().contains("ikke"))
-        assertTrue("Should contain positive text",
-            response.lowercase().contains("fullt"))
+        val score = scoreFromResponseReflectively(response)
+        assertEquals("Should score as fully accessible", 3, score)
     }
 
-    /**
-     * Test segment building from dummy data.
-     */
+    @Test
+    fun `scoreFromResponse detects partial accessibility`() {
+        val response = """
+            FeatureId: gid_777
+            tilgjengvurderingrulleman: Delvis tilgjengelig
+        """.trimIndent()
+
+        val score = scoreFromResponseReflectively(response)
+        assertEquals("Should score as partially accessible", 2, score)
+    }
+
+    @Test
+    fun `scoreFromResponse returns unknown for missing values`() {
+        val response = """
+            FeatureId: gid_888
+            tilgjengvurderingrulleman: null
+        """.trimIndent()
+
+        val score = scoreFromResponseReflectively(response)
+        assertEquals("Missing values should score as unknown", 0, score)
+    }
+
     @Test
     fun `accessibility breakdown calculates percentages`() {
         val distances = listOf(0.0, 100.0, 200.0, 300.0) // 300m total
@@ -79,9 +91,17 @@ class RouteUtilsTest {
         // seg 0 (0→100): score=3, accessible=100m
         // seg 1 (100→200): score=3, accessible=100m
         // seg 2 (200→300): score=1, not accessible=100m
-        // Score at position 3 is at distance 300 but it's just the last point, not a segment
+        // Score at position 3 is the final sample point and does not start a segment.
 
-        // So: accessible=200/300=66%, not=100/300=33%, partial=0%, unknown=0%
+        val result = buildSegmentsReflectively(distances, scores, 300.0)
+
+        assertEquals("Should build one segment per interval", 3, result.segments.size)
+        assertEquals("First segment starts at 0m", 0.0, result.segments[0].range.start, 0.001)
+        assertEquals("First segment ends at 100m", 100.0, result.segments[0].range.endInclusive, 0.001)
+        assertEquals("Accessible percentage", 66, result.accessiblePct)
+        assertEquals("Partially accessible percentage", 0, result.partiallyAccessiblePct)
+        assertEquals("Not accessible percentage", 33, result.notAccessiblePct)
+        assertEquals("Unknown percentage", 0, result.unknownPct)
     }
 }
 
@@ -125,4 +145,29 @@ private fun decodePolylineReflectively(encoded: String): List<Pair<Double, Doubl
     }
 
     return coords
+}
+
+private fun scoreFromResponseReflectively(raw: String): Int {
+    val method = AccessibilityAssessment::class.java.getDeclaredMethod(
+        "scoreFromResponse",
+        String::class.java,
+    )
+    method.isAccessible = true
+    return method.invoke(AccessibilityAssessment, raw) as Int
+}
+
+private fun buildSegmentsReflectively(
+    distances: List<Double>,
+    scores: List<Int>,
+    totalDist: Double,
+): AccessibilityAssessment.AssessmentResult {
+    val method = AccessibilityAssessment::class.java.getDeclaredMethod(
+        "buildSegments",
+        List::class.java,
+        List::class.java,
+        Double::class.javaPrimitiveType,
+    )
+    method.isAccessible = true
+    @Suppress("UNCHECKED_CAST")
+    return method.invoke(AccessibilityAssessment, distances, scores, totalDist) as AccessibilityAssessment.AssessmentResult
 }
