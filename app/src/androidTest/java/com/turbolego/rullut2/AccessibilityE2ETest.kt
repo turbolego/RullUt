@@ -80,13 +80,14 @@ class AccessibilityE2ETest {
         ).performClick()
 
         onNodeWithAnyText(Strings.searchTitle).assertIsDisplayed()
-        onNodeWithAnyText(Strings.settingsCloseLabel).assertIsDisplayed()
         onNodeWithAnyContentDescription(
             "Lukk søk",
             "Close search",
         ).assertIsDisplayed()
-
-        onNodeWithAnyText(Strings.settingsCloseLabel).performClick()
+        onNodeWithAnyContentDescription(
+            "Lukk søk",
+            "Close search",
+        ).performClick()
     }
 
     @Test
@@ -105,18 +106,24 @@ class AccessibilityE2ETest {
     }
 
     @Test
-    fun toiletViewportAndHighscoreFeatures_areReachable() {
-        // Toilets dialog
+    fun toiletsDialog_isReachableAndDismissible() {
         onNodeWithAnyContentDescription("Finn nærliggende toaletter").performClick()
         onNodeWithAnyText(Strings.toiletTitle).assertIsDisplayed()
-        onNodeWithAnyText(Strings.settingsCloseLabel).performClick()
+        onNodeWithAnyContentDescription(
+            Strings.settingsCloseLabel,
+            "Close",
+        ).performClick()
+    }
 
-        // Viewport scanner sheet
+    @Test
+    fun viewportScanner_isReachableAndDismissible() {
         onNodeWithAnyContentDescription("Objekter i visning").performClick()
         onNodeWithAnyText("Søker...", "Objekter i visning").assertIsDisplayed()
         dismissModalWithBack()
+    }
 
-        // Highscore sheet
+    @Test
+    fun highscoreSheet_isReachableAndDismissible() {
         onNodeWithAnyContentDescription("Highscore").performClick()
         onNodeWithAnyText("Tilgjengelighet — Highscore").assertIsDisplayed()
         dismissModalWithBack()

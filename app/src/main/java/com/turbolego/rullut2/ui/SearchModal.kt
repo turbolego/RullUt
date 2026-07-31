@@ -59,13 +59,27 @@ fun SearchModal(
         containerColor = MaterialTheme.colorScheme.surface,
         properties = DialogProperties(usePlatformDefaultWidth = false),
         title = {
-            Text(
-                Strings.searchTitle,
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.semantics { heading() }
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text(
+                    Strings.searchTitle,
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .weight(1f)
+                        .semantics { heading() }
+                )
+                IconButton(onClick = onDismiss) {
+                    Icon(
+                        Icons.Default.Close,
+                        contentDescription = Strings.searchClose,
+                    )
+                }
+            }
         },
         text = {
             Column {
