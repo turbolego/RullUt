@@ -102,7 +102,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.1")
 
     // DataStore for preferences (basemap, active layers)
-    implementation("androidx.datastore:datastore-preferences:1.1.2")
+    implementation("androidx.datastore:datastore-preferences:1.2.1")
 
     // Core KTX
     implementation("androidx.core:core-ktx:1.16.0")
