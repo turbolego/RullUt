@@ -95,6 +95,38 @@ class FeatureInfoParserTest {
         assertTrue("Should detect image URL", features[0].images.isNotEmpty())
     }
 
+      @Test
+      fun `parse equals separated key value lines`() {
+        val raw = """
+          GetFeatureInfo results:
+          Feature 1
+          FeatureId=vei.12
+          OBJID=abc-123
+          BREDDE=260
+          STIGNING=4.2
+        """.trimIndent()
+
+        val features = FeatureInfoParser.parseGetFeatureInfo(raw, "t_vei_r")
+
+        assertEquals("Should parse one feature", 1, features.size)
+        assertEquals("Should parse feature id", "vei.12", features[0].featureId)
+        assertEquals("Should normalize key casing", "abc-123", features[0].props["objid"])
+        assertEquals("Should parse width", "260", features[0].props["bredde"])
+        assertEquals("Should parse slope", "4.2", features[0].props["stigning"])
+      }
+
+      @Test
+      fun `parse no-result payload returns empty list`() {
+        val raw = """
+          GetFeatureInfo results:
+
+            Search returned no results.
+        """.trimIndent()
+
+        val features = FeatureInfoParser.parseGetFeatureInfo(raw, "tilgjengelighet3")
+        assertTrue("No-result payload should produce empty list", features.isEmpty())
+      }
+
     @Test
     fun `parse capabilities xml basic structure`() {
         val xml = """

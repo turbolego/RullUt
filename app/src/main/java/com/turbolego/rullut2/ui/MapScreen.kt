@@ -659,13 +659,19 @@ fun MapScreen(modifier: Modifier = Modifier) {
             val loc = currentLocation ?: withContext(Dispatchers.IO) {
                 LocationService.getCurrentLocation(context)
             }
-            if (loc == null) {
+
+            val searchLat = loc?.latitude ?: map?.cameraPosition?.target?.latitude
+            val searchLon = loc?.longitude ?: map?.cameraPosition?.target?.longitude
+
+            if (searchLat == null || searchLon == null) {
+                toiletList = emptyList()
                 toiletLoading = false
                 return@LaunchedEffect
             }
+
             toiletList = withContext(Dispatchers.IO) {
                 try {
-                    ToiletSearchApi.findNearestToilets(loc.latitude, loc.longitude)
+                    ToiletSearchApi.findNearestToilets(searchLat, searchLon)
                 } catch (_: Exception) {
                     emptyList()
                 }

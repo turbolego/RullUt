@@ -60,11 +60,15 @@ data class ViewportFeature(
             val props = feature.props
 
             // Determine deduplication key: prefer objid, fall back to lokalid, then featureId.
+            val fallbackId = feature.featureId.ifBlank {
+                "${feature.layerName}:${centreX3857}:${centreY3857}:${props.hashCode()}"
+            }
+
             val objId = props["objid"]
                 ?.takeIf { it.isNotBlank() }
                 ?: props["lokalid"]
                     ?.takeIf { it.isNotBlank() }
-                    ?: feature.featureId
+                    ?: fallbackId
 
             val byggtype = props["byggtype"]?.takeIf { it.isNotBlank() } ?: ""
             val name = props["navn"]?.takeIf { it.isNotBlank() }

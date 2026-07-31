@@ -17,11 +17,15 @@ object MapConfig {
     // WMS layers to query on GetFeatureInfo
     val WMS_FEATURE_LAYERS = listOf(
         "tilgjengelighet3",
+        "tettsted",
+        "t_rullestol",
+        "t_el_rullestol",
+        "t_syn",
+        "friluft",
+        "f_rullestol",
+        "f_el_rullestol",
+        "f_syn",
         "t_vei_r",
-        "t_ra_r",
-        "t_sti_r",
-        "t_omrade",
-        "publikum",
     )
 
     // OpenFreeMap basemap styles (no API key, no account, no billing)
@@ -66,7 +70,7 @@ object MapConfig {
     const val GRID_ROWS = 4
     const val GRID_BATCH_SIZE = 4
     const val FEATURE_COUNT_PER_CELL = 50
-    const val TILGJENGELIGHET_QUERY_LAYERS = "tilgjengelighet3"
+    const val TILGJENGELIGHET_QUERY_LAYERS = "t_rullestol,t_el_rullestol,t_syn,f_rullestol,f_el_rullestol,f_syn"
 
     // WFS base for toilet search
     const val WFS_BASE_URL = "https://wfs.geonorge.no/skwms1/wfs.tilgjengelighet"

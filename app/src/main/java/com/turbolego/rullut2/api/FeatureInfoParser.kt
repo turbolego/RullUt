@@ -48,24 +48,47 @@ object FeatureInfoParser {
      *   (blank line separates features)
      */
     fun parseGetFeatureInfo(raw: String, layerName: String): List<FeatureInfo> {
+        if (raw.isBlank()) return emptyList()
+
         val features = mutableListOf<FeatureInfo>()
+        val currentBlock = mutableListOf<String>()
 
-        // Split by "---" delimited sections
-        val sections = raw.split(Regex("(?m)^-{2,}.*?-{2,}\n?"))
-            .map { it.trim() }
-            .filter { it.isNotBlank() }
-
-        if (sections.isEmpty()) {
-            // Single feature with no "---" delimiter
-            parseFeatureBlock(raw, layerName)?.let { features.add(it) }
-            return features
+        fun flushBlock() {
+            if (currentBlock.isEmpty()) return
+            parseFeatureBlock(currentBlock.joinToString("\n"), layerName)?.let { features.add(it) }
+            currentBlock.clear()
         }
 
-        for (section in sections) {
-            parseFeatureBlock(section, layerName)?.let { features.add(it) }
+        for (line in raw.lines()) {
+            val trimmed = line.trim()
+            if (trimmed.isEmpty()) {
+                flushBlock()
+                continue
+            }
+
+            if (trimmed.equals("GetFeatureInfo results:", ignoreCase = true) ||
+                trimmed.contains("Search returned no results", ignoreCase = true)
+            ) {
+                continue
+            }
+
+            if (trimmed.startsWith("---") ||
+                Regex("""(?i)^feature\s+\d+\b""").containsMatchIn(trimmed) ||
+                Regex("""(?i)^layer\s+['\"].*['\"]\s*$""").containsMatchIn(trimmed)
+            ) {
+                flushBlock()
+                continue
+            }
+
+            currentBlock.add(trimmed)
         }
 
-        return features
+        flushBlock()
+
+        if (features.isNotEmpty()) return features
+
+        // Fallback for unconventional payloads with no separators.
+        return listOfNotNull(parseFeatureBlock(raw, layerName))
     }
 
     private fun parseFeatureBlock(block: String, layerName: String): FeatureInfo? {
@@ -78,19 +101,29 @@ object FeatureInfoParser {
 
         for (line in lines) {
             when {
-                line.startsWith("FeatureId:", ignoreCase = true) -> {
-                    featureId = line.substringAfter(":").trim()
+                line.startsWith("FeatureId:", ignoreCase = true) ||
+                    line.startsWith("FeatureId=", ignoreCase = true) -> {
+                    featureId = if (line.contains(':')) {
+                        line.substringAfter(":").trim()
+                    } else {
+                        line.substringAfter("=").trim()
+                    }
                 }
                 line.contains("FeatureId", ignoreCase = true) &&
-                    line.contains(":") -> {
+                    (line.contains(":") || line.contains("=")) -> {
                     // Some WMS servers use "FeatureId=..."
-                    val featurePart = line.substringAfter(":")
+                    val featurePart = if (line.contains(':')) {
+                        line.substringAfter(":")
+                    } else {
+                        line.substringAfter("=")
+                    }
                     val id = featurePart.substringBefore(",").trim()
                     if (featureId.isEmpty()) featureId = id
                 }
-                line.contains(":", false) -> {
-                    val key = line.substringBefore(":").trim()
-                    val value = line.substringAfter(":").trim()
+                line.contains(':') || line.contains('=') -> {
+                    val separator = if (line.contains(':')) ':' else '='
+                    val key = line.substringBefore(separator).trim().lowercase()
+                    val value = line.substringAfter(separator).trim().trim('"')
                     if (key.isNotBlank() && value.isNotBlank()) {
                         // Detect image URLs
                         if (value.startsWith("http") &&

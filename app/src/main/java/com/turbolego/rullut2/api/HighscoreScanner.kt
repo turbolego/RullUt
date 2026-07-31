@@ -44,6 +44,7 @@ object HighscoreScanner {
             bboxMinY = minY,
             bboxMaxX = maxX,
             bboxMaxY = maxY,
+            queryLayers = "t_vei_r",
         )
 
         // Convert to RoadSegmentFeature (limited field mapping).
@@ -58,7 +59,7 @@ object HighscoreScanner {
 
             val props = vf.rawProps
             RoadSegmentFeature(
-                objid = vf.objId,
+                objid = vf.objId.ifBlank { "${vf.layerName}:${vf.featureId}:${vf.centreX}:${vf.centreY}" },
                 sourceLayer = vf.layerName,
                 roadType = props["byggtype"]?.takeIf { it.isNotBlank() } ?: vf.byggtype,
                 widthCm = props["bredde"]?.toDoubleOrNull(),
