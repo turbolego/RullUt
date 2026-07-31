@@ -12,6 +12,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
@@ -78,6 +81,7 @@ fun RoutePlannerModal(
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.semantics { heading() },
             )
 
             Spacer(Modifier.height(12.dp))
@@ -114,7 +118,9 @@ fun RoutePlannerModal(
                         Text("✓", color = MaterialTheme.colorScheme.primary)
                     }
                 },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .semantics { contentDescription = Strings.routeFrom },
                 singleLine = true,
             )
 
@@ -184,7 +190,9 @@ fun RoutePlannerModal(
                         Text("✓", color = MaterialTheme.colorScheme.primary)
                     }
                 },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .semantics { contentDescription = Strings.routeTo },
                 singleLine = true,
             )
 
@@ -205,6 +213,7 @@ fun RoutePlannerModal(
                                     toSelected = Pair(place.lat, place.lon)
                                     toQuery = "${place.name} — ${place.municipality}"
                                     toSelected = Pair(place.lat, place.lon)
+                                    toResults = emptyList()
                                 }
                                 .padding(horizontal = 8.dp, vertical = 4.dp),
                             color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f),

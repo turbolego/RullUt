@@ -99,7 +99,8 @@ fun ToiletListModal(
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .clickable { onSelectToilet(toilet) }
-                                            .padding(12.dp),
+                                            .padding(12.dp)
+                                            .semantics { contentDescription = "${toilet.name}, ${(toilet.distanceKm * 1000).toInt()} m" },
                                         verticalAlignment = Alignment.CenterVertically,
                                     ) {
                                         Icon(

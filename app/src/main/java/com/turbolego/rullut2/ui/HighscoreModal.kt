@@ -49,6 +49,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -153,7 +155,9 @@ fun HighscoreModal(
                 text = "Tilgjengelighet — Highscore",
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 8.dp),
+                modifier = Modifier
+                    .padding(bottom = 8.dp)
+                    .semantics { heading() },
             )
 
             // ── Stats header ─────────────────────────────────────────────
@@ -192,7 +196,7 @@ fun HighscoreModal(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(480.dp),
+                        .weight(1f),
                     verticalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
                     itemsIndexed(entries) { _, entry ->

@@ -15,6 +15,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -59,7 +61,6 @@ fun ViewportFeatureModal(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.95f)
-                .heightIn(min = 200.dp, max = 600.dp)
                 .padding(horizontal = 16.dp)
                 .navigationBarsPadding()
                 .imePadding()
@@ -76,7 +77,9 @@ fun ViewportFeatureModal(
                     text = if (isLoading) "Søker..." else "Objekter i visning",
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .weight(1f)
+                        .semantics { heading() },
                 )
 
                 if (isLoading.not()) {

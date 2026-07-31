@@ -154,7 +154,7 @@ fun FeaturePopup(
                 ),
                 modifier = Modifier
                     .align(Alignment.End)
-                    .semantics { contentDescription = Strings.featureInfoTitle },
+                    .semantics { contentDescription = Strings.settingsCloseLabel },
             ) {
                 Text(Strings.settingsCloseLabel, color = MaterialTheme.colorScheme.onPrimary)
             }
