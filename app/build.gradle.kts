@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.turbolego.rullut2"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.turbolego.rullut3"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         // versionCode: derived from GITHUB_RUN_NUMBER in CI, falls back to 1 locally
         versionCode = (System.getenv("GITHUB_RUN_NUMBER") ?: "1").toInt()
         versionName = System.getenv("GITHUB_REF_NAME")?.removePrefix("v") ?: "1.0.0"
