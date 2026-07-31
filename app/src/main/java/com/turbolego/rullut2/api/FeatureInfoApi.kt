@@ -101,8 +101,14 @@ object FeatureInfoApi {
 
     /**
      * Bbox-based GetFeatureInfo query.
-     * Uses a 1×1 pixel image covering the full bbox to harvest all features.
-     * Returns raw text/plain GML response.
+     *
+     * Renders the full bbox as a 256×256 image and queries the centre
+     * pixel, returning the features crossing that point as raw text/plain.
+     *
+     * NOTE: a 1×1 pixel image was used previously to "harvest" all features
+     * in the bbox, but the Geonorge MapServer silently returns "no results"
+     * for it (sub-pixel geometry is dropped during rasterization). A real
+     * image size with a centre-pixel query is required to get any data.
      */
     suspend fun fetchBboxFeatures(
         bboxMinX: Double,

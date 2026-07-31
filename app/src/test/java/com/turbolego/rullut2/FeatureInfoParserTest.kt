@@ -179,4 +179,92 @@ class FeatureInfoParserTest {
         assertTrue("Should parse layers", layers.isNotEmpty())
         // Since abstract Layer promotes children directly
     }
+
+    // ── Real Geonorge text/plain GetFeatureInfo format ──────────────────
+
+    @Test
+    fun `parse geonorge format with equals and quotes`() {
+        val raw = """
+            GetFeatureInfo results:
+
+            Layer 't_vei_r'
+              Feature 111291:
+                objid = '111291'
+                gatetype = 'Fortau'
+                bredde = '350'
+                stigning = '1'
+                segmentlengde = '76.7'
+                kommune = '5001'
+        """.trimIndent()
+
+        val features = FeatureInfoParser.parseGetFeatureInfo(raw, "tilgjengelighet3")
+
+        assertEquals("Should parse 1 feature", 1, features.size)
+        val f = features[0]
+        assertEquals("Feature ID from header", "111291", f.featureId)
+        assertEquals("Layer from section header", "t_vei_r", f.layerName)
+        assertEquals("objid prop", "111291", f.props["objid"])
+        assertEquals("gatetype prop", "Fortau", f.props["gatetype"])
+        assertEquals("bredde prop", "350", f.props["bredde"])
+        assertEquals("stigning prop", "1", f.props["stigning"])
+        assertEquals("segmentlengde prop", "76.7", f.props["segmentlengde"])
+        assertEquals("kommune prop", "5001", f.props["kommune"])
+    }
+
+    @Test
+    fun `parse geonorge format multiple layers and features`() {
+        val raw = """
+            GetFeatureInfo results:
+
+            Layer 't_vei_r'
+              Feature 1:
+                objid = '1'
+                gatetype = 'Fortau'
+                bredde = '300'
+
+            Layer 't_vei_el'
+              Feature 2:
+                objid = '2'
+                gatetype = 'Gangvei'
+                bredde = '250'
+        """.trimIndent()
+
+        val features = FeatureInfoParser.parseGetFeatureInfo(raw, "tilgjengelighet3")
+
+        assertEquals("Should parse 2 features", 2, features.size)
+        assertEquals("First layer", "t_vei_r", features[0].layerName)
+        assertEquals("First id", "1", features[0].featureId)
+        assertEquals("Second layer", "t_vei_el", features[1].layerName)
+        assertEquals("Second id", "2", features[1].featureId)
+    }
+
+    @Test
+    fun `parse geonorge format skips blank values and header noise`() {
+        val raw = """
+            GetFeatureInfo results:
+
+            Layer 't_vei_r'
+              Feature 7:
+                objid = '7'
+                bildefil1 = ''
+                kommentar = 'Har kolon: i verdien'
+                bredde = '400'
+        """.trimIndent()
+
+        val features = FeatureInfoParser.parseGetFeatureInfo(raw, "tilgjengelighet3")
+
+        assertEquals("Should parse 1 feature", 1, features.size)
+        val f = features[0]
+        assertNull("Blank values are skipped", f.props["bildefil1"])
+        assertEquals("Colon inside value preserved", "Har kolon: i verdien", f.props["kommentar"])
+        assertEquals("bredde prop", "400", f.props["bredde"])
+    }
+
+    @Test
+    fun `parse geonorge no results response returns empty`() {
+        val features = FeatureInfoParser.parseGetFeatureInfo(
+            "GetFeatureInfo results:\n\n  Search returned no results.", "test"
+        )
+        assertTrue("No results should be empty", features.isEmpty())
+    }
 }

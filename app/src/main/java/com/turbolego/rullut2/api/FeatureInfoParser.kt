@@ -13,11 +13,18 @@ import java.util.concurrent.TimeUnit
 /**
  * Parsers for WMS GetFeatureInfo responses and GetCapabilities XML.
  *
- * GetFeatureInfo response format (text/plain GML):
+ * GetFeatureInfo response format (text/plain GML) — Geonorge MapServer:
+ *   GetFeatureInfo results:
+ *
+ *   Layer 't_vei_r'
+ *     Feature 111291:
+ *       objid = '111291'
+ *       key = 'value'
+ *
+ * Legacy format (still supported):
  *   --- layerName ---
  *   FeatureId: id
  *   key: value
- *   ...
  *
  * GetCapabilities response format (XML):
  *   <WMS_Capabilities>
@@ -39,113 +46,96 @@ object FeatureInfoParser {
 
     /**
      * Parse the text/plain GetFeatureInfo response.
-     * Format from Geonorge WMS:
+     *
+     * Supports both the real Geonorge WMS format and the legacy format:
+     *
+     * Geonorge (MapServer msGMLOutput text/plain):
+     *   GetFeatureInfo results:
+     *
+     *   Layer 't_vei_r'
+     *     Feature 111291:
+     *       objid = '111291'
+     *       gatetype = 'Fortau'
+     *       bredde = '350'
+     *       ...
+     *
+     * Legacy:
      *   --- layerName ---
      *   FeatureId: gid_123
      *   Key1: Value1
-     *   Key2: Value2
      *   ...
-     *   (blank line separates features)
      */
     fun parseGetFeatureInfo(raw: String, layerName: String): List<FeatureInfo> {
         if (raw.isBlank()) return emptyList()
 
         val features = mutableListOf<FeatureInfo>()
-        val currentBlock = mutableListOf<String>()
+        var currentLayer = layerName
+        var currentId: String? = null
+        val currentProps = mutableMapOf<String, String>()
+        val currentImages = mutableListOf<String>()
 
-        fun flushBlock() {
-            if (currentBlock.isEmpty()) return
-            parseFeatureBlock(currentBlock.joinToString("\n"), layerName)?.let { features.add(it) }
-            currentBlock.clear()
+        fun flush() {
+            if (currentId != null || currentProps.isNotEmpty() || currentImages.isNotEmpty()) {
+                features.add(
+                    FeatureInfo(
+                        layerName = currentLayer,
+                        featureId = currentId ?: "",
+                        props = currentProps.toMap(),
+                        images = currentImages.toList(),
+                    )
+                )
+            }
+            currentId = null
+            currentProps.clear()
+            currentImages.clear()
         }
 
-        for (line in raw.lines()) {
-            val trimmed = line.trim()
-            if (trimmed.isEmpty()) {
-                flushBlock()
+        for (rawLine in raw.lines()) {
+            val line = rawLine.trim()
+            if (line.isEmpty()) continue
+
+            // "Layer 't_vei_r'" — Geonorge section header; starts a new layer group
+            val layerMatch = Regex("^Layer\\s+'(.+)'$").find(line)
+            if (layerMatch != null) {
+                flush()
+                currentLayer = layerMatch.groupValues[1]
                 continue
             }
 
-            if (trimmed.equals("GetFeatureInfo results:", ignoreCase = true) ||
-                trimmed.contains("Search returned no results", ignoreCase = true)
-            ) {
+            // "Feature 111291:" / "FeatureId: gid_123" / "FeatureId=gid_123" — starts a new feature
+            val featureMatch = Regex(
+                "^Feature(?:Id)?(?:\\s+(\\d+))?\\s*[=:]\\s*(.*)$",
+                RegexOption.IGNORE_CASE,
+            ).find(line)
+            if (featureMatch != null) {
+                flush()
+                currentId = (featureMatch.groupValues[1].takeIf { it.isNotBlank() }
+                    ?: featureMatch.groupValues[2])
+                    .trim().ifEmpty { null }
                 continue
             }
 
-            if (trimmed.startsWith("---") ||
-                Regex("""(?i)^feature\s+\d+\b""").containsMatchIn(trimmed) ||
-                Regex("""(?i)^layer\s+['\"].*['\"]\s*$""").containsMatchIn(trimmed)
-            ) {
-                flushBlock()
-                continue
-            }
-
-            currentBlock.add(trimmed)
-        }
-
-        flushBlock()
-
-        if (features.isNotEmpty()) return features
-
-        // Fallback for unconventional payloads with no separators.
-        return listOfNotNull(parseFeatureBlock(raw, layerName))
-    }
-
-    private fun parseFeatureBlock(block: String, layerName: String): FeatureInfo? {
-        val lines = block.lines().map { it.trim() }.filter { it.isNotEmpty() }
-        if (lines.isEmpty()) return null
-
-        var featureId = ""
-        val props = mutableMapOf<String, String>()
-        val images = mutableListOf<String>()
-
-        for (line in lines) {
-            when {
-                line.startsWith("FeatureId:", ignoreCase = true) ||
-                    line.startsWith("FeatureId=", ignoreCase = true) -> {
-                    featureId = if (line.contains(':')) {
-                        line.substringAfter(":").trim()
-                    } else {
-                        line.substringAfter("=").trim()
-                    }
-                }
-                line.contains("FeatureId", ignoreCase = true) &&
-                    (line.contains(":") || line.contains("=")) -> {
-                    // Some WMS servers use "FeatureId=..."
-                    val featurePart = if (line.contains(':')) {
-                        line.substringAfter(":")
-                    } else {
-                        line.substringAfter("=")
-                    }
-                    val id = featurePart.substringBefore(",").trim()
-                    if (featureId.isEmpty()) featureId = id
-                }
-                line.contains(':') || line.contains('=') -> {
-                    val separator = if (line.contains(':')) ':' else '='
-                    val key = line.substringBefore(separator).trim().lowercase()
-                    val value = line.substringAfter(separator).trim().trim('"')
-                    if (key.isNotBlank() && value.isNotBlank()) {
-                        // Detect image URLs
-                        if (value.startsWith("http") &&
-                            (value.contains(".png") || value.contains(".jpg") || value.contains("wms"))
-                        ) {
-                            images.add(value)
-                        } else {
-                            props[key] = value
-                        }
-                    }
+            // Property lines. Geonorge uses "key = 'value'", legacy uses "key: value".
+            // Try '=' first so colons inside values (e.g. timestamps) don't split the key.
+            val eqMatch = Regex("^([^=:]+)=\\s*(.*)$").find(line)
+            val colonMatch = eqMatch ?: Regex("^([^:]+):\\s*(.*)$").find(line)
+            if (colonMatch != null) {
+                val key = colonMatch.groupValues[1].trim().lowercase()
+                val value = colonMatch.groupValues[2].trim().trim('\'', '"')
+                if (key.isEmpty() || value.isBlank()) continue
+                if (value.startsWith("http") &&
+                    (value.contains(".png") || value.contains(".jpg") || value.contains("wms"))
+                ) {
+                    currentImages.add(value)
+                } else {
+                    currentProps[key] = value
                 }
             }
+            // Anything else (e.g. "GetFeatureInfo results:", "Search returned no results.")
+            // is ignored.
         }
-
-        if (props.isEmpty() && featureId.isEmpty()) return null
-
-        return FeatureInfo(
-            layerName = layerName,
-            featureId = featureId,
-            props = props,
-            images = images,
-        )
+        flush()
+        return features
     }
 
     /**
@@ -174,41 +164,38 @@ object FeatureInfoParser {
      */
     fun parseCapabilitiesXml(xml: String): List<LayerInfo> {
         val layers = mutableListOf<LayerInfo>()
-        val layerRegex = Regex(
-            pattern = """
-                <Layer>\s*
-                .*?<Name>(.*?)</Name>\s*
-                .*?<Title>(.*?)</Title>
-                .*?</Layer>
-            """.trimIndent(),
-            options = setOf(RegexOption.DOT_MATCHES_ALL, RegexOption.IGNORE_CASE),
-        )
+        try {
+            val factory = XmlPullParserFactory.newInstance()
+            val parser = factory.newPullParser()
+            parser.setInput(StringReader(xml))
 
-        layerRegex.findAll(xml).forEach { match ->
-            val name = match.groupValues.getOrNull(1)?.trim().orEmpty()
-            val title = match.groupValues.getOrNull(2)
-                ?.trim()
-                ?.takeIf { it.isNotBlank() }
-                ?: name
-            if (name.isNotBlank()) {
-                layers.add(
-                    LayerInfo(
-                        name = name,
-                        title = title,
-                        legendUrl = null,
-                        children = emptyList(),
-                    )
-                )
+            // Navigate to the Capability/Layer tree
+            var eventType = parser.eventType
+            while (eventType != XmlPullParser.END_DOCUMENT) {
+                if (eventType == XmlPullParser.START_TAG &&
+                    parser.name == "Layer" &&
+                    parser.depth == 3 // WMS_Capabilities > Capability > Layer
+                ) {
+                    parseLayerTree(parser).let { root ->
+                        if (root != null) {
+                            // Abstract root (no Name) — promote its children
+                            if (root.name.isNotEmpty()) layers.add(root) else layers.addAll(root.children)
+                        }
+                    }
+                    break
+                }
+                eventType = parser.next()
             }
+        } catch (_: XmlPullParserException) {
+        } catch (_: Exception) {
         }
-
         return layers
     }
 
     /**
      * Recursively parse a <Layer> element.
-     * Returns a LayerInfo for this layer if it has a <Name>,
-     * otherwise returns null (abstract grouping layer).
+     * Returns a LayerInfo; abstract groups (no <Name>) get an empty name so
+     * the caller can promote their children.
      */
     private fun parseLayerTree(parser: XmlPullParser): LayerInfo? {
         var name: String? = null
@@ -231,7 +218,10 @@ object FeatureInfoParser {
                 }
                 eventType == XmlPullParser.START_TAG && parser.name == "Layer" -> {
                     val child = parseLayerTree(parser)
-                    if (child != null) children.add(child)
+                    if (child != null) {
+                        // Abstract child (no Name) — promote its children
+                        if (child.name.isNotEmpty()) children.add(child) else children.addAll(child.children)
+                    }
                 }
                 eventType == XmlPullParser.END_TAG && parser.name == "Layer" -> {
                     break
@@ -241,17 +231,14 @@ object FeatureInfoParser {
         }
 
         // If this layer has a name, return it with children.
-        // If no name, this is an abstract group — promote children.
-        return if (name != null || children.isNotEmpty()) {
-            LayerInfo(
-                name = name ?: title ?: "",
-                title = title ?: name ?: "",
-                legendUrl = legendUrl,
-                children = children,
-            )
-        } else {
-            null
-        }
+        // If no name, this is an abstract group — still return it (with
+        // name empty) so the caller can promote its children.
+        return LayerInfo(
+            name = name ?: "",
+            title = title ?: name ?: "",
+            legendUrl = legendUrl,
+            children = children,
+        )
     }
 
     private fun parseLegendUrl(parser: XmlPullParser): String? {

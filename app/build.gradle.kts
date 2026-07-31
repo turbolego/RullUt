@@ -113,6 +113,8 @@ dependencies {
     // Tests
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.json:json:20250107")
+    // Real XmlPullParser implementation so parseCapabilitiesXml runs on JVM
+    testImplementation("net.sf.kxml:kxml2:2.3.0")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.1")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")

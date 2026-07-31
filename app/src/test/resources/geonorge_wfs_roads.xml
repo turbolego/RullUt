@@ -1,0 +1,2005 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wfs:FeatureCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1 https://wfs.geonorge.no/skwms1/wfs.tilgjengelighet?SERVICE=WFS&amp;VERSION=2.0.0&amp;REQUEST=DescribeFeatureType&amp;OUTPUTFORMAT=text%2Fxml%3B+subtype%3Dgml%2F3.2.1&amp;TYPENAME=app:TettstedVei,app:FriluftTurvei&amp;NAMESPACES=xmlns(app,https%3A%2F%2Fskjema.geonorge.no%2FSOSI%2Fproduktspesifikasjon%2FTilgjengelighet%2F1.3.1)" xmlns:wfs="http://www.opengis.net/wfs/2.0" timeStamp="2026-07-31T21:16:23Z" xmlns:gml="http://www.opengis.net/gml/3.2" numberMatched="unknown" numberReturned="0">
+  <!--NOTE: numberReturned attribute should be 'unknown' as well, but this would not validate against the current version of the WFS 2.0 schema (change upcoming). See change request (CR 144): https://portal.opengeospatial.org/files?artifact_id=43925.-->
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.94804">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-08T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7736</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180813115601.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>38549347-1b38-497b-987f-3bf5a15aa836</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.94804_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.94804_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.407499 63.437749 10.407657 63.437988 10.407743 63.438029 10.407845 63.438053 10.407984 63.438059 10.408260 63.438011</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Fortau</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>200</app:bredde>
+      <app:stigning>2.0</app:stigning>
+      <app:tverrfall>1.2</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>61.6</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.95362">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-09T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7764</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180813115109.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>a062163d-c47e-445b-b806-beef16f08d9d</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.95362_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.95362_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.407499 63.437749 10.406769 63.436632 10.406511 63.436252 10.406241 63.435847 10.405991 63.435573</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Fortau</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>200</app:bredde>
+      <app:stigning>2.0</app:stigning>
+      <app:tverrfall>1.2</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>254.2</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.97479">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-08T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7739</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180813111136.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>7aaccd5a-39f6-42f5-a752-e77e4993e4ab</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.97479_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.97479_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.406594 63.438615 10.406868 63.438475 10.406918 63.438411 10.406914 63.438355 10.406870 63.438297 10.406864 63.438253</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Fortau</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>200</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.0</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>46.3</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.97612">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-09T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7788</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180813113008.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>d85b72c6-1357-4e93-9e9d-7da4bd4b1d6c</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.97612_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.97612_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.400587 63.435912 10.401577 63.435914 10.401663 63.435924 10.401762 63.435934 10.401888 63.435934 10.401975 63.435934 10.402039 63.435928 10.402109 63.435921 10.402193 63.435919 10.402745 63.435921 10.402952 63.435931</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Fortau</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Stein</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>260</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.2</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>118.6</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.97988">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2018-08-13T12:01:36</app:førsteDatafangstdato>
+      <app:objektNr>20191</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180813140047.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>06cb7f2b-72b6-49e3-9a7d-503b75fec717</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommentar>Bygging pågår</app:kommentar>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.97988_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.97988_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.410448 63.436309 10.409749 63.436645 10.410082 63.436992</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangvei</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>300</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.0</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>93.3</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Ja</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.97989">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-09T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7793</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180813114406.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>7f0856d0-6386-42f6-9f7b-51b28f1b431a</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.97989_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.97989_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.405307 63.435563 10.403844 63.435968 10.403703 63.436007</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Fortau</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>400</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.0</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>94.2</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.98945">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-06-27T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7199</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180813135402.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>2c92e54c-1bde-490b-ad55-cb0381910d5b</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.98945_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.98945_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.414886 63.436206 10.414747 63.436181 10.414756 63.436064 10.413606 63.436054 10.413158 63.436195 10.410694 63.436186 10.410448 63.436309</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangvei</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>340</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.0</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>246.8</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.99504">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2018-08-13T09:19:14</app:førsteDatafangstdato>
+      <app:objektNr>20188</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180813111821.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>299bc254-4024-472e-bdac-fc0eeef6f1ac</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommentar>Bygging pågår</app:kommentar>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.99504_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.99504_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.406232 63.436670 10.405451 63.436756 10.405346 63.436762 10.405137 63.436773</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangvei</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>300</app:bredde>
+      <app:stigning>4.7</app:stigning>
+      <app:tverrfall>1.2</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>56.0</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Delvis tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Ikke tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Ja</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.100330">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-08T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7733</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180813111230.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>6319c25d-7bdc-4bcd-94d2-ddc239a0d91e</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.100330_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.100330_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.406864 63.438253 10.406932 63.438157</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangfelt</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>200</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.0</app:tverrfall>
+      <app:nedsenk1>1.0</app:nedsenk1>
+      <app:nedsenk2>1.0</app:nedsenk2>
+      <app:lyssignal>Nei</app:lyssignal>
+      <app:lydsignal>Nei</app:lydsignal>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>Mindre god</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Delvis tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>11.3</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.101279">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-06-27T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7188</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180813134532.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>5a892c5f-dc81-4b5a-b788-f6c69731121e</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.101279_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.101279_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.412428 63.435619 10.410274 63.435490 10.409551 63.435097</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangvei</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>210</app:bredde>
+      <app:stigning>2.0</app:stigning>
+      <app:tverrfall>1.2</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>165.3</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.103209">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-06-27T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7196</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180731143431.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>d03bf8bb-e7ed-4210-9103-14f65a548ef2</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.103209_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.103209_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.406223 63.435237 10.408791 63.435306</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangvei</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>170</app:bredde>
+      <app:stigning>6.0</app:stigning>
+      <app:tverrfall>1.0</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Delvis tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>128.4</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Ikke tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Ikke tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.105003">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2015-07-01T08:46:44</app:førsteDatafangstdato>
+      <app:objektNr>12181</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180813114536.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>b2b3a7ef-81a1-4476-a7aa-2f1b84fc7ca8</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.105003_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.105003_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.405482 63.435488 10.405420 63.435568</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangfelt</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>300</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.2</app:tverrfall>
+      <app:nedsenk1>1.0</app:nedsenk1>
+      <app:nedsenk2>1.0</app:nedsenk2>
+      <app:lyssignal>Ja</app:lyssignal>
+      <app:lydsignal>Ja</app:lydsignal>
+      <app:ledelinje>Visuell</app:ledelinje>
+      <app:ledelinjeKontrast>Dårlig</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Delvis tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>9.5</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.105454">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-09T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7754</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180813112243.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>1ecdcc0b-0d5b-4075-baed-f872f7322c2d</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.105454_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.105454_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.403703 63.436007 10.403282 63.436093</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangfelt</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>300</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.0</app:tverrfall>
+      <app:nedsenk1>1.0</app:nedsenk1>
+      <app:nedsenk2>1.0</app:nedsenk2>
+      <app:lyssignal>Ja</app:lyssignal>
+      <app:lydsignal>Ja</app:lydsignal>
+      <app:ledelinje>Visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Delvis tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>23.1</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.96764">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-08T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7719</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180813110821.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>084b86aa-530d-4f8f-a869-8727f47e28d9</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.96764_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.96764_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.406937 63.438751 10.406594 63.438615</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangfelt</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>270</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.0</app:tverrfall>
+      <app:nedsenk1>1.0</app:nedsenk1>
+      <app:nedsenk2>1.0</app:nedsenk2>
+      <app:lyssignal>Ja</app:lyssignal>
+      <app:lydsignal>Ja</app:lydsignal>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>22.9</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.108303">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2018-08-13T09:21:50</app:førsteDatafangstdato>
+      <app:objektNr>20189</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180813112053.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>2cf7b741-29ee-42a6-be5b-568155c93e5c</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommentar>Bygging pågår</app:kommentar>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.108303_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.108303_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.405137 63.436773 10.404772 63.436711 10.404325 63.436547 10.403705 63.436090 10.403690 63.436063 10.403686 63.436035 10.403703 63.436007</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Fortau</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>300</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>3.0</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Delvis tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>117.4</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Ikke tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Ikke tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Ja</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.111063">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2018-08-13T12:07:37</app:førsteDatafangstdato>
+      <app:objektNr>20194</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180813140621.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>8baed201-8fc7-44a2-8947-069a95b7d9d6</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.111063_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.111063_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.411089 63.437510 10.408260 63.438011</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangvei</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>300</app:bredde>
+      <app:stigning>1.2</app:stigning>
+      <app:tverrfall>1.2</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>151.9</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.113080">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2018-08-13T12:03:36</app:førsteDatafangstdato>
+      <app:objektNr>20192</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180813140256.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>54044eea-eb5e-4d2f-bfbb-b8b5b93f7112</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.113080_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.113080_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.410082 63.436992 10.410454 63.437385 10.410500 63.437398</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangvei</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>300</app:bredde>
+      <app:stigning>4.9</app:stigning>
+      <app:tverrfall>1.2</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>50.3</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Delvis tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Ikke tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.94502">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2015-06-22T12:20:33</app:førsteDatafangstdato>
+      <app:objektNr>21857</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_Tettstedvei_20180614132953.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>d03c1f62-eab3-4247-8921-e6b6f5d99ba9</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommentar>Bygging pågår</app:kommentar>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.94502_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.94502_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.381400 63.430342 10.381430 63.430350 10.381447 63.430361 10.381451 63.430375 10.381411 63.430647</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Fortau</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>40</app:bredde>
+      <app:stigning>2.5</app:stigning>
+      <app:tverrfall>3.8</app:tverrfall>
+      <app:ledelinje>Ingen</app:ledelinje>
+      <app:tilgjengvurderingElRull>Ikke tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Ikke tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>35.2</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Ikke tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Ikke tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Ja</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.94750">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-02T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7572</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180808120524.jpg</app:bildefil1>
+      <app:bildefil2>5001_TettstedVei_20180808120553.jpg</app:bildefil2>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>5f7abafe-9bd3-4dd4-9a33-d7c561f3e0e0</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommentar>fallfare</app:kommentar>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.94750_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.94750_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.381552 63.430741 10.382379 63.430774</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Fortau</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Ujevnt</app:dekkeTilstand>
+      <app:bredde>250</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.0</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Ikke tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Delvis tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>41.5</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Ikke tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Delvis tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.94751">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-02T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7563</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>Kommune</app:opphav>
+      <app:bildefil1>uu41Tilgjengeligveg226.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>919ebb87-91b5-489e-a4b9-de30adb2e097</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.94751_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.94751_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.381647 63.430344 10.381628 63.430359 10.381621 63.430372 10.381579 63.430657</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Fortau</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>130</app:bredde>
+      <app:stigning>2.0</app:stigning>
+      <app:tverrfall>2.0</app:tverrfall>
+      <app:nedsenk1>2.0</app:nedsenk1>
+      <app:nedsenk2>2.0</app:nedsenk2>
+      <app:ledelinje>Ingen</app:ledelinje>
+      <app:tilgjengvurderingElRull>Ikke tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Ikke tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>35.3</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Ikke tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Ikke tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.94857">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-02T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7547</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180809094407.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>7544361a-58b7-4a19-bb99-06c8cc758314</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommentar>fallfare</app:kommentar>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.94857_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.94857_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.390188 63.430733 10.390109 63.430699 10.389391 63.430648 10.388932 63.430614 10.388782 63.430602</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Fortau</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Stein</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>300</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.0</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>Mindre god</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Delvis tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>72.6</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.94865">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2015-06-22T12:53:20</app:førsteDatafangstdato>
+      <app:objektNr>11937</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>b575737f-e565-4049-9f48-ba55b22ed6f9</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.94865_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.94865_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.388270 63.430607 10.387774 63.430546</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangfelt</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>300</app:bredde>
+      <app:stigning>1.6</app:stigning>
+      <app:tverrfall>1.2</app:tverrfall>
+      <app:nedsenk1>2.5</app:nedsenk1>
+      <app:nedsenk2>2.0</app:nedsenk2>
+      <app:lyssignal>Ja</app:lyssignal>
+      <app:lydsignal>Ja</app:lydsignal>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>Dårlig</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Delvis tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>25.7</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Delvis tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.94887">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2018-08-11T17:10:32</app:førsteDatafangstdato>
+      <app:objektNr>20137</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180811190959.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>2194948c-6816-42cc-9672-5883a2cde031</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.94887_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.94887_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.390855 63.435442 10.389896 63.435141</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangvei og sykkelvei</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>200</app:bredde>
+      <app:stigning>2.0</app:stigning>
+      <app:tverrfall>1.2</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>58.5</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.96480">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-02T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7573</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180809094718.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>1c9e3f07-b621-4426-8137-8000d6b4c1ed</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.96480_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.96480_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.390457 63.430686 10.390580 63.430707 10.391664 63.430711 10.391822 63.430716</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Fortau</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Stein</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>200</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.2</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>68.6</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.96565">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-02T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7521</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180808130536.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>9a8e92e4-2fde-400f-9ffd-9cc86c827865</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.96565_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.96565_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.387261 63.431382 10.387076 63.431755</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Fortau</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>290</app:bredde>
+      <app:stigning>3.8</app:stigning>
+      <app:tverrfall>1.0</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>Mindre god</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Delvis tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>42.6</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Delvis tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.96598">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-02T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7552</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180808121045.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>332b60f2-ab2b-4d88-a6cf-d354b15a9c26</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.96598_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.96598_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.382485 63.430779 10.383413 63.430824</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Fortau</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>245</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.2</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>46.6</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.96747">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-02T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7582</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>1c1e765a-497d-4de5-9b47-ee833940fbe8</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommentar>fallfare</app:kommentar>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.96747_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.96747_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.382226 63.431149 10.382252 63.431129 10.382379 63.430774</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Fortau</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>68</app:bredde>
+      <app:stigning>7.0</app:stigning>
+      <app:tverrfall>6.0</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Ikke tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Delvis tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>42.7</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Ikke tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Ikke tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.96748">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-02T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7503</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180808120227.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>55caaf31-4500-4fc7-a067-735d3dc86ccb</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommentar>søplebøtter på fortau</app:kommentar>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.96748_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.96748_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.381552 63.430741 10.381487 63.431099</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Fortau</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>130</app:bredde>
+      <app:stigning>6.0</app:stigning>
+      <app:tverrfall>3.4</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Ikke tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Delvis tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>40.0</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Ikke tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Ikke tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.96754">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2018-06-14T08:16:14</app:førsteDatafangstdato>
+      <app:objektNr>30882</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_Tettstedvei_20180614101344.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>b2b9a0ad-cb18-45e8-a4ab-097e0d40963c</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.96754_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.96754_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.379396 63.431230 10.379406 63.431112</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangfelt</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>280</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.0</app:tverrfall>
+      <app:nedsenk1>2.0</app:nedsenk1>
+      <app:nedsenk2>2.0</app:nedsenk2>
+      <app:lyssignal>Ja</app:lyssignal>
+      <app:lydsignal>Ja</app:lydsignal>
+      <app:ledelinje>Ingen</app:ledelinje>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Delvis tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>13.1</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.96776">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2018-06-13T11:16:24</app:førsteDatafangstdato>
+      <app:objektNr>30870</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_Tettstedvei_20180613131436.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>ae416cba-82e4-482b-97ac-522400b8659a</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommentar>Mangler rekkverk, men har oppkant</app:kommentar>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.96776_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.96776_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.379577 63.431518 10.379840 63.431294</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangvei og sykkelvei</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Tre</app:dekkeMateriale>
+      <app:plankeavstand>1.0</app:plankeavstand>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>250</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.0</app:tverrfall>
+      <app:ledelinje>Taktil</app:ledelinje>
+      <app:ledelinjeKontrast>Dårlig</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Delvis tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>28.2</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.96790">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-02T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>21077</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>uu41Tilgjengeligveg167.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>4f27d49d-bc31-4e0c-8592-729f7ff99efd</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommentar>Halve strekket har møbleringssone uten taktilt dekke</app:kommentar>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.96790_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.96790_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.389190 63.432396 10.389059 63.432364 10.387446 63.431975</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Fortau</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>350</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.0</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>Mindre god</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Delvis tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>98.9</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.96796">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-02T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7493</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180808132711.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>68bcf6d3-83e8-45a5-88da-15f0732dde59</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.96796_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.96796_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.385215 63.430378 10.386027 63.430418 10.386238 63.430429 10.386656 63.430453 10.387732 63.430529 10.387756 63.430535 10.387774 63.430546</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Fortau</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Stein</app:dekkeMateriale>
+      <app:dekkeTilstand>Ujevnt</app:dekkeTilstand>
+      <app:bredde>250</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>2.6</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Ikke tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Delvis tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>129.7</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Ikke tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Ikke tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.96857">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-02T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7529</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180809103928.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>f94c3213-c5b0-4e0e-8ca3-a6957145b0c0</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommentar>fallfare</app:kommentar>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.96857_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.96857_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.390753 63.432025 10.391658 63.432047</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Fortau</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>300</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.2</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Delvis tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>45.3</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.96882">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2020-12-14T13:00:00</app:førsteDatafangstdato>
+      <app:objektNr>41162</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>StatensKartverk</app:opphav>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>d9531348-4290-4653-9c71-74804c37bc1b</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.96882_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.96882_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.387540 63.431301 10.387344 63.431276</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangvei</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>300</app:bredde>
+      <app:stigning>2.3</app:stigning>
+      <app:tverrfall>1.2</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Delvis tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>10.2</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.97079">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2015-06-23T09:10:46</app:førsteDatafangstdato>
+      <app:objektNr>11945</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>2a6f0d93-d105-40db-ad69-bb81446c9808</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.97079_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.97079_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.387871 63.431337 10.387540 63.431301</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangfelt</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>300</app:bredde>
+      <app:stigning>2.3</app:stigning>
+      <app:tverrfall>1.2</app:tverrfall>
+      <app:nedsenk1>2.5</app:nedsenk1>
+      <app:nedsenk2>1.0</app:nedsenk2>
+      <app:lyssignal>Nei</app:lyssignal>
+      <app:lydsignal>Nei</app:lydsignal>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Delvis tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>17.0</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.97100">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-02T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7557</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180808133053.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>a3d4aac6-3c98-472f-b1ea-9f2ef14f0995</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.97100_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.97100_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.387404 63.431158 10.387774 63.430546</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangvei</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Stein</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>300</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.0</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>70.7</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.97116">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-02T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7518</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180809100957.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>6d8375a0-fd01-472f-b459-bba59ed3f5b5</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommentar>fallfare</app:kommentar>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.97116_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.97116_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.390278 63.431368 10.389876 63.431342</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangfelt</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Brostein</app:dekkeMateriale>
+      <app:dekkeTilstand>Ujevnt</app:dekkeTilstand>
+      <app:bredde>280</app:bredde>
+      <app:stigning>3.0</app:stigning>
+      <app:tverrfall>1.0</app:tverrfall>
+      <app:nedsenk1>1.0</app:nedsenk1>
+      <app:nedsenk2>1.0</app:nedsenk2>
+      <app:lyssignal>Nei</app:lyssignal>
+      <app:lydsignal>Nei</app:lydsignal>
+      <app:ledelinje>Visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Ikke tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Delvis tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>20.3</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Ikke tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Delvis tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.97277">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-02T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7556</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180809100149.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>60006996-ba49-4163-98ea-d9fa8d0cc21f</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommentar>fallfare</app:kommentar>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.97277_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.97277_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.388627 63.431257 10.388733 63.430844 10.388763 63.430680 10.388782 63.430602</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangvei</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Brostein</app:dekkeMateriale>
+      <app:dekkeTilstand>Ujevnt</app:dekkeTilstand>
+      <app:bredde>300</app:bredde>
+      <app:stigning>1.5</app:stigning>
+      <app:tverrfall>1.2</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>Mindre god</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Ikke tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Delvis tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>73.4</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Ikke tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Ikke tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.97310">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-02T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7486</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180808131926.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>67bd09dc-1a6d-4dbb-984b-a5bf078470cf</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.97310_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.97310_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.385793 63.431003 10.384979 63.430908 10.384852 63.430875</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Fortau</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Ujevnt</app:dekkeTilstand>
+      <app:bredde>185</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.0</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Ikke tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Delvis tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>49.4</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Ikke tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.97413">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-02T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>15421</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>uu41Tilgjengeligveg193.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>cc00f3ae-0bc5-4f70-a396-697b82deecc4</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.97413_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.97413_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.384502 63.431516 10.384255 63.431495 10.383867 63.431470 10.383475 63.431450 10.382678 63.431391 10.381587 63.431303 10.380658 63.431261 10.380199 63.431249 10.379396 63.431230 10.379320 63.431228</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangvei</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Grus</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>300</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.0</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>261.1</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.97431">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2018-06-14T11:52:59</app:førsteDatafangstdato>
+      <app:objektNr>30890</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_Tettstedvei_20180614135142.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>fe70b9dd-d880-45c3-a8fc-d47f910ef770</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.97431_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.97431_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.384451 63.430768 10.384609 63.430532</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangvei</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Grus</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>280</app:bredde>
+      <app:stigning>12.0</app:stigning>
+      <app:tverrfall>1.0</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Ikke tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>27.4</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Ikke tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.97881">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-02T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7570</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180809102808.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>a588ceea-5355-4bb9-b993-e915c12b0452</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.97881_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.97881_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.391211 63.433009 10.391143 63.432988 10.390393 63.432762 10.389443 63.432475</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Fortau</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Ujevnt</app:dekkeTilstand>
+      <app:bredde>350</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.0</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Ikke tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>106.5</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Ikke tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.97978">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2018-08-08T10:18:29</app:førsteDatafangstdato>
+      <app:objektNr>20046</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180808121659.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>118d71c8-14ea-46ee-8cf9-beb3b8364187</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.97978_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.97978_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.383413 63.430824 10.384371 63.430914</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Fortau</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Stein</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>300</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.2</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>48.9</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.97979">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-02T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>17778</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_Tettstedvei_20180614133912.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>d5e8bd09-a3c3-4b1c-995c-fd7afeaa15a3</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.97979_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.97979_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.384059 63.430363 10.383990 63.430396 10.383935 63.430432 10.383845 63.430515 10.383740 63.430612 10.383638 63.430707 10.383599 63.430754</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangvei</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Grus</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>300</app:bredde>
+      <app:stigning>2.0</app:stigning>
+      <app:tverrfall>1.0</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>49.5</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.98383">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-02T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7544</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180809103733.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>01b1038c-b116-4d42-a66f-0b0c2a2ba74d</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommentar>fallfare</app:kommentar>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.98383_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.98383_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.389906 63.431965 10.389971 63.431957 10.390277 63.431989 10.390634 63.432020</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Fortau</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>200</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>3.4</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Ikke tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Delvis tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>37.2</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Ikke tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Ikke tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.98464">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-02T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>7513</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_TettstedVei_20180809102351.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>82f568d1-de71-4e4c-91df-57629265f438</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommentar>fallfare</app:kommentar>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.98464_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.98464_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.389906 63.431965 10.389579 63.432334 10.389558 63.432358</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Fortau</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>270</app:bredde>
+      <app:stigning>2.0</app:stigning>
+      <app:tverrfall>1.2</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Delvis tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>47.2</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.98525">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2018-06-13T11:26:03</app:førsteDatafangstdato>
+      <app:objektNr>30872</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_Tettstedvei_20180613132249.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>ad243278-1c22-4d0b-9bff-ef439aa37459</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.98525_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.98525_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.380144 63.431303 10.380199 63.431249</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangvei</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Grus</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>300</app:bredde>
+      <app:stigning>7.5</app:stigning>
+      <app:tverrfall>2.3</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Delvis tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>6.6</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Ikke tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.98549">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2018-06-14T11:43:23</app:førsteDatafangstdato>
+      <app:objektNr>30888</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_Tettstedvei_20180614134215.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>63041aa0-1930-4081-8c74-2cdeeb4605f4</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.98549_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.98549_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.383638 63.430707 10.383964 63.430728 10.384451 63.430768</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangvei</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Grus</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>200</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.0</app:tverrfall>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>41.2</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.98618">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2012-07-02T22:00:00</app:førsteDatafangstdato>
+      <app:objektNr>27791</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_Tettstedvei_20180613135442.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>fd168eaf-d77e-458f-8e00-6e07890e5ab3</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommentar>ikke varselsfelt</app:kommentar>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.98618_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.98618_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.384502 63.431516 10.384608 63.431334</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangfelt</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Asfalt</app:dekkeMateriale>
+      <app:dekkeTilstand>Ujevnt</app:dekkeTilstand>
+      <app:bredde>190</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.0</app:tverrfall>
+      <app:nedsenk1>1.0</app:nedsenk1>
+      <app:nedsenk2>1.0</app:nedsenk2>
+      <app:lyssignal>Nei</app:lyssignal>
+      <app:lydsignal>Nei</app:lydsignal>
+      <app:ledelinje>Visuell</app:ledelinje>
+      <app:ledelinjeKontrast>Dårlig</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Ikke tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Delvis tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>21.0</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Ikke tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+  <wfs:member>
+    <app:TettstedVei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="tettstedvei.98623">
+      <app:datafangstdato>2020-12-14T13:00:00</app:datafangstdato>
+      <app:førsteDatafangstdato>2018-06-13T11:11:22</app:førsteDatafangstdato>
+      <app:objektNr>30868</app:objektNr>
+      <app:kommune>5001</app:kommune>
+      <app:opphav>K5001_uu14</app:opphav>
+      <app:bildefil1>5001_Tettstedvei_20180613131009.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>4d146fb8-a21c-4569-840c-f3cf927717bc</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-03-31 11:44:39.107988000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommentar>dekket er strekkmetall</app:kommentar>
+      <app:kommReel>5001</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'tettstedvei.98623_APP_GEOMETRI'-->
+        <gml:LineString gml:id="tettstedvei.98623_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.379382 63.431673 10.379502 63.431576</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:gatetype>Gangvei og sykkelvei</app:gatetype>
+      <app:varmekabel>Nei</app:varmekabel>
+      <app:dekkeMateriale>Tre</app:dekkeMateriale>
+      <app:plankeavstand>1.0</app:plankeavstand>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:bredde>300</app:bredde>
+      <app:stigning>1.0</app:stigning>
+      <app:tverrfall>1.0</app:tverrfall>
+      <app:ledelinje>Taktil</app:ledelinje>
+      <app:ledelinjeKontrast>Mindre god</app:ledelinjeKontrast>
+      <app:tilgjengvurderingElRull>Tilgjengelig</app:tilgjengvurderingElRull>
+      <app:tilgjengvurderingSyn>Delvis tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>12.4</app:segmentLengde>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:byggingpågår>Nei</app:byggingpågår>
+    </app:TettstedVei>
+  </wfs:member>
+</wfs:FeatureCollection>
