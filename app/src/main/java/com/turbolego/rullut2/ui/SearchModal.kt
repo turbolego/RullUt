@@ -82,7 +82,7 @@ fun SearchModal(
             }
         },
         text = {
-            Column {
+            Column(modifier = Modifier.navigationBarsPadding()) {
                 OutlinedTextField(
                     value = query,
                     onValueChange = { query = it },

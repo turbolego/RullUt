@@ -43,8 +43,6 @@ private val BILDEFIL_KEYS = setOf("bildefil1", "bildefil2", "bildefil3")
  * Helper: format a WMS property key+value pair into a Norwegian-friendly string.
  * Translates technical WMS keys using [PROPERTY_LABELS_NB]; falls back to the
  * original key if no translation exists. Exposed as a top-level function so it
-                .navigationBarsPadding()
-                .imePadding()
  * can be used elsewhere (e.g., in testing or for custom label rendering).
  *
  * Example:
@@ -103,6 +101,7 @@ fun FeaturePopup(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp, vertical = 16.dp)
+                .navigationBarsPadding()
                 .semantics { heading() },
         ) {
             // ── Title ──

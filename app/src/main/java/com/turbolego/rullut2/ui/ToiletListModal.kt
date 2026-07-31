@@ -64,7 +64,7 @@ fun ToiletListModal(
             }
         },
         text = {
-            Column {
+            Column(modifier = Modifier.navigationBarsPadding()) {
                 if (loading) {
                     LinearProgressIndicator(
                         modifier = Modifier.fillMaxWidth(),

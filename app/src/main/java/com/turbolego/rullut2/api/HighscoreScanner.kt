@@ -3,7 +3,6 @@ package com.turbolego.rullut2.api
 import com.turbolego.rullut2.map.MapConfig
 import com.turbolego.rullut2.model.CoordinateUtils
 import com.turbolego.rullut2.model.RoadSegmentFeature
-import org.maplibre.android.maps.MapLibreMap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -20,20 +19,17 @@ import kotlinx.coroutines.withContext
 object HighscoreScanner {
 
     /**
-     * Perform a grid scan of the current viewport and build a
+     * Perform a grid scan of the given viewport bounds and build a
      * complete [HighscoreResult].
+     *
+     * Bounds must be extracted on the main thread before calling this.
      */
     suspend fun scan(
-        map: MapLibreMap,
+        swLat: Double, swLon: Double,
+        neLat: Double, neLon: Double,
     ): HighscoreResult = withContext(Dispatchers.IO) {
-        val region = map.projection.visibleRegion
-        val latLngBounds = region.latLngBounds
-        val sw = latLngBounds.southWest
-        val ne = latLngBounds.northEast
-
-        // Convert viewport corners to EPSG:3857 for the grid scan
-        val (swX, swY) = CoordinateUtils.lonLatToMercator(sw.longitude, sw.latitude)
-        val (neX, neY) = CoordinateUtils.lonLatToMercator(ne.longitude, ne.latitude)
+        val (swX, swY) = CoordinateUtils.lonLatToMercator(swLon, swLat)
+        val (neX, neY) = CoordinateUtils.lonLatToMercator(neLon, neLat)
         val minX = minOf(swX, neX)
         val minY = minOf(swY, neY)
         val maxX = maxOf(swX, neX)
@@ -61,13 +57,15 @@ object HighscoreScanner {
             RoadSegmentFeature(
                 objid = vf.objId.ifBlank { "${vf.layerName}:${vf.featureId}:${vf.centreX}:${vf.centreY}" },
                 sourceLayer = vf.layerName,
-                roadType = props["byggtype"]?.takeIf { it.isNotBlank() } ?: vf.byggtype,
+                roadType = props["gatetype"]?.takeIf { it.isNotBlank() }
+                    ?: props["byggtype"]?.takeIf { it.isNotBlank() }
+                    ?: vf.byggtype,
                 widthCm = props["bredde"]?.toDoubleOrNull(),
                 slopePercent = props["stigning"]?.toDoubleOrNull(),
                 municipality = props["kommune"] ?: "",
                 surfaceMaterial = props["dekkemateriale"] ?: "",
-                surfaceCondition = props["dekkestandard"] ?: "",
-                comment = props["merknad"] ?: "",
+                surfaceCondition = props["dekketilstand"] ?: "",
+                comment = props["kommentar"] ?: "",
                 estimatedLengthMetres = props["segmentlengde"]?.toDoubleOrNull()
                     ?: props["lengde"]?.toDoubleOrNull(),
                 centerLat = lat,

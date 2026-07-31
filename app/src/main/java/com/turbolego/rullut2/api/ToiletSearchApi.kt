@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit
 object ToiletSearchApi {
 
     private const val TAG = "ToiletSearchApi"
-    private const val SEARCH_RADIUS = 2000 // meters
+    private val SEARCH_RADII_METERS = listOf(2000.0, 5000.0, 10_000.0, 30_000.0)
     private const val TIMEOUT_MS = 15_000L
 
     private val client = OkHttpClient.Builder()
@@ -45,24 +45,33 @@ object ToiletSearchApi {
         lon: Double,
         limit: Int = 10,
     ): List<ToiletResult> = withContext(Dispatchers.IO) {
-        val bbox = buildBbox(lat, lon, SEARCH_RADIUS.toDouble())
-        val url = buildWfsUrl(bbox)
-
         try {
-            val request = Request.Builder()
-                .url(url)
-                .header("User-Agent", MapConfig.USER_AGENT)
-                .get()
-                .build()
+            for (radius in SEARCH_RADII_METERS) {
+                val bbox = buildBbox(lat, lon, radius)
+                val url = buildWfsUrl(bbox)
+                val request = Request.Builder()
+                    .url(url)
+                    .header("User-Agent", MapConfig.USER_AGENT)
+                    .get()
+                    .build()
 
-            val response = client.newCall(request).execute()
-            if (!response.isSuccessful) {
-                Log.w(TAG, "WFS returned ${response.code}")
-                return@withContext emptyList()
+                val response = client.newCall(request).execute()
+                if (!response.isSuccessful) {
+                    Log.w(TAG, "WFS returned ${response.code} for radius=${radius.toInt()}m")
+                    continue
+                }
+
+                val xml = response.body?.string().orEmpty()
+                if (xml.isBlank()) continue
+
+                val results = parseWfsResponse(xml, lat, lon, limit)
+                if (results.isNotEmpty()) {
+                    Log.d(TAG, "Found ${results.size} toilets within ${radius.toInt()}m")
+                    return@withContext results
+                }
             }
 
-            val xml = response.body?.string() ?: return@withContext emptyList()
-            parseWfsResponse(xml, lat, lon, limit)
+            emptyList()
         } catch (e: Exception) {
             Log.w(TAG, "WFS request failed", e)
             emptyList()

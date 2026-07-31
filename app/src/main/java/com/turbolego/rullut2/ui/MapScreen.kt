@@ -399,10 +399,12 @@ fun MapScreen(modifier: Modifier = Modifier) {
                     highscoreResult = null
                     coroutineScope.launch {
                         try {
-                            val mapRef = map
-                            if (mapRef == null) return@launch
+                            val mapRef = map ?: return@launch
+                            val bounds = mapRef.projection.visibleRegion.latLngBounds
+                            val sw = bounds.southWest
+                            val ne = bounds.northEast
                             val result = withContext(Dispatchers.IO) {
-                                HighscoreScanner.scan(mapRef)
+                                HighscoreScanner.scan(sw.latitude, sw.longitude, ne.latitude, ne.longitude)
                             }
                             highscoreResult = result
                         } catch (_: Exception) {
@@ -677,6 +679,14 @@ fun MapScreen(modifier: Modifier = Modifier) {
                 }
             }
             toiletLoading = false
+
+            if (toiletList.isEmpty()) {
+                Toast.makeText(
+                    context,
+                    Strings.toiletNoResults,
+                    Toast.LENGTH_SHORT,
+                ).show()
+            }
         }
     }
 }
