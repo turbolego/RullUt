@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import com.turbolego.rullut2.model.ViewportFeature
 import java.util.Locale
 
@@ -46,17 +47,22 @@ fun ViewportFeatureModal(
 ) {
     if (!isVisible) return
 
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
     ModalBottomSheet(
         onDismissRequest = onDismiss,
-        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+        sheetState = sheetState,
         containerColor = MaterialTheme.colorScheme.surface,
         shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .fillMaxHeight(0.95f)
                 .heightIn(min = 200.dp, max = 600.dp)
                 .padding(horizontal = 16.dp)
+                .navigationBarsPadding()
+                .imePadding()
                 .padding(bottom = 32.dp),
         ) {
             // ── Header ──────────────────────────────────────────────

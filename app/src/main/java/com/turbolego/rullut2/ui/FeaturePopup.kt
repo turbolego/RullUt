@@ -26,6 +26,7 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import com.turbolego.rullut2.i18n.PROPERTY_LABELS_NB
 import com.turbolego.rullut2.i18n.Strings
 import com.turbolego.rullut2.i18n.WFS_IMAGE_BASE_URL
@@ -33,7 +34,6 @@ import com.turbolego.rullut2.model.FeatureInfo
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.util.concurrent.TimeUnit
-
 /**
  * Property keys that carry image filenames from WFS features.
  */
@@ -43,6 +43,8 @@ private val BILDEFIL_KEYS = setOf("bildefil1", "bildefil2", "bildefil3")
  * Helper: format a WMS property key+value pair into a Norwegian-friendly string.
  * Translates technical WMS keys using [PROPERTY_LABELS_NB]; falls back to the
  * original key if no translation exists. Exposed as a top-level function so it
+                .navigationBarsPadding()
+                .imePadding()
  * can be used elsewhere (e.g., in testing or for custom label rendering).
  *
  * Example:
@@ -78,6 +80,8 @@ fun FeaturePopup(
     onDismiss: () -> Unit,
 ) {
     if (!visible) return
+
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
     // ── Deduplicate by layerName + featureId (mirrors Expo dedup logic) ──
     val dedupedFeatures = remember(features) {

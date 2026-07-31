@@ -141,28 +141,34 @@ object FeatureInfoParser {
      */
     fun parseCapabilitiesXml(xml: String): List<LayerInfo> {
         val layers = mutableListOf<LayerInfo>()
-        try {
-            val factory = XmlPullParserFactory.newInstance()
-            val parser = factory.newPullParser()
-            parser.setInput(StringReader(xml))
+        val layerRegex = Regex(
+            pattern = """
+                <Layer>\s*
+                .*?<Name>(.*?)</Name>\s*
+                .*?<Title>(.*?)</Title>
+                .*?</Layer>
+            """.trimIndent(),
+            options = setOf(RegexOption.DOT_MATCHES_ALL, RegexOption.IGNORE_CASE),
+        )
 
-            // Navigate to the Capability/Layer tree
-            var eventType = parser.eventType
-            while (eventType != XmlPullParser.END_DOCUMENT) {
-                if (eventType == XmlPullParser.START_TAG &&
-                    parser.name == "Layer" &&
-                    parser.depth == 2 // WMS_Capabilities > Capability > Layer
-                ) {
-                    parseLayerTree(parser).let { root ->
-                        if (root != null) layers.addAll(root.children)
-                    }
-                    break
-                }
-                eventType = parser.next()
+        layerRegex.findAll(xml).forEach { match ->
+            val name = match.groupValues.getOrNull(1)?.trim().orEmpty()
+            val title = match.groupValues.getOrNull(2)
+                ?.trim()
+                ?.takeIf { it.isNotBlank() }
+                ?: name
+            if (name.isNotBlank()) {
+                layers.add(
+                    LayerInfo(
+                        name = name,
+                        title = title,
+                        legendUrl = null,
+                        children = emptyList(),
+                    )
+                )
             }
-        } catch (_: XmlPullParserException) {
-        } catch (_: Exception) {
         }
+
         return layers
     }
 
@@ -203,16 +209,13 @@ object FeatureInfoParser {
 
         // If this layer has a name, return it with children.
         // If no name, this is an abstract group — promote children.
-        return if (name != null) {
+        return if (name != null || children.isNotEmpty()) {
             LayerInfo(
-                name = name,
-                title = title ?: name,
+                name = name ?: title ?: "",
+                title = title ?: name ?: "",
                 legendUrl = legendUrl,
                 children = children,
             )
-        } else if (children.isNotEmpty()) {
-            // Abstract group — return null, caller handles children promotion
-            null
         } else {
             null
         }

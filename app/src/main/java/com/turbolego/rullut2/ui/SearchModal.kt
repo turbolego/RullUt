@@ -16,6 +16,7 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import com.turbolego.rullut2.i18n.Strings
 import com.turbolego.rullut2.model.PlaceResult
 
@@ -54,7 +55,9 @@ fun SearchModal(
 
     AlertDialog(
         onDismissRequest = onDismiss,
+        modifier = Modifier.fillMaxWidth(),
         containerColor = MaterialTheme.colorScheme.surface,
+        properties = DialogProperties(usePlatformDefaultWidth = false),
         title = {
             Text(
                 Strings.searchTitle,

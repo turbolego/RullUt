@@ -1,6 +1,7 @@
 package com.turbolego.rullut2
 
 import com.turbolego.rullut2.api.AccessibilityAssessment
+import com.turbolego.rullut2.api.ValhallaRouteApi
 import com.turbolego.rullut2.model.RouteAccessibilitySegment
 import org.junit.Assert.*
 import org.junit.Test
@@ -13,8 +14,8 @@ class RouteUtilsTest {
 
     @Test
     fun `decode simple polyline`() {
-        // Standard polyline example from Google's reference docs.
-        val encoded = "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
+        // Precision-6 polyline example matching the Valhalla decoder in the app.
+        val encoded = "_izlhA~rlgdF_{geC~ywl@_kwzCn`{nI"
 
         val decoded = decodePolylineReflectively(encoded)
 
@@ -111,40 +112,10 @@ class RouteUtilsTest {
  * indirectly by checking the computeRoute response factor.
  */
 private fun decodePolylineReflectively(encoded: String): List<Pair<Double, Double>> {
-    // This is a direct port of the polyline decode algorithm
-    val coords = mutableListOf<Pair<Double, Double>>()
-    var idx = 0
-    var lat = 0
-    var lng = 0
-
-    while (idx < encoded.length) {
-        // Latitude
-        var shift = 0
-        var result = 0
-        var byte: Int
-        do {
-            byte = encoded[idx++].code - 63
-            result = result or ((byte and 0x1f) shl shift)
-            shift += 5
-        } while (byte >= 0x20)
-        val dlat = if (result and 1 == 1) (result shr 1).inv() else result shr 1
-        lat += dlat
-
-        // Longitude
-        shift = 0
-        result = 0
-        do {
-            byte = encoded[idx++].code - 63
-            result = result or ((byte and 0x1f) shl shift)
-            shift += 5
-        } while (byte >= 0x20)
-        val dlng = if (result and 1 == 1) (result shr 1).inv() else result shr 1
-        lng += dlng
-
-        coords.add(Pair(lng * 1e-6, lat * 1e-6))
-    }
-
-    return coords
+    val method = ValhallaRouteApi::class.java.getDeclaredMethod("decodePolyline", String::class.java)
+    method.isAccessible = true
+    @Suppress("UNCHECKED_CAST")
+    return method.invoke(ValhallaRouteApi, encoded) as List<Pair<Double, Double>>
 }
 
 private fun scoreFromResponseReflectively(raw: String): Int {
