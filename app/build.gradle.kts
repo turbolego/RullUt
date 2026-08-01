@@ -62,6 +62,12 @@ android {
         compose = true
     }
 
+    testOptions {
+        // Android framework stubs (Log, etc.) return defaults instead of
+        // throwing "not mocked" in plain JVM unit tests.
+        unitTests.isReturnDefaultValues = true
+    }
+
     // Generate an AAB (Android App Bundle) by default for Play Store
     bundle {
         language {

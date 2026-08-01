@@ -164,4 +164,6 @@ data class RoadSegmentFeature(
     val estimatedLengthMetres: Double? = null,
     val centerLat: Double? = null,
     val centerLon: Double? = null,
+    /** Full segment polyline as (lon, lat) pairs in EPSG:4326, in vertex order. */
+    val geometry: List<Pair<Double, Double>> = emptyList(),
 )

@@ -133,6 +133,14 @@ object RoadWfsApi {
             val coords = posList.trim().split(Regex("\\s+")).mapNotNull { it.toDoubleOrNull() }
             if (coords.size < 4) continue // need at least one full point pair
 
+            // Full polyline: (lon, lat) pairs in vertex order
+            val polyline = mutableListOf<Pair<Double, Double>>()
+            var k = 0
+            while (k + 1 < coords.size) {
+                polyline.add(Pair(coords[k], coords[k + 1]))
+                k += 2
+            }
+
             var sumLon = 0.0
             var sumLat = 0.0
             var i = 0
@@ -163,6 +171,7 @@ object RoadWfsApi {
                     estimatedLengthMetres = tag("segmentLengde")?.toDoubleOrNull(),
                     centerLat = centerLat,
                     centerLon = centerLon,
+                    geometry = polyline,
                 )
             )
         }

@@ -4,23 +4,20 @@ import android.content.Context
 import android.util.Log
 import com.turbolego.rullut2.map.MapConfig
 import com.turbolego.rullut2.model.*
-import org.json.JSONArray
-import org.json.JSONObject
-import kotlin.math.min
 
 /**
- * Route engine: tries Overpass OSM → Valhalla pedestrian API.
+ * Route engine: computes accessible routes between two known points.
  *
- * The original Expo app had a pre-compiled WFS routing graph (norge-routing-graph.dat)
- * as the first tier. We skip it because:
- * 1. The ~14MB file requires periodic regeneration from Geonorge WFS
- * 2. Overpass + Valhalla always use live OSM data (fresher routes)
- * 3. Users get better results without waiting for graph rebuilds
- * 4. App size stays small (<5MB)
+ * Fallback chain (first available wins):
+ *   1. WFS — builds a routing graph from Geonorge tilgjengelighet road data
+ *      (app:TettstedVei / app:FriluftTurvei). Same data source as the
+ *      Highscore feature; no third-party dependency. [WfsRouteApi]
+ *   2. Overpass OSM — live OSM roads, custom Dijkstra. [OsmRouteApi]
+ *   3. Valhalla — production pedestrian routing. [ValhallaRouteApi]
  *
- * Fallback chain:
- *   1. Overpass API — fetches OSM roads, builds graph, runs Dijkstra
- *   2. Valhalla — production pedestrian routing with proper turn-by-turn
+ * The original Expo app had a pre-compiled WFS routing graph
+ * (norge-routing-graph.dat) as the first tier. We rebuild the graph on demand
+ * from live WFS data instead of shipping a ~14MB file that needs regeneration.
  */
 object RouteEngine {
 
@@ -28,8 +25,7 @@ object RouteEngine {
 
     /**
      * Find an accessible route between two points.
-     * Tries Overpass OSM first, then falls back to Valhalla.
-     * After finding a route, runs accessibility assessment.
+     * Tries WFS → Overpass OSM → Valhalla, then runs accessibility assessment.
      */
     suspend fun findRoute(
         context: Context,
@@ -38,16 +34,26 @@ object RouteEngine {
         toLat: Double,
         toLon: Double,
     ): RouteResult? {
-        // 1) Try Overpass OSM (custom Dijkstra on live OSM road data)
+        // 1) WFS road network (primary — authoritative, no third-party server)
         var path: Dijkstra.RoutePath? = null
-        var source = "osm"
+        var source = "wfs"
         try {
-            path = OsmRouteApi.computeRoute(fromLat, fromLon, toLat, toLon)
+            path = WfsRouteApi.computeRoute(fromLat, fromLon, toLat, toLon)
         } catch (e: Exception) {
-            Log.w(TAG, "Overpass routing failed", e)
+            Log.w(TAG, "WFS routing failed", e)
         }
 
-        // 2) Fall back to Valhalla pedestrian API
+        // 2) Overpass OSM fallback
+        if (path == null) {
+            try {
+                path = OsmRouteApi.computeRoute(fromLat, fromLon, toLat, toLon)
+                source = "osm"
+            } catch (e: Exception) {
+                Log.w(TAG, "Overpass routing failed", e)
+            }
+        }
+
+        // 3) Valhalla pedestrian API fallback
         if (path == null) {
             try {
                 path = ValhallaRouteApi.computeRoute(fromLat, fromLon, toLat, toLon)
@@ -94,21 +100,21 @@ object RouteEngine {
      * Build a GeoJSON FeatureCollection string for the route path.
      */
     private fun buildGeoJson(coordinates: List<Pair<Double, Double>>): String {
-        val coordsArray = JSONArray()
+        val coordsArray = org.json.JSONArray()
         for ((lng, lat) in coordinates) {
-            coordsArray.put(JSONArray().apply { put(lng); put(lat) })
+            coordsArray.put(org.json.JSONArray().apply { put(lng); put(lat) })
         }
 
-        return JSONObject().apply {
+        return org.json.JSONObject().apply {
             put("type", "FeatureCollection")
-            put("features", JSONArray().apply {
-                put(JSONObject().apply {
+            put("features", org.json.JSONArray().apply {
+                put(org.json.JSONObject().apply {
                     put("type", "Feature")
-                    put("geometry", JSONObject().apply {
+                    put("geometry", org.json.JSONObject().apply {
                         put("type", "LineString")
                         put("coordinates", coordsArray)
                     })
-                    put("properties", JSONObject())
+                    put("properties", org.json.JSONObject())
                 })
             })
         }.toString()
