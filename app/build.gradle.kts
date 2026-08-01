@@ -114,7 +114,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.19.0")
 
     // Google Play Services (location — FusedLocationProviderClient)
-    implementation("com.google.android.gms:play-services-location:21.3.0")
+    implementation("com.google.android.gms:play-services-location:21.4.0")
 
     // Tests
     testImplementation("junit:junit:4.13.2")
