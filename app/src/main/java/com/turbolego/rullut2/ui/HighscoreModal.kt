@@ -119,6 +119,9 @@ fun HighscoreFab(
  * Bottom-sheet modal showing the four highscore top lists.
  *
  * @param result         The [HighscoreResult] from [buildHighscore].
+ *                       When null and [loading] is true, shows a spinner
+ *                       (mirrors the web modal which opens immediately).
+ * @param loading        True while data is being loaded (asset parse or scan).
  * @param onDismiss      Called when the sheet is dismissed.
  * @param onZoomToFeature Called when the user taps "Zoom til veien".
  *                        Receives the [RoadSegmentFeature] to centre the map on.
@@ -126,7 +129,8 @@ fun HighscoreFab(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HighscoreModal(
-    result: HighscoreResult,
+    result: HighscoreResult?,
+    loading: Boolean,
     onDismiss: () -> Unit,
     onZoomToFeature: (RoadSegmentFeature) -> Unit,
     modifier: Modifier = Modifier,
@@ -159,6 +163,26 @@ fun HighscoreModal(
                     .padding(bottom = 8.dp)
                     .semantics { heading() },
             )
+
+            if (loading || result == null) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        CircularProgressIndicator()
+                        Spacer(Modifier.height(12.dp))
+                        Text(
+                            text = "Henter data…",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                }
+                return@ModalBottomSheet
+            }
 
             // ── Stats header ─────────────────────────────────────────────
             StatsHeader(result)

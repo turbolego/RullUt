@@ -398,6 +398,16 @@ fun MapScreen(modifier: Modifier = Modifier) {
                     highscoreScanning = true
                     highscoreResult = null
                     coroutineScope.launch {
+                        // 1. Bundled static data (instant, works offline, cached in memory)
+                        val bundled = withContext(Dispatchers.IO) {
+                            HighscoreAssetApi.load(context)
+                        }
+                        if (bundled != null) {
+                            highscoreResult = bundled
+                            highscoreScanning = false
+                            return@launch
+                        }
+                        // 2. Fallback: live WFS scan of current viewport
                         try {
                             val mapRef = map ?: return@launch
                             val bounds = mapRef.projection.visibleRegion.latLngBounds
@@ -488,28 +498,27 @@ fun MapScreen(modifier: Modifier = Modifier) {
                 Pair(it.latitude, it.longitude)
             },
             onRouteRequest = { fromLat, fromLon, toLat, toLon ->
-                coroutineScope.launch {
-                    val result = withContext(Dispatchers.IO) {
-                        RouteEngine.findRoute(
-                            context, fromLat, fromLon, toLat, toLon
-                        )
-                    }
-                    routeResult = result
-                    if (result != null) {
-                        drawRouteOnMap(map, style, result)
-                        Toast.makeText(
-                            context,
-                            "${Strings.routeTitle}: ${result.distanceLabel}, ${result.durationLabel}",
-                            Toast.LENGTH_SHORT,
-                        ).show()
-                    } else {
-                        Toast.makeText(
-                            context,
-                            Strings.routeNoRoute,
-                            Toast.LENGTH_SHORT,
-                        ).show()
-                    }
+                val result = withContext(Dispatchers.IO) {
+                    RouteEngine.findRoute(
+                        context, fromLat, fromLon, toLat, toLon
+                    )
                 }
+                routeResult = result
+                if (result != null) {
+                    drawRouteOnMap(map, style, result)
+                    Toast.makeText(
+                        context,
+                        "${Strings.routeTitle}: ${result.distanceLabel}, ${result.durationLabel}",
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        context,
+                        Strings.routeNoRoute,
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                }
+                result
             },
             onSearchPlace = { query ->
                 withContext(Dispatchers.IO) {
@@ -543,10 +552,16 @@ fun MapScreen(modifier: Modifier = Modifier) {
         // ── Toilet list modal ──
         var toiletList by remember { mutableStateOf<List<ToiletResult>>(emptyList()) }
         var toiletLoading by remember { mutableStateOf(false) }
+        var toiletRouting by remember { mutableStateOf<ToiletResult?>(null) }
+        var toiletRouteLoading by remember { mutableStateOf(false) }
+        var toiletRouteResult by remember { mutableStateOf<RouteResult?>(null) }
         ToiletListModal(
             visible = showToilets,
             loading = toiletLoading,
             toilets = toiletList,
+            routingToilet = toiletRouting,
+            routeLoading = toiletRouteLoading,
+            routeResult = toiletRouteResult,
             onSelectToilet = { toilet ->
                 map?.moveCamera(
                     CameraUpdateFactory.newLatLngZoom(
@@ -559,7 +574,6 @@ fun MapScreen(modifier: Modifier = Modifier) {
                 showToilets = false
             },
             onRouteToToilet = { toilet ->
-                showToilets = false
                 coroutineScope.launch {
                     // Ensure we have GPS — try to get it if not already cached
                     val loc = currentLocation ?: withContext(Dispatchers.IO) {
@@ -568,7 +582,10 @@ fun MapScreen(modifier: Modifier = Modifier) {
                     if (loc != null) {
                         // Cache the fresh location
                         currentLocation = loc
-                        
+                        toiletRouting = toilet
+                        toiletRouteLoading = true
+                        toiletRouteResult = null
+
                         val result = withContext(Dispatchers.IO) {
                             RouteEngine.findRoute(
                                 context,
@@ -577,13 +594,9 @@ fun MapScreen(modifier: Modifier = Modifier) {
                             )
                         }
                         if (result != null) {
+                            toiletRouteResult = result
                             routeResult = result
                             drawRouteOnMap(map, style, result)
-                            Toast.makeText(
-                                context,
-                                "Rute til ${toilet.name}: ${result.distanceLabel}, ${result.durationLabel}",
-                                Toast.LENGTH_SHORT,
-                            ).show()
                         } else {
                             Toast.makeText(
                                 context,
@@ -591,6 +604,7 @@ fun MapScreen(modifier: Modifier = Modifier) {
                                 Toast.LENGTH_SHORT,
                             ).show()
                         }
+                        toiletRouteLoading = false
                     } else {
                         Toast.makeText(
                             context,
@@ -629,9 +643,10 @@ fun MapScreen(modifier: Modifier = Modifier) {
         )
 
         // ── Highscore modal ──
-        if (highscoreResult != null) {
+        if (showHighscore) {
             HighscoreModal(
-                result = highscoreResult!!,
+                result = highscoreResult,
+                loading = highscoreScanning,
                 onDismiss = {
                     showHighscore = false
                     highscoreResult = null

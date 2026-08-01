@@ -19,16 +19,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import com.turbolego.rullut2.i18n.Strings
+import com.turbolego.rullut2.model.RouteResult
 import com.turbolego.rullut2.model.ToiletResult
 
 /**
  * Toilet search results modal with "Route to" action.
+ *
+ * Mirrors the working GitHub Pages flow: when the user routes to a toilet the
+ * result is shown inline in the modal ("Rute til Toalett: 4.1 km, 52 min")
+ * instead of closing the modal and showing only a toast.
  */
 @Composable
 fun ToiletListModal(
     visible: Boolean,
     loading: Boolean,
     toilets: List<ToiletResult>,
+    routingToilet: ToiletResult? = null,
+    routeLoading: Boolean = false,
+    routeResult: RouteResult? = null,
     onSelectToilet: (ToiletResult) -> Unit,
     onRouteToToilet: (ToiletResult) -> Unit,
     onDismiss: () -> Unit,
@@ -122,7 +130,10 @@ fun ToiletListModal(
                                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                             )
                                         }
-                                        IconButton(onClick = { onRouteToToilet(toilet) }) {
+                                        IconButton(
+                                            onClick = { onRouteToToilet(toilet) },
+                                            enabled = !routeLoading,
+                                        ) {
                                             Icon(
                                                 Icons.Default.DirectionsWalk,
                                                 contentDescription = "Route til toalett",
@@ -134,6 +145,75 @@ fun ToiletListModal(
                                 }
                             }
                             Spacer(Modifier.height(4.dp))
+                        }
+                    }
+                }
+
+                // ── Inline route status/result (web-style) ──
+                if (routeLoading) {
+                    Spacer(Modifier.height(12.dp))
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(18.dp),
+                            strokeWidth = 2.dp,
+                        )
+                        Spacer(Modifier.width(8.dp))
+                        Text(
+                            Strings.routeCalculating,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                } else if (routeResult != null && routingToilet != null) {
+                    Spacer(Modifier.height(12.dp))
+                    Surface(
+                        modifier = Modifier.fillMaxWidth(),
+                        color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f),
+                        shape = MaterialTheme.shapes.small,
+                    ) {
+                        Column(modifier = Modifier.padding(12.dp)) {
+                            Text(
+                                "Rute til ${routingToilet.name}",
+                                style = MaterialTheme.typography.titleSmall,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.primary,
+                            )
+                            Spacer(Modifier.height(4.dp))
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceEvenly,
+                            ) {
+                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                    Text(
+                                        routeResult.distanceLabel,
+                                        style = MaterialTheme.typography.titleMedium,
+                                        fontWeight = FontWeight.Bold,
+                                    )
+                                    Text(
+                                        Strings.routeDistance,
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                }
+                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                    Text(
+                                        routeResult.durationLabel,
+                                        style = MaterialTheme.typography.titleMedium,
+                                        fontWeight = FontWeight.Bold,
+                                    )
+                                    Text(
+                                        Strings.routeDuration,
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                }
+                            }
+                            Spacer(Modifier.height(6.dp))
+                            Text(
+                                Strings.routeAccessible(routeResult.accessiblePct),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
                         }
                     }
                 }

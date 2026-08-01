@@ -21,17 +21,22 @@ import androidx.compose.ui.window.DialogProperties
 import com.turbolego.rullut2.i18n.Strings
 import com.turbolego.rullut2.model.PlaceResult
 import com.turbolego.rullut2.model.RouteResult
+import kotlinx.coroutines.launch
 
 /**
  * Route planner — search for origin/destination, compute accessible route.
  * Uses place search instead of manual lat/lon entry.
+ *
+ * Mirrors the working GitHub Pages flow: the modal computes the route itself
+ * and shows the result inline ("Rute funnet: 11.6 km") instead of relying on
+ * a toast from the parent.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RoutePlannerModal(
     visible: Boolean,
     myLocation: Pair<Double, Double>?,
-    onRouteRequest: (fromLat: Double, fromLon: Double, toLat: Double, toLon: Double) -> Unit,
+    onRouteRequest: suspend (fromLat: Double, fromLon: Double, toLat: Double, toLon: Double) -> RouteResult?,
     onSearchPlace: suspend (query: String) -> List<PlaceResult>,
     onDismiss: () -> Unit,
 ) {
@@ -51,11 +56,13 @@ fun RoutePlannerModal(
 
     var loading by remember { mutableStateOf(false) }
     var routeResult by remember { mutableStateOf<RouteResult?>(null) }
+    var routeError by remember { mutableStateOf<String?>(null) }
+    val scope = rememberCoroutineScope()
 
     // Auto-set origin from current GPS
     LaunchedEffect(myLocation) {
         if (myLocation != null && fromSelected == null) {
-            fromQuery = "📍 Min posisjon"
+            fromQuery = "📍 ${Strings.routeFromLocation}"
             fromSelected = myLocation
         }
     }
@@ -100,6 +107,33 @@ fun RoutePlannerModal(
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.SemiBold,
                 )
+                Spacer(Modifier.weight(1f))
+                // "Use my location" button (same as web's Min posisjon)
+                TextButton(
+                    onClick = {
+                        val loc = myLocation
+                        if (loc != null) {
+                            fromSelected = loc
+                            fromQuery = "📍 ${Strings.routeFromLocation}"
+                            fromResults = emptyList()
+                        }
+                    },
+                    enabled = myLocation != null,
+                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
+                ) {
+                    Icon(
+                        Icons.Filled.LocationOn,
+                        contentDescription = null,
+                        modifier = Modifier.size(16.dp),
+                        tint = MaterialTheme.colorScheme.primary,
+                    )
+                    Spacer(Modifier.width(4.dp))
+                    Text(
+                        Strings.routeFromLocation,
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                }
             }
             Spacer(Modifier.height(4.dp))
 
@@ -238,7 +272,17 @@ fun RoutePlannerModal(
                     val t = toSelected
                     if (f != null && t != null) {
                         loading = true
-                        onRouteRequest(f.first, f.second, t.first, t.second)
+                        routeError = null
+                        routeResult = null
+                        scope.launch {
+                            val result = onRouteRequest(f.first, f.second, t.first, t.second)
+                            loading = false
+                            if (result != null) {
+                                routeResult = result
+                            } else {
+                                routeError = Strings.routeNoRoute
+                            }
+                        }
                     }
                 },
                 enabled = !loading && fromSelected != null && toSelected != null,
@@ -258,6 +302,15 @@ fun RoutePlannerModal(
                 } else {
                     Text(Strings.routeCalculate, color = MaterialTheme.colorScheme.onPrimary)
                 }
+            }
+
+            if (routeError != null) {
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    routeError!!,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error,
+                )
             }
 
             if (routeResult != null) {
