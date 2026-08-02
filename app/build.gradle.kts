@@ -105,7 +105,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0")
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0")
 
     // DataStore for preferences (basemap, active layers)
     implementation("androidx.datastore:datastore-preferences:1.2.1")
@@ -121,7 +121,7 @@ dependencies {
     testImplementation("org.json:json:20250107")
     // Real XmlPullParser implementation so parseCapabilitiesXml runs on JVM
     testImplementation("net.sf.kxml:kxml2:2.3.0")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.1")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.11.0")
     androidTestImplementation("androidx.test.ext:junit:1.3.0")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
     androidTestImplementation(composeBom)
