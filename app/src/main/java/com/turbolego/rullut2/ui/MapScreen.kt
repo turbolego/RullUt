@@ -196,13 +196,13 @@ fun MapScreen(modifier: Modifier = Modifier) {
                     featureTitle = Strings.featureLoading
 
                     try {
-                                                    val features = withContext(Dispatchers.IO) {
-                                FeatureInfoApi.queryAllLayers(
-                                    lat = latLng.latitude,
-                                    lng = latLng.longitude,
-                                    layers = activeLayers,
-                                )
-                            }
+                        val features = withContext(Dispatchers.IO) {
+                            FeatureInfoApi.queryAllLayers(
+                                lat = latLng.latitude,
+                                lng = latLng.longitude,
+                                layers = activeLayers,
+                            )
+                        }
 
                         featureList = features
                         featureTitle = if (features.isNotEmpty()) {
@@ -559,25 +559,25 @@ fun MapScreen(modifier: Modifier = Modifier) {
 
         fun requestRouteToToilet(toilet: ToiletResult) {
             coroutineScope.launch {
-                // Reuse the latest GPS fix when available; otherwise request one
-                // before calculating the route from the user's position.
-                val loc = currentLocation ?: withContext(Dispatchers.IO) {
-                    LocationService.getCurrentLocation(context)
-                }
-                if (loc == null) {
-                    Toast.makeText(
-                        context,
-                        "Slå på GPS for å finne rute",
-                        Toast.LENGTH_SHORT,
-                    ).show()
-                    return@launch
-                }
-
-                currentLocation = loc
-                toiletRouting = toilet
-                toiletRouteLoading = true
-                toiletRouteResult = null
                 try {
+                    // Reuse the latest GPS fix when available; otherwise request one
+                    // before calculating the route from the user's position.
+                    val loc = currentLocation ?: withContext(Dispatchers.IO) {
+                        LocationService.getCurrentLocation(context)
+                    }
+                    if (loc == null) {
+                        Toast.makeText(
+                            context,
+                            "Slå på GPS for å finne rute",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                        return@launch
+                    }
+
+                    currentLocation = loc
+                    toiletRouting = toilet
+                    toiletRouteLoading = true
+                    toiletRouteResult = null
                     val result = withContext(Dispatchers.IO) {
                         RouteEngine.findRoute(
                             context,
@@ -598,6 +598,12 @@ fun MapScreen(modifier: Modifier = Modifier) {
                             Toast.LENGTH_SHORT,
                         ).show()
                     }
+                } catch (_: Exception) {
+                    Toast.makeText(
+                        context,
+                        Strings.errorGeneral,
+                        Toast.LENGTH_SHORT,
+                    ).show()
                 } finally {
                     toiletRouteLoading = false
                 }
