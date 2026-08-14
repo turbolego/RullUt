@@ -100,7 +100,7 @@ dependencies {
     implementation("org.maplibre.gl:android-sdk:11.13.5")
 
     // OkHttp for API calls (GetFeatureInfo, routing, search)
-    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.14")
+    implementation("com.squareup.okhttp3:okhttp:5.4.0")
 
     // Kotlin serialization (JSON parsing for routing graph, Overpass API)
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
