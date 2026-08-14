@@ -81,7 +81,7 @@ fun MapScreen(modifier: Modifier = Modifier) {
     var routeResult by remember { mutableStateOf<RouteResult?>(null) }
 
     var selectedBasemap by remember { mutableStateOf("osm") }
-    var activeLayers by remember { mutableStateOf(setOf("tilgjengelighet3")) }
+    var activeLayers by remember { mutableStateOf(setOf(MapConfig.DEFAULT_WMS_RENDER_LAYER)) }
 
     var layers by remember { mutableStateOf<List<LayerInfo>>(emptyList()) }
     var layersLoading by remember { mutableStateOf(true) }
@@ -176,13 +176,16 @@ fun MapScreen(modifier: Modifier = Modifier) {
     LaunchedEffect(Unit) {
         mapView.getMapAsync { nativeMap ->
             map = nativeMap
+            nativeMap.moveCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    LatLng(MapConfig.NORWAY_CENTER_LAT, MapConfig.NORWAY_CENTER_LNG),
+                    MapConfig.NORWAY_ZOOM,
+                )
+            )
             nativeMap.setStyle(MapConfig.BASEMAP_LIBERTY) { loadedStyle ->
                 style = loadedStyle
                 MarkerManager.initialize(loadedStyle)
-                val source = MapStyleBuilder.buildRasterSource()
-                loadedStyle.addSource(source)
-                val layer = MapStyleBuilder.buildRasterLayer()
-                loadedStyle.addLayer(layer)
+                addWmsOverlay(loadedStyle, activeLayers)
             }
 
             // Tap → GetFeatureInfo
@@ -197,8 +200,10 @@ fun MapScreen(modifier: Modifier = Modifier) {
                             FeatureInfoApi.queryAllLayers(
                                 lat = latLng.latitude,
                                 lng = latLng.longitude,
+                                layers = activeLayers,
                             )
                         }
+
                         featureList = features
                         featureTitle = if (features.isNotEmpty()) {
                             features.first().props["tittel"]
@@ -456,10 +461,15 @@ fun MapScreen(modifier: Modifier = Modifier) {
             layersLoading = layersLoading,
             activeLayers = activeLayers,
             onLayerToggle = { layer ->
-                activeLayers = if (activeLayers.contains(layer)) {
+                val updatedLayers = if (activeLayers.contains(layer)) {
                     activeLayers - layer
                 } else {
                     activeLayers + layer
+                }
+                activeLayers = updatedLayers
+                style?.let { loadedStyle ->
+                    removeWmsOverlay(loadedStyle)
+                    addWmsOverlay(loadedStyle, updatedLayers)
                 }
             },
             basemap = selectedBasemap,
@@ -467,23 +477,14 @@ fun MapScreen(modifier: Modifier = Modifier) {
                 selectedBasemap = basemap
                 val styleUrl = when (basemap) {
                     "topo" -> MapConfig.BASEMAP_TOPO
-                    "none" -> null
+                    "none" -> MapConfig.EMPTY_BASEMAP_STYLE
                     else -> MapConfig.BASEMAP_LIBERTY
                 }
-                if (styleUrl != null) {
-                    map?.setStyle(styleUrl) { loadedStyle ->
-                        style = loadedStyle
-                        MarkerManager.initialize(loadedStyle)
-                        val source = MapStyleBuilder.buildRasterSource()
-                        loadedStyle.addSource(source)
-                        val layer = MapStyleBuilder.buildRasterLayer()
-                        loadedStyle.addLayer(layer)
-                    }
-                } else {
-                    map?.setStyle(MapConfig.BASEMAP_LIBERTY) { loadedStyle ->
-                        style = loadedStyle
-                        MarkerManager.initialize(loadedStyle)
-                    }
+                map?.setStyle(styleUrl) { loadedStyle ->
+                    style = loadedStyle
+                    MarkerManager.initialize(loadedStyle)
+                    addWmsOverlay(loadedStyle, activeLayers)
+                    routeResult?.let { drawRouteOnMap(map, loadedStyle, it) }
                 }
             },
             currentLang = currentLang,
@@ -555,6 +556,60 @@ fun MapScreen(modifier: Modifier = Modifier) {
         var toiletRouting by remember { mutableStateOf<ToiletResult?>(null) }
         var toiletRouteLoading by remember { mutableStateOf(false) }
         var toiletRouteResult by remember { mutableStateOf<RouteResult?>(null) }
+
+        fun requestRouteToToilet(toilet: ToiletResult) {
+            coroutineScope.launch {
+                try {
+                    // Reuse the latest GPS fix when available; otherwise request one
+                    // before calculating the route from the user's position.
+                    val loc = currentLocation ?: withContext(Dispatchers.IO) {
+                        LocationService.getCurrentLocation(context)
+                    }
+                    if (loc == null) {
+                        Toast.makeText(
+                            context,
+                            "Slå på GPS for å finne rute",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                        return@launch
+                    }
+
+                    currentLocation = loc
+                    toiletRouting = toilet
+                    toiletRouteLoading = true
+                    toiletRouteResult = null
+                    val result = withContext(Dispatchers.IO) {
+                        RouteEngine.findRoute(
+                            context,
+                            loc.latitude,
+                            loc.longitude,
+                            toilet.lat,
+                            toilet.lon,
+                        )
+                    }
+                    if (result != null) {
+                        toiletRouteResult = result
+                        routeResult = result
+                        drawRouteOnMap(map, style, result)
+                    } else {
+                        Toast.makeText(
+                            context,
+                            Strings.routeNoRoute,
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                    }
+                } catch (_: Exception) {
+                    Toast.makeText(
+                        context,
+                        Strings.errorGeneral,
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                } finally {
+                    toiletRouteLoading = false
+                }
+            }
+        }
+
         ToiletListModal(
             visible = showToilets,
             loading = toiletLoading,
@@ -569,51 +624,18 @@ fun MapScreen(modifier: Modifier = Modifier) {
                     )
                 )
                 MarkerManager.clear()
-                MarkerManager.addMarker(toilet.lat, toilet.lon, toilet.name, "${(toilet.distanceKm * 1000).toInt()} m", "toilet-1")
+                MarkerManager.addMarker(
+                    toilet.lat,
+                    toilet.lon,
+                    toilet.name,
+                    "${(toilet.distanceKm * 1000).toInt()} m",
+                    "toilet-1",
+                )
                 MarkerManager.apply()
                 showToilets = false
+                requestRouteToToilet(toilet)
             },
-            onRouteToToilet = { toilet ->
-                coroutineScope.launch {
-                    // Ensure we have GPS — try to get it if not already cached
-                    val loc = currentLocation ?: withContext(Dispatchers.IO) {
-                        LocationService.getCurrentLocation(context)
-                    }
-                    if (loc != null) {
-                        // Cache the fresh location
-                        currentLocation = loc
-                        toiletRouting = toilet
-                        toiletRouteLoading = true
-                        toiletRouteResult = null
-
-                        val result = withContext(Dispatchers.IO) {
-                            RouteEngine.findRoute(
-                                context,
-                                loc.latitude, loc.longitude,
-                                toilet.lat, toilet.lon,
-                            )
-                        }
-                        if (result != null) {
-                            toiletRouteResult = result
-                            routeResult = result
-                            drawRouteOnMap(map, style, result)
-                        } else {
-                            Toast.makeText(
-                                context,
-                                Strings.routeNoRoute,
-                                Toast.LENGTH_SHORT,
-                            ).show()
-                        }
-                        toiletRouteLoading = false
-                    } else {
-                        Toast.makeText(
-                            context,
-                            "Slå på GPS for å finne rute",
-                            Toast.LENGTH_SHORT,
-                        ).show()
-                    }
-                }
-            },
+            onRouteToToilet = { toilet -> requestRouteToToilet(toilet) },
             onDismiss = { showToilets = false },
         )
 
@@ -703,6 +725,30 @@ fun MapScreen(modifier: Modifier = Modifier) {
                 ).show()
             }
         }
+    }
+}
+
+/** Adds the selected WMS overlay only when at least one layer is enabled. */
+private fun addWmsOverlay(style: Style, layers: Collection<String>) {
+    if (layers.none { it.isNotBlank() }) return
+    try {
+        style.addSource(MapStyleBuilder.buildRasterSource(layers))
+        style.addLayer(MapStyleBuilder.buildRasterLayer())
+    } catch (_: Exception) {
+        // A pending style reload can race a settings click; leaving the old map
+        // visible is safer than crashing the map screen.
+    }
+}
+
+/** Removes the current WMS source and layer before applying a new selection. */
+private fun removeWmsOverlay(style: Style) {
+    try {
+        style.removeLayer(MapStyleBuilder.WMS_LAYER_ID)
+    } catch (_: Exception) {
+    }
+    try {
+        style.removeSource(MapStyleBuilder.WMS_SOURCE_ID)
+    } catch (_: Exception) {
     }
 }
 

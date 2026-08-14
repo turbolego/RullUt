@@ -85,9 +85,10 @@ object FeatureInfoApi {
     suspend fun queryAllLayers(
         lat: Double,
         lng: Double,
+        layers: Collection<String> = MapConfig.WMS_FEATURE_LAYERS,
     ): List<FeatureInfo> {
         val results = mutableListOf<FeatureInfo>()
-        for (layer in MapConfig.WMS_FEATURE_LAYERS) {
+        for (layer in layers.asSequence().map(String::trim).filter(String::isNotEmpty).distinct()) {
             try {
                 val raw = queryFeatureInfo(lat, lng, layer)
                 val parsed = FeatureInfoParser.parseGetFeatureInfo(raw, layer)
