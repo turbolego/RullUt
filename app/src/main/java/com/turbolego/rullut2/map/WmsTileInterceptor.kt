@@ -11,30 +11,23 @@ import java.util.concurrent.TimeUnit
 /**
  * WMS tile URL interceptor for MapLibre Native Android.
  *
- * MapLibre Native supports only `{z}/{x}/{y}` tokens in raster tile URLs,
- * NOT the `{bbox-epsg-3857}` token used by `@maplibre/maplibre-react-native`.
- * We set a custom OkHttpClient as MapLibre's HTTP engine that intercepts
- * tile requests matching our dummy `wms-local` host and rewrites them into
- * real Geonorge WMS GetMap URLs with the correct EPSG:3857 bounding box.
- *
- * Usage: Call `WmsInterceptorManager.install()` once after MapLibre.getInstance().
+ * MapLibre Native supports only `{z}/{x}/{y}` tokens in raster tile URLs, not
+ * the WMS `{bbox-epsg-3857}` token. We therefore route dummy `wms-local` tile
+ * URLs through this interceptor, which builds proper Geonorge GetMap requests
+ * with a Web Mercator bounding box and the layers selected in Settings.
  */
 object WmsInterceptorManager {
 
-    // EPSG:3857 / Web Mercator constants
     private const val ORIGIN_X = -20037508.342789244
     private const val ORIGIN_Y = 20037508.342789244
     private const val MAP_SIZE = 40075016.685578488
 
-    /** The dummy host used in MapConfig.WMS_TILE_PATTERN. */
+    /** The dummy host used in [MapConfig.WMS_TILE_PATTERN]. */
     private val dummyHost = MapConfig.WMS_TILE_PATTERN
         .toHttpUrlOrNull()
         ?.host ?: "wms-local"
 
-    /**
-     * Install the interceptor by registering a custom OkHttpClient
-     * with MapLibre's HTTP engine.
-     */
+    /** Installs the custom HTTP client once after MapLibre initialization. */
     fun install() {
         val client = OkHttpClient.Builder()
             .connectTimeout(15, TimeUnit.SECONDS)
@@ -45,63 +38,67 @@ object WmsInterceptorManager {
         HttpRequestUtil.setOkHttpClient(client)
     }
 
-    /**
-     * OkHttp interceptor that rewrites wms-local tile URLs to real WMS URLs.
-     */
+    /** Rewrites requests made to the dummy WMS host. */
     private class TileInterceptor : okhttp3.Interceptor {
         @Throws(IOException::class)
         override fun intercept(chain: okhttp3.Interceptor.Chain): Response {
             val request = chain.request()
             val url = request.url.toString()
 
-            // Only intercept requests to our dummy WMS host
-            if (!url.contains(dummyHost)) {
-                return chain.proceed(request)
-            }
+            if (!url.contains(dummyHost)) return chain.proceed(request)
 
-            try {
+            return try {
                 val newUrl = transformWmsTileUrl(url)
                 val newRequest = Request.Builder()
                     .url(newUrl)
                     .header("User-Agent", MapConfig.USER_AGENT)
                     .build()
-                return chain.proceed(newRequest)
-            } catch (e: Exception) {
-                // If transformation fails, proceed with original (will 404)
-                return chain.proceed(request)
+                chain.proceed(newRequest)
+            } catch (_: Exception) {
+                // Let MapLibre receive the normal failed request if a malformed
+                // tile URL somehow reaches this interceptor.
+                chain.proceed(request)
             }
         }
     }
 
     /**
-     * Transform a dummy tile URL into a real Geonorge WMS GetMap URL.
+     * Transforms a dummy XYZ tile URL into a Geonorge WMS GetMap URL.
      *
-     * Input:  "https://wms-local/tiles/{z}/{x}/{y}"
-     *                  → MapLibre fills in → "https://wms-local/tiles/5/15/10"
-     * Output: "https://wms.geonorge.no/...&BBOX=...,...,...,..."
+     * The optional `layers` query parameter is passed through from
+     * [MapStyleBuilder]. It is intentionally read from the parsed URL rather
+     * than hard-coded, so a settings toggle changes the rendered overlay.
      */
     fun transformWmsTileUrl(dummyUrl: String): String {
-        // Extract the path after "/tiles/"
+        val parsedUrl = dummyUrl.toHttpUrlOrNull() ?: return dummyUrl
         val tilesPrefix = "/tiles/"
-        val tilesIndex = dummyUrl.indexOf(tilesPrefix)
+        val tilesIndex = parsedUrl.encodedPath.indexOf(tilesPrefix)
         if (tilesIndex < 0) return dummyUrl
 
-        val segmentPart = dummyUrl.substring(tilesIndex + tilesPrefix.length)
-        val parts = segmentPart.split("/")
-        if (parts.size != 3) return dummyUrl
+        val segments = parsedUrl.encodedPath
+            .substring(tilesIndex + tilesPrefix.length)
+            .split("/")
+        if (segments.size != 3) return dummyUrl
 
-        val z = parts[0].toIntOrNull() ?: return dummyUrl
-        val x = parts[1].toIntOrNull() ?: return dummyUrl
-        val y = parts[2].toIntOrNull() ?: return dummyUrl
+        val z = segments[0].toIntOrNull() ?: return dummyUrl
+        val x = segments[1].toIntOrNull() ?: return dummyUrl
+        val y = segments[2].toIntOrNull() ?: return dummyUrl
+        val layers = parsedUrl.queryParameter("layers")
+            ?.split(",")
+            ?.map(String::trim)
+            ?.filter(String::isNotEmpty)
+            ?.distinct()
+            ?.joinToString(",")
+            .orEmpty()
+            .ifEmpty { MapConfig.DEFAULT_WMS_RENDER_LAYER }
 
         val bbox = tileToBBox(x, y, z)
-
         return buildString {
             append(MapConfig.WMS_BASE_URL)
             append("?service=WMS")
             append("&request=GetMap")
             append("&version=1.1.1")
-            append("&layers=tilgjengelighet3")
+            append("&layers=$layers")
             append("&styles=")
             append("&format=image/png")
             append("&transparent=true")
@@ -112,10 +109,7 @@ object WmsInterceptorManager {
         }
     }
 
-    /**
-     * Convert tile coordinates to EPSG:3857 bounding box.
-     * Uses standard Web Mercator math for XYZ tiles.
-     */
+    /** Converts XYZ tile coordinates to an EPSG:3857 bounding box. */
     private fun tileToBBox(x: Int, y: Int, z: Int): DoubleArray {
         val tileSize = MAP_SIZE / (1 shl z)
         val minX = ORIGIN_X + x * tileSize

@@ -13,6 +13,7 @@ object MapConfig {
     // We intercept the tile URL request in WmsTileInterceptor.kt and rewrite
     // the URL to a proper WMS GetMap URL with the correct EPSG:3857 bounding box.
     const val WMS_TILE_PATTERN = "https://wms-local/tiles/{z}/{x}/{y}"
+    const val DEFAULT_WMS_RENDER_LAYER = "tilgjengelighet3"
 
     // WMS layers to query on GetFeatureInfo
     val WMS_FEATURE_LAYERS = listOf(
@@ -31,6 +32,7 @@ object MapConfig {
     // OpenFreeMap basemap styles (no API key, no account, no billing)
     const val BASEMAP_LIBERTY = "https://tiles.openfreemap.org/styles/liberty"
     const val BASEMAP_TOPO = "https://tiles.openfreemap.org/styles/topo"
+    const val EMPTY_BASEMAP_STYLE = "{\"version\":8,\"sources\":{},\"layers\":[]}"
 
     // Kartverket Stedsnavn search
     const val PLACES_SEARCH_URL = "https://ws.geonorge.no/stedsnavn/v1/navn"
