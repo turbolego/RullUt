@@ -97,7 +97,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.9.8")
 
     // MapLibre Native (open-source, BSD license, no API key required)
-    implementation("org.maplibre.gl:android-sdk:11.13.5")
+    implementation("org.maplibre.gl:android-sdk:13.5.0")
 
     // OkHttp for API calls (GetFeatureInfo, routing, search)
     implementation("com.squareup.okhttp3:okhttp:5.4.0")
