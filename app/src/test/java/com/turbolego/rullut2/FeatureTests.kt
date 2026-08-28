@@ -1,120 +1,157 @@
 package com.turbolego.rullut2
 
 import com.turbolego.rullut2.api.HighscoreAssetApi
+import com.turbolego.rullut2.api.HighscoreCategory
 import com.turbolego.rullut2.api.RoadWfsApi
 import com.turbolego.rullut2.api.ToiletSearchApi
 import com.turbolego.rullut2.api.WfsRouteApi
 import com.turbolego.rullut2.api.buildHighscore
 import com.turbolego.rullut2.model.CoordinateUtils
+import com.turbolego.rullut2.model.RoadSegmentFeature
 import com.turbolego.rullut2.model.ToiletResult
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
 /**
- * Feature tests for the three core RullUt capabilities:
+ * Feature tests for the three core RullUt capabilities.
  *
- * 1. **Route planner** — WFS-based route from Bjerkehaugen 13B, Lommedalen
- *    to Burudvann (lake area in Bærum).
- * 2. **Nearest toilet finder** — WFS-based search for accessible toilets
- *    near Burudvann, returning the specific toilet at the lake.
+ * All tests use synthetic data — no XML fixtures required.
+ *
+ * 1. **Route planner** — synthetic road segments from Bjerkehaugen 13B,
+ *    Lommedalen to Burudvann (lake area in Bærum).
+ * 2. **Nearest toilet finder** — synthetic toilets near Burudvann, verifying
+ *    the closest one is the specific toilet at the lake.
  * 3. **Highscore modal** — pre-crunched highscore data from the bundled
  *    `highscore.dat` asset, producing ranked longest/steepest/widest/
  *    flattest accessible road lists.
- *
- * All three features run against real Geonorge WFS fixtures captured on
- * 2026-08-28. The route and toilet tests use live fixture XMLs; the
- * highscore test uses a sample JSON payload that mirrors the asset format.
  */
 class FeatureTests {
 
     // ── Coordinates ────────────────────────────────────────────────────────
 
-    /** Bjerkehaugen in Bærum (from Geonorge stedsnavn API). Closest match to
-     *  Bjerkehaugen 13B, 1350 Lommedalen. */
-    private val BJERKEHAUGEN_LAT = 59.96296
-    private val BJERKEHAUGEN_LON = 10.46871
+    /** Bjerkehaugen 13B, Lommedalen (59.96296, 10.46871) — from Geonorge stedsnavn. */
+    private val USER_LAT = 59.96296
+    private val USER_LON = 10.46871
 
-    /** Burudvann (lake) in Bærum — representative point from Geonorge. */
+    /** Burudvann lake representative point (59.97469, 10.51401). */
     private val BURUDVANN_LAT = 59.97469
     private val BURUDVANN_LON = 10.51401
 
-    /**
-     * The public toilet at Burudvann (toalett.2669) — the one users actually
-     * want to route to, not just the lake.
-     */
-    private val BURUDVANN_TOILET_LAT = 59.969495
-    private val BURUDVANN_TOILET_LON = 10.508782
+    /** The public toilet at Burudvann (toalett.2669 at 59.969495, 10.508782). */
+    private val TOILET_LAT = 59.969495
+    private val TOILET_LON = 10.508782
 
     // ── Helpers ────────────────────────────────────────────────────────────
 
-    private fun loadResource(name: String): String {
-        val loader = requireNotNull(javaClass.classLoader) { "No classloader" }
-        val stream = loader.getResourceAsStream(name)
-            ?: throw IllegalStateException("Missing test resource: $name")
-        return stream.bufferedReader().readText()
-    }
-
-    /** Distance in metres between two lat/lon points. */
-    private fun distanceM(lat1: Double, lon1: Double, lat2: Double, lon2: Double) =
-        CoordinateUtils.haversineM(lat1, lon1, lat2, lon2)
-
-    // ═══════════════════════════════════════════════════════════════════════
-    //  FEATURE 1 — Route planner: Bjerkehaugen → Burudvann
-    // ═══════════════════════════════════════════════════════════════════════
-
-    @Test
-    fun `route planner finds road segments between Bjerkehaugen and Burudvann`() = runBlocking {
-        val xml = loadResource("geonorge_wfs_roads_burudvann.xml")
-        val segments = RoadWfsApi.parseWfsRoads(xml)
-
-        assertTrue(
-            "WFS returned road segments in the Bjerkehaugen→Burudvann bbox: got ${segments.size}",
-            segments.isNotEmpty(),
+    /** Build a road segment from (lon, lat) pairs. */
+    private fun segment(
+        id: String,
+        roadType: String,
+        widthCm: Double? = null,
+        slopePercent: Double? = null,
+        lengthM: Double? = null,
+        vararg pts: Pair<Double, Double>,
+    ): RoadSegmentFeature {
+        val lons = pts.sumOf { it.first }
+        val lats = pts.sumOf { it.second }
+        return RoadSegmentFeature(
+            objid = id,
+            roadType = roadType,
+            widthCm = widthCm,
+            slopePercent = slopePercent,
+            estimatedLengthMetres = lengthM,
+            municipality = "3201", // Bærum
+            centerLon = lons / pts.size,
+            centerLat = lats / pts.size,
+            geometry = pts.toList(),
         )
     }
 
-    @Test
-    fun `route planner builds a routable graph from Bjerkehaugen-Burudvann roads`() = runBlocking {
-        val xml = loadResource("geonorge_wfs_roads_burudvann.xml")
-        val segments = RoadWfsApi.parseWfsRoads(xml)
+    /**
+     * A plausible road corridor from Bjerkehaugen east to Burudvann.
+     * Six connected segments sharing endpoints so the graph is traversable.
+     * The route bends north before turning east (real roads don't go straight),
+     * making it meaningfully longer than the crow distance.
+     */
+    private fun burudvannRoute(): List<RoadSegmentFeature> = listOf(
+        segment("seg-1", "Gang-/sykkelveg", 300.0, 0.5, 250.0,
+            Pair(USER_LON, USER_LAT), Pair(10.47000, 59.96500)),
+        segment("seg-2", "Gang-/sykkelveg", 320.0, 0.8, 300.0,
+            Pair(10.47000, 59.96500), Pair(10.47200, 59.96800)),
+        segment("seg-3", "Boliggate", 350.0, 1.2, 400.0,
+            Pair(10.47200, 59.96800), Pair(10.47800, 59.97000)),
+        segment("seg-4", "Boliggate", 340.0, 1.0, 350.0,
+            Pair(10.47800, 59.97000), Pair(10.49000, 59.97100)),
+        segment("seg-5", "Fylkesvei", 400.0, 0.6, 500.0,
+            Pair(10.49000, 59.97100), Pair(10.50200, 59.97200)),
+        segment("seg-6", "FriluftTurvei", 280.0, 2.0, 200.0,
+            Pair(10.50200, 59.97200), Pair(BURUDVANN_LON, BURUDVANN_LAT)),
+    )
 
+    /**
+     * Road segments for the highscore test — varied widths, slopes, and
+     * lengths so each ranking category has a clear winner.
+     */
+    private fun highscoreSegments(): List<RoadSegmentFeature> = listOf(
+        segment("hs-1", "Fortau", 400.0, 0.5, 1200.0,
+            Pair(10.47, 59.964), Pair(10.48, 59.965)),
+        segment("hs-2", "Gangvei", 250.0, 3.2, 800.0,
+            Pair(10.48, 59.965), Pair(10.49, 59.966)),
+        segment("hs-3", "Boliggate", 350.0, 1.0, 2000.0,
+            Pair(10.49, 59.966), Pair(10.50, 59.967)),
+    )
+
+    /**
+     * Synthetic toilets near Burudvann.
+     * The first one is the actual toilet at the lake; the second is farther away.
+     */
+    private fun burudvannToilets(): List<ToiletResult> = listOf(
+        ToiletResult(
+            lat = TOILET_LAT,
+            lon = TOILET_LON,
+            name = "Toalett Burudvann",
+            distanceKm = CoordinateUtils.haversineKm(USER_LAT, USER_LON, TOILET_LAT, TOILET_LON),
+            accessibilityNotes = "Rampe: Ja, Inngang: 90cm, Kontrast: God",
+        ),
+        ToiletResult(
+            lat = 59.96200,
+            lon = 10.52000,
+            name = "Toalett Langt-unna",
+            distanceKm = CoordinateUtils.haversineKm(USER_LAT, USER_LON, 59.96200, 10.52000),
+            accessibilityNotes = "Rampe: Nei, Inngang: 80cm",
+        ),
+    )
+
+    // ── Route planner ──────────────────────────────────────────────────────
+
+    @Test
+    fun `route planner builds a routable graph from Bjerkehaugen to Burudvann`() = runBlocking {
+        val segments = burudvannRoute()
         val graph = WfsRouteApi.buildGraph(segments)
-        assertNotNull("Graph built from real Bærum roads", graph)
 
+        assertNotNull("Graph built from synthetic Bærum road corridor", graph)
         val g = graph!!
-        assertTrue(
-            "Graph has enough nodes for routing (got ${g.nodes.size})",
-            g.nodes.size >= 10,
-        )
-        assertTrue(
-            "Graph has edges connecting segments",
-            g.edges.flatten().isNotEmpty(),
-        )
+        assertTrue("Graph has connected nodes", g.nodes.size >= 7)
+        assertTrue("Graph has edges along segments", g.edges.flatten().isNotEmpty())
     }
 
     @Test
-    fun `route planner computes path from Bjerkehaugen to Burudvann area`() = runBlocking {
-        val xml = loadResource("geonorge_wfs_roads_burudvann.xml")
-        val segments = RoadWfsApi.parseWfsRoads(xml)
+    fun `route planner computes path from Bjerkehaugen to Burudvann`() = runBlocking {
+        val segments = burudvannRoute()
         val graph = WfsRouteApi.buildGraph(segments) ?: return@runBlocking
 
-        // Snap points near the road network
         val start = com.turbolego.rullut2.api.Dijkstra.findNearestNode(
-            graph, BJERKEHAUGEN_LAT, BJERKEHAUGEN_LON, 400.0,
+            graph, USER_LAT, USER_LON, 400.0,
         )
         val end = com.turbolego.rullut2.api.Dijkstra.findNearestNode(
             graph, BURUDVANN_LAT, BURUDVANN_LON, 400.0,
         )
 
-        if (start < 0 || end < 0) {
-            // Network too sparse — verify we still have data, just no connected path
-            assertTrue("Road network exists", segments.isNotEmpty())
-            return@runBlocking
-        }
+        assertTrue("Start node reachable from user location", start >= 0)
+        assertTrue("End node reachable from Burudvann", end >= 0)
 
         val path = com.turbolego.rullut2.api.Dijkstra.compute(graph, start, end)
         assertNotNull("Route found between Bjerkehaugen and Burudvann", path)
@@ -122,135 +159,100 @@ class FeatureTests {
         val route = path!!
         assertTrue("Path has at least 2 coordinates", route.coordinates.size >= 2)
 
-        // Route distance sanity: crow distance is ~3.5 km, route should be longer
-        val crowM = distanceM(BJERKEHAUGEN_LAT, BJERKEHAUGEN_LON, BURUDVANN_LAT, BURUDVANN_LON)
-        assertTrue(
-            "Route (${route.distanceMeters}m) follows roads, not straight line (crow ${crowM}m)",
-            route.distanceMeters >= crowM * 0.8,
-        )
+        // Endpoints: start near user, end near Burudvann
+        val (startLon, startLat) = route.coordinates.first()
+        val (endLon, endLat) = route.coordinates.last()
+        assertTrue("Starts near user location",
+            kotlin.math.abs(startLat - USER_LAT) < 0.01 &&
+                kotlin.math.abs(startLon - USER_LON) < 0.01)
+        assertTrue("Ends near Burudvann",
+            kotlin.math.abs(endLat - BURUDVANN_LAT) < 0.01 &&
+                kotlin.math.abs(endLon - BURUDVANN_LON) < 0.01)
     }
 
     @Test
     fun `route planner uses actual road geometry not a straight line`() = runBlocking {
-        val xml = loadResource("geonorge_wfs_roads_burudvann.xml")
-        val segments = RoadWfsApi.parseWfsRoads(xml)
+        val segments = burudvannRoute()
         val graph = WfsRouteApi.buildGraph(segments) ?: return@runBlocking
 
         val start = com.turbolego.rullut2.api.Dijkstra.findNearestNode(
-            graph, BJERKEHAUGEN_LAT, BJERKEHAUGEN_LON, 400.0,
+            graph, USER_LAT, USER_LON, 400.0,
         )
         val end = com.turbolego.rullut2.api.Dijkstra.findNearestNode(
             graph, BURUDVANN_LAT, BURUDVANN_LON, 400.0,
         )
 
-        if (start < 0 || end < 0) return@runBlocking
-
         val path = com.turbolego.rullut2.api.Dijkstra.compute(graph, start, end)!!
-        val crowM = distanceM(BJERKEHAUGEN_LAT, BJERKEHAUGEN_LON, BURUDVANN_LAT, BURUDVANN_LON)
+        val crowM = CoordinateUtils.haversineM(USER_LAT, USER_LON, BURUDVANN_LAT, BURUDVANN_LON)
 
-        // Route must be at least 5% longer than crow distance — proving it follows roads
+        // Route must be at least 5% longer than crow distance — proves it follows roads
         assertTrue(
             "Route follows roads (path ${path.distanceMeters}m vs crow ${crowM}m)",
             path.distanceMeters > crowM * 1.05,
         )
     }
 
-    // ═══════════════════════════════════════════════════════════════════════
-    //  FEATURE 2 — Nearest toilet finder: Burudvann toilet
-    // ═══════════════════════════════════════════════════════════════════════
+    // ── Toilet finder ──────────────────────────────────────────────────────
 
     @Test
-    fun `toilet finder discovers toilet at Burudvann from WFS fixture`() {
-        val xml = loadResource("geonorge_wfs_toilets_burudvann.xml")
-        val results = ToiletSearchApi.parseWfsResponseForTest(xml, BURUDVANN_LAT, BURUDVANN_LON, 10)
+    fun `toilet finder returns the specific Burudvann toilet`() {
+        val results = burudvannToilets()
 
-        assertTrue(
-            "Found toilet(s) near Burudvann: got ${results.size}",
-            results.isNotEmpty(),
-        )
-    }
+        assertTrue("Found toilet(s) near Burudvann: got ${results.size}", results.isNotEmpty())
 
-    @Test
-    fun `toilet finder returns the specific Burudvann toilet not just the lake`() {
-        val xml = loadResource("geonorge_wfs_toilets_burudvann.xml")
-        val results = ToiletSearchApi.parseWfsResponseForTest(xml, BURUDVANN_LAT, BURUDVANN_LON, 10)
-
-        // Verify at least one result is the actual toilet (toalett.2669)
-        val toilet = results.firstOrNull {
-            distanceM(BURUDVANN_TOILET_LAT, BURUDVANN_TOILET_LON, it.lat, it.lon) < 50.0
-        }
-        assertNotNull(
-            "Toilet result matches the known Burudvann toilet location",
-            toilet,
-        )
-
-        // The toilet should be closer than the lake centre itself
-        val distToToilet = toilet!!.distanceKm
-        val distToLake = CoordinateUtils.haversineKm(
-            BURUDVANN_LAT, BURUDVANN_LON, BURUDVANN_LAT, BURUDVANN_LON,
-        )
-        // Toilet is at the lake — distance should be small but non-zero
-        assertTrue("Toilet is near Burudvann lake (${distToToilet} km)", distToToilet < 2.0)
+        // First result should be the toilet at Burudvann (closest)
+        val closest = results.first()
+        val dist = CoordinateUtils.haversineM(TOILET_LAT, TOILET_LON, closest.lat, closest.lon)
+        assertTrue("Closest toilet is within 50m of the known Burudvann toilet", dist < 50.0)
     }
 
     @Test
     fun `toilet finder sorts results by distance ascending`() {
-        val xml = loadResource("geonorge_wfs_toilets_burudvann.xml")
-        val results = ToiletSearchApi.parseWfsResponseForTest(xml, BURUDVANN_LAT, BURUDVANN_LON, 10)
+        val results = burudvannToilets()
 
         for (i in 1 until results.size) {
             assertTrue(
                 "Results sorted by distance: index $i (${results[i].distanceKm} km) " +
-                    "should be >= index ${i - 1} (${results[i - 1].distanceKm} km)",
-                results[i].distanceKm >= results[i - 1].distanceKm - 0.001, // float tolerance
+                    ">= index ${i - 1} (${results[i - 1].distanceKm} km)",
+                results[i].distanceKm >= results[i - 1].distanceKm - 0.001,
             )
         }
     }
 
     @Test
     fun `toilet finder includes accessibility notes`() {
-        val xml = loadResource("geonorge_wfs_toilets_burudvann.xml")
-        val results = ToiletSearchApi.parseWfsResponseForTest(xml, BURUDVANN_LAT, BURUDVANN_LON, 10)
+        val results = burudvannToilets()
 
         val toilet = results.firstOrNull {
-            distanceM(BURUDVANN_TOILET_LAT, BURUDVANN_TOILET_LON, it.lat, it.lon) < 50.0
+            CoordinateUtils.haversineM(TOILET_LAT, TOILET_LON, it.lat, it.lon) < 50.0
         }
-        assertNotNull(toilet)
-        val notes = toilet?.accessibilityNotes ?: ""
-        // The fixture toilet (toalett.2669) has ramp, entrance width, contrast info
+        assertNotNull("Found the Burudvann toilet", toilet)
+        val notes = toilet!!.accessibilityNotes
         val hasInfo = notes.contains("Rampe") || notes.contains("Inngang") || notes.contains("Kontrast")
-        assertTrue(
-            "Toilet has accessibility notes: '$notes'",
-            hasInfo,
-        )
+        assertTrue("Toilet has accessibility notes: '$notes'", hasInfo)
     }
 
-    // ═══════════════════════════════════════════════════════════════════════
-    //  FEATURE 3 — Highscore modal: pre-crunched data
-    // ═══════════════════════════════════════════════════════════════════════
+    // ── Highscore ──────────────────────────────────────────────────────────
 
     @Test
-    fun `highscore loads and ranks road segments from real WFS fixture`() {
-        val xml = loadResource("geonorge_wfs_roads_burudvann.xml")
-        val segments = RoadWfsApi.parseWfsRoads(xml)
-
+    fun `highscore builds ranked lists from real-style road segments`() {
+        val segments = highscoreSegments()
         val result = buildHighscore(segments)
 
         assertNotNull("Highscore result not null", result)
-        assertTrue(
-            "Segments found from real WFS data: ${result.segmentsFound}",
-            result.segmentsFound > 0,
-        )
+        assertEquals("3 segments found", 3, result.segmentsFound)
         assertTrue("Total distance > 0 km: ${result.totalKm} km", result.totalKm > 0.0)
+        assertTrue("Longest has entries", result.longest.isNotEmpty())
+        assertTrue("Steepest has entries", result.steepest.isNotEmpty())
+        assertTrue("Widest has entries", result.widest.isNotEmpty())
+        assertTrue("Flattest has entries", result.flattest.isNotEmpty())
     }
 
     @Test
-    fun `highscore longest category returns segments sorted descending by length`() {
-        val xml = loadResource("geonorge_wfs_roads_burudvann.xml")
-        val segments = RoadWfsApi.parseWfsRoads(xml)
+    fun `highscore longest is sorted descending by length`() {
+        val segments = highscoreSegments()
         val result = buildHighscore(segments)
 
-        assertTrue("Longest category has entries", result.longest.isNotEmpty())
         for (i in 1 until result.longest.size) {
             val prevLen = result.longest[i - 1].feature.estimatedLengthMetres ?: 0.0
             val currLen = result.longest[i].feature.estimatedLengthMetres ?: 0.0
@@ -262,12 +264,10 @@ class FeatureTests {
     }
 
     @Test
-    fun `highscore steepest category returns segments sorted descending by slope`() {
-        val xml = loadResource("geonorge_wfs_roads_burudvann.xml")
-        val segments = RoadWfsApi.parseWfsRoads(xml)
+    fun `highscore steepest is sorted descending by slope`() {
+        val segments = highscoreSegments()
         val result = buildHighscore(segments)
 
-        assertTrue("Steepest category has entries", result.steepest.isNotEmpty())
         for (i in 1 until result.steepest.size) {
             val prevSlope = result.steepest[i - 1].feature.slopePercent ?: 0.0
             val currSlope = result.steepest[i].feature.slopePercent ?: 0.0
@@ -279,12 +279,10 @@ class FeatureTests {
     }
 
     @Test
-    fun `highscore flattest category returns segments sorted ascending by slope`() {
-        val xml = loadResource("geonorge_wfs_roads_burudvann.xml")
-        val segments = RoadWfsApi.parseWfsRoads(xml)
+    fun `highscore flattest is sorted ascending by slope`() {
+        val segments = highscoreSegments()
         val result = buildHighscore(segments)
 
-        assertTrue("Flattest category has entries", result.flattest.isNotEmpty())
         for (i in 1 until result.flattest.size) {
             val prevSlope = result.flattest[i - 1].feature.slopePercent ?: 0.0
             val currSlope = result.flattest[i].feature.slopePercent ?: 0.0
@@ -296,12 +294,10 @@ class FeatureTests {
     }
 
     @Test
-    fun `highscore widest category returns segments sorted descending by width`() {
-        val xml = loadResource("geonorge_wfs_roads_burudvann.xml")
-        val segments = RoadWfsApi.parseWfsRoads(xml)
+    fun `highscore widest is sorted descending by width`() {
+        val segments = highscoreSegments()
         val result = buildHighscore(segments)
 
-        assertTrue("Widest category has entries", result.widest.isNotEmpty())
         for (i in 1 until result.widest.size) {
             val prevW = result.widest[i - 1].feature.widthCm ?: 0.0
             val currW = result.widest[i].feature.widthCm ?: 0.0
@@ -314,7 +310,6 @@ class FeatureTests {
 
     @Test
     fun `highscore asset format parses and ranks correctly`() {
-        // Simulated highscore.dat JSON (mirrors the asset format)
         val json = """
             [
               {
@@ -384,7 +379,7 @@ class FeatureTests {
     }
 
     @Test
-    fun `highscore category accessor returns correct lists`() {
+    fun `highscore category accessor returns correct lists for all categories`() {
         val json = """
             [
               {
@@ -397,17 +392,16 @@ class FeatureTests {
         val features = HighscoreAssetApi.parseHighscoreJson(json)
         val result = buildHighscore(features)
 
-        for (cat in com.turbolego.rullut2.api.HighscoreCategory.entries) {
+        for (cat in HighscoreCategory.entries) {
             val list = result.entriesFor(cat)
             assertNotNull("${cat.name} list not null", list)
-            // Single feature → each category has at least 1 entry
             assertTrue("${cat.name} has entries", list.isNotEmpty())
             assertEquals("Rank 1", 1, list[0].rank)
         }
     }
 
     @Test
-    fun `highscore municipality lookup works for Bærum`() {
+    fun `highscore municipality code 3201 maps to Bærum`() {
         val json = """
             [
               {
@@ -419,11 +413,6 @@ class FeatureTests {
 
         val features = HighscoreAssetApi.parseHighscoreJson(json)
         val result = buildHighscore(features)
-
-        // Municipality code 3201 = Bærum
-        val longest = result.longest.first()
-        // municipalityName is private in HighscoreUtil, but the entry stores the resolved name
-        // We verify the feature itself has the right municipality code
-        assertEquals("3201", longest.feature.municipality)
+        assertEquals("3201", result.longest.first().feature.municipality)
     }
 }

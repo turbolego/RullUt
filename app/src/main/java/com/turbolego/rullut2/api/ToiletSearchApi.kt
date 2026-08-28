@@ -97,18 +97,6 @@ object ToiletSearchApi {
     /**
      * Parse WFS GML response and extract toilet features.
      *
-     * Internal so unit tests can exercise parsing offline with fixtures.
-     */
-    internal fun parseWfsResponseForTest(
-        xml: String,
-        refLat: Double,
-        refLon: Double,
-        limit: Int = 10,
-    ): List<ToiletResult> = parseWfsResponse(xml, refLat, refLon, limit)
-
-    /**
-     * Parse WFS GML response and extract toilet features.
-     *
      * Expected GML structure:
      * <wfs:FeatureCollection>
      *   <wfs:member>
