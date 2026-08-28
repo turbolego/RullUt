@@ -1,0 +1,569 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wfs:FeatureCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1 https://wfs.geonorge.no/skwms1/wfs.tilgjengelighet?SERVICE=WFS&amp;VERSION=2.0.0&amp;REQUEST=DescribeFeatureType&amp;OUTPUTFORMAT=text%2Fxml%3B+subtype%3Dgml%2F3.2.1&amp;TYPENAME=app:FriluftTurvei,app:TettstedVei&amp;NAMESPACES=xmlns(app,https%3A%2F%2Fskjema.geonorge.no%2FSOSI%2Fproduktspesifikasjon%2FTilgjengelighet%2F1.3.1)" xmlns:wfs="http://www.opengis.net/wfs/2.0" timeStamp="2026-08-28T13:17:50Z" xmlns:gml="http://www.opengis.net/gml/3.2" numberMatched="unknown" numberReturned="0">
+  <!--NOTE: numberReturned attribute should be 'unknown' as well, but this would not validate against the current version of the WFS 2.0 schema (change upcoming). See change request (CR 144): https://portal.opengeospatial.org/files?artifact_id=43925.-->
+  <wfs:member>
+    <app:FriluftTurvei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="friluftturvei.61925">
+      <app:datafangstdato>2022-08-08T13:00:30</app:datafangstdato>
+      <app:førsteDatafangstdato>2022-08-08T12:55:02</app:førsteDatafangstdato>
+      <app:kommune>3201</app:kommune>
+      <app:opphav>o0014_uu_fri</app:opphav>
+      <app:bildefil1>3024_FriluftTurvei_20220808125503.jpg</app:bildefil1>
+      <app:bildefil2>3024_FriluftTurvei_20220808125504.jpg</app:bildefil2>
+      <app:bildefil3>3024_FriluftTurvei_20220808130032.jpg</app:bildefil3>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>dd9644d4-e3ad-4289-bcdd-17ec785cc8e2</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-06-19 14:58:43.860033000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommentar>Bomvei som er bilvei, men med få som kjører. Stedvis mindre bratt, men stort sett jevn stigning oppover.</app:kommentar>
+      <app:kommReel>3201</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'friluftturvei.61925_APP_GEOMETRI'-->
+        <gml:LineString gml:id="friluftturvei.61925_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.444454 59.975720 10.444956 59.975605 10.445685 59.975546 10.447026 59.975262 10.447906 59.974843 10.449900 59.973808 10.450672 59.973454 10.450994 59.972928 10.451402 59.972692 10.452196 59.972541</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:spesialFotrutetype>Kultursti</app:spesialFotrutetype>
+      <app:veitype>Grusvei</app:veitype>
+      <app:årstidsbruk>Sommerbruk</app:årstidsbruk>
+      <app:sperrebom>Nei</app:sperrebom>
+      <app:belysning>Ikke belysning</app:belysning>
+      <app:dekkeMateriale>Grus</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:dekkeFasthet>Fast</app:dekkeFasthet>
+      <app:bredde>500</app:bredde>
+      <app:stigning>11.0</app:stigning>
+      <app:tverrfall>10.0</app:tverrfall>
+      <app:møteHvileplass>Nei</app:møteHvileplass>
+      <app:friHøyde>&gt;225 cm</app:friHøyde>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingRulleMan>Ikke tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:tilgjengvurderingRulleAuto>Ikke tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingElRullestol>Ikke tilgjengelig</app:tilgjengvurderingElRullestol>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+    </app:FriluftTurvei>
+  </wfs:member>
+  <wfs:member>
+    <app:FriluftTurvei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="friluftturvei.61926">
+      <app:førsteDatafangstdato>2022-08-08T13:09:08</app:førsteDatafangstdato>
+      <app:kommune>3201</app:kommune>
+      <app:opphav>o0014_uu_fri</app:opphav>
+      <app:bildefil1>3024_FriluftTurvei_20220808130908.jpg</app:bildefil1>
+      <app:bildefil2>3024_FriluftTurvei_20220808130909.jpg</app:bildefil2>
+      <app:bildefil3>3024_FriluftTurvei_20220808130910.jpg</app:bildefil3>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>75033327-21ca-4e9b-8915-349e645f22a0</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-06-19 14:58:43.860033000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommentar>Bomvei som er bilvei, men med få som kjører. Stedvis mindre bratt, men stort sett jevn stigning oppover.</app:kommentar>
+      <app:kommReel>3201</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'friluftturvei.61926_APP_GEOMETRI'-->
+        <gml:LineString gml:id="friluftturvei.61926_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.452196 59.972541 10.452803 59.972353 10.453436 59.971982 10.454391 59.971617 10.454752 59.971423 10.455525 59.971218 10.455954 59.970741 10.456651 59.970225 10.456806 59.969956 10.456871 59.969172 10.457053 59.968399 10.457879 59.967766 10.459210 59.967223 10.460336 59.967089</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:spesialFotrutetype>Kultursti</app:spesialFotrutetype>
+      <app:veitype>Grusvei</app:veitype>
+      <app:årstidsbruk>Sommerbruk</app:årstidsbruk>
+      <app:sperrebom>Nei</app:sperrebom>
+      <app:belysning>Ikke belysning</app:belysning>
+      <app:dekkeMateriale>Grus</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:dekkeFasthet>Fast</app:dekkeFasthet>
+      <app:bredde>500</app:bredde>
+      <app:stigning>10.0</app:stigning>
+      <app:tverrfall>3.0</app:tverrfall>
+      <app:møteHvileplass>Nei</app:møteHvileplass>
+      <app:friHøyde>&gt;225 cm</app:friHøyde>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingRulleMan>Ikke tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:tilgjengvurderingRulleAuto>Ikke tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingElRullestol>Delvis tilgjengelig</app:tilgjengvurderingElRullestol>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+    </app:FriluftTurvei>
+  </wfs:member>
+  <wfs:member>
+    <app:FriluftTurvei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="friluftturvei.59262">
+      <app:datafangstdato>2018-07-11T08:03:27</app:datafangstdato>
+      <app:førsteDatafangstdato>2018-07-11T08:03:12</app:førsteDatafangstdato>
+      <app:objektNr>5161</app:objektNr>
+      <app:kommune>3201</app:kommune>
+      <app:opphav>F0002_uu16</app:opphav>
+      <app:bildefil1>0002_FriluftTurvei_20180711100113.jpg</app:bildefil1>
+      <app:bildefil2>0002_FriluftTurvei_20180711100129.jpg</app:bildefil2>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>8dc423f9-baf3-4a2c-a4fa-1b2327b11417</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-06-19 14:58:43.860033000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>3201</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'friluftturvei.59262_APP_GEOMETRI'-->
+        <gml:LineString gml:id="friluftturvei.59262_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.508905 59.969458 10.509152 59.969399 10.509622 59.969333 10.510025 59.969214 10.510204 59.969098</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:veitype>Grusvei</app:veitype>
+      <app:årstidsbruk>Sommerbruk</app:årstidsbruk>
+      <app:sperrebom>Ja</app:sperrebom>
+      <app:sperrebomTilgjengelig>Ja</app:sperrebomTilgjengelig>
+      <app:belysning>Ikke belysning</app:belysning>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:dekkeFasthet>Fast</app:dekkeFasthet>
+      <app:bredde>300</app:bredde>
+      <app:stigning>1.6</app:stigning>
+      <app:tverrfall>1.3</app:tverrfall>
+      <app:møteHvileplass>Nei</app:møteHvileplass>
+      <app:friHøyde>&gt;225 cm</app:friHøyde>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingElRullestol>Tilgjengelig</app:tilgjengvurderingElRullestol>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>85.1</app:segmentLengde>
+    </app:FriluftTurvei>
+  </wfs:member>
+  <wfs:member>
+    <app:FriluftTurvei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="friluftturvei.59778">
+      <app:datafangstdato>2018-07-11T07:48:48</app:datafangstdato>
+      <app:førsteDatafangstdato>2018-07-11T07:47:45</app:førsteDatafangstdato>
+      <app:objektNr>5156</app:objektNr>
+      <app:kommune>3201</app:kommune>
+      <app:opphav>F0002_uu16</app:opphav>
+      <app:bildefil1>0002_FriluftTurvei_20180711094539.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>0780bf5d-4708-46a2-b4c2-b8e8e6ed779e</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-06-19 14:58:43.860033000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>3201</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'friluftturvei.59778_APP_GEOMETRI'-->
+        <gml:LineString gml:id="friluftturvei.59778_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.506858 59.966757 10.506450 59.967082 10.506392 59.967242 10.506571 59.967734 10.506634 59.967929</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:veitype>Grusvei</app:veitype>
+      <app:årstidsbruk>Sommerbruk</app:årstidsbruk>
+      <app:sperrebom>Ja</app:sperrebom>
+      <app:sperrebomTilgjengelig>Ja</app:sperrebomTilgjengelig>
+      <app:belysning>Ikke belysning</app:belysning>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:dekkeFasthet>Fast</app:dekkeFasthet>
+      <app:bredde>300</app:bredde>
+      <app:stigning>3.8</app:stigning>
+      <app:tverrfall>2.4</app:tverrfall>
+      <app:møteHvileplass>Nei</app:møteHvileplass>
+      <app:friHøyde>&gt;225 cm</app:friHøyde>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingElRullestol>Tilgjengelig</app:tilgjengvurderingElRullestol>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>138.8</app:segmentLengde>
+    </app:FriluftTurvei>
+  </wfs:member>
+  <wfs:member>
+    <app:FriluftTurvei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="friluftturvei.59984">
+      <app:datafangstdato>2018-07-11T08:00:52</app:datafangstdato>
+      <app:førsteDatafangstdato>2018-07-11T07:58:02</app:førsteDatafangstdato>
+      <app:objektNr>5160</app:objektNr>
+      <app:kommune>3201</app:kommune>
+      <app:opphav>F0002_uu16</app:opphav>
+      <app:bildefil1>0002_FriluftTurvei_20180711095623.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>df3db288-e2ed-4303-b3e6-00f050800681</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-06-19 14:58:43.860033000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>3201</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'friluftturvei.59984_APP_GEOMETRI'-->
+        <gml:LineString gml:id="friluftturvei.59984_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.508279 59.968870 10.508629 59.969158 10.508878 59.969437 10.508905 59.969458</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:veitype>Grusvei</app:veitype>
+      <app:årstidsbruk>Sommerbruk</app:årstidsbruk>
+      <app:sperrebom>Ja</app:sperrebom>
+      <app:sperrebomTilgjengelig>Ja</app:sperrebomTilgjengelig>
+      <app:belysning>Ikke belysning</app:belysning>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:dekkeFasthet>Fast</app:dekkeFasthet>
+      <app:bredde>300</app:bredde>
+      <app:stigning>3.4</app:stigning>
+      <app:tverrfall>1.7</app:tverrfall>
+      <app:møteHvileplass>Nei</app:møteHvileplass>
+      <app:friHøyde>&gt;225 cm</app:friHøyde>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingElRullestol>Tilgjengelig</app:tilgjengvurderingElRullestol>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>74.5</app:segmentLengde>
+    </app:FriluftTurvei>
+  </wfs:member>
+  <wfs:member>
+    <app:FriluftTurvei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="friluftturvei.60239">
+      <app:datafangstdato>2018-07-11T08:08:37</app:datafangstdato>
+      <app:førsteDatafangstdato>2018-07-11T08:06:16</app:førsteDatafangstdato>
+      <app:objektNr>5162</app:objektNr>
+      <app:kommune>3201</app:kommune>
+      <app:opphav>F0002_uu16</app:opphav>
+      <app:bildefil1>0002_FriluftTurvei_20180711100345.jpg</app:bildefil1>
+      <app:bildefil2>0002_FriluftTurvei_20180711100129.jpg</app:bildefil2>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>afd1c6aa-c571-4065-8d56-2f111ead3222</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-06-19 14:58:43.860033000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>3201</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'friluftturvei.60239_APP_GEOMETRI'-->
+        <gml:LineString gml:id="friluftturvei.60239_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.510204 59.969098 10.510635 59.968747</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:veitype>Gangbane</app:veitype>
+      <app:årstidsbruk>Sommerbruk</app:årstidsbruk>
+      <app:sperrebom>Ja</app:sperrebom>
+      <app:sperrebomTilgjengelig>Ja</app:sperrebomTilgjengelig>
+      <app:belysning>Ikke belysning</app:belysning>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:dekkeFasthet>Fast</app:dekkeFasthet>
+      <app:bredde>180</app:bredde>
+      <app:stigning>0.6</app:stigning>
+      <app:tverrfall>1.3</app:tverrfall>
+      <app:møteHvileplass>Nei</app:møteHvileplass>
+      <app:friHøyde>&gt;225 cm</app:friHøyde>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingElRullestol>Tilgjengelig</app:tilgjengvurderingElRullestol>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>45.9</app:segmentLengde>
+    </app:FriluftTurvei>
+  </wfs:member>
+  <wfs:member>
+    <app:FriluftTurvei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="friluftturvei.60240">
+      <app:datafangstdato>2018-07-11T07:45:20</app:datafangstdato>
+      <app:førsteDatafangstdato>2018-07-11T07:40:48</app:førsteDatafangstdato>
+      <app:objektNr>5155</app:objektNr>
+      <app:kommune>3201</app:kommune>
+      <app:opphav>F0002_uu16</app:opphav>
+      <app:bildefil1>0002_FriluftTurvei_20180711093837.jpg</app:bildefil1>
+      <app:bildefil2>0002_FriluftTurvei_20180711094258.jpg</app:bildefil2>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>786c4198-36df-4866-83a7-c8a899e8a564</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-06-19 14:58:43.860033000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>3201</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'friluftturvei.60240_APP_GEOMETRI'-->
+        <gml:LineString gml:id="friluftturvei.60240_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.507455 59.963891 10.507542 59.964426 10.507595 59.964866 10.507634 59.965059 10.507616 59.965323 10.507673 59.965561 10.507636 59.965765 10.507489 59.966107 10.507235 59.966408 10.506858 59.966757</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:veitype>Grusvei</app:veitype>
+      <app:årstidsbruk>Sommerbruk</app:årstidsbruk>
+      <app:sperrebom>Ja</app:sperrebom>
+      <app:sperrebomTilgjengelig>Ja</app:sperrebomTilgjengelig>
+      <app:belysning>Ikke belysning</app:belysning>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:dekkeFasthet>Fast</app:dekkeFasthet>
+      <app:bredde>300</app:bredde>
+      <app:stigning>3.2</app:stigning>
+      <app:tverrfall>2.1</app:tverrfall>
+      <app:møteHvileplass>Nei</app:møteHvileplass>
+      <app:friHøyde>&gt;225 cm</app:friHøyde>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingElRullestol>Tilgjengelig</app:tilgjengvurderingElRullestol>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>329.2</app:segmentLengde>
+    </app:FriluftTurvei>
+  </wfs:member>
+  <wfs:member>
+    <app:FriluftTurvei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="friluftturvei.60254">
+      <app:datafangstdato>2018-07-11T07:54:39</app:datafangstdato>
+      <app:førsteDatafangstdato>2018-07-11T07:54:21</app:førsteDatafangstdato>
+      <app:objektNr>5158</app:objektNr>
+      <app:kommune>3201</app:kommune>
+      <app:opphav>F0002_uu16</app:opphav>
+      <app:bildefil1>0002_FriluftTurvei_20180711095228.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>a08c712c-2757-457c-a306-248a7b997e8e</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-06-19 14:58:43.860033000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>3201</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'friluftturvei.60254_APP_GEOMETRI'-->
+        <gml:LineString gml:id="friluftturvei.60254_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.506917 59.968271 10.507389 59.968459 10.507758 59.968628 10.507878 59.968679</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:veitype>Grusvei</app:veitype>
+      <app:årstidsbruk>Sommerbruk</app:årstidsbruk>
+      <app:sperrebom>Ja</app:sperrebom>
+      <app:sperrebomTilgjengelig>Ja</app:sperrebomTilgjengelig>
+      <app:belysning>Ikke belysning</app:belysning>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:dekkeFasthet>Fast</app:dekkeFasthet>
+      <app:bredde>300</app:bredde>
+      <app:stigning>2.3</app:stigning>
+      <app:tverrfall>1.7</app:tverrfall>
+      <app:møteHvileplass>Nei</app:møteHvileplass>
+      <app:friHøyde>&gt;225 cm</app:friHøyde>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:tilgjengvurderingRulleAuto>Tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingElRullestol>Tilgjengelig</app:tilgjengvurderingElRullestol>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>70.5</app:segmentLengde>
+    </app:FriluftTurvei>
+  </wfs:member>
+  <wfs:member>
+    <app:FriluftTurvei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="friluftturvei.60851">
+      <app:førsteDatafangstdato>2018-07-11T07:51:55</app:førsteDatafangstdato>
+      <app:objektNr>5157</app:objektNr>
+      <app:kommune>3201</app:kommune>
+      <app:opphav>F0002_uu16</app:opphav>
+      <app:bildefil1>0002_FriluftTurvei_20180711094859.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>9616163f-843b-4ae8-b97e-bb2b885fcf00</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-06-19 14:58:43.860033000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>3201</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'friluftturvei.60851_APP_GEOMETRI'-->
+        <gml:LineString gml:id="friluftturvei.60851_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.506634 59.967929 10.506662 59.968137 10.506917 59.968271</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:veitype>Grusvei</app:veitype>
+      <app:årstidsbruk>Sommerbruk</app:årstidsbruk>
+      <app:sperrebom>Ja</app:sperrebom>
+      <app:sperrebomTilgjengelig>Ja</app:sperrebomTilgjengelig>
+      <app:belysning>Ikke belysning</app:belysning>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:dekkeFasthet>Fast</app:dekkeFasthet>
+      <app:bredde>300</app:bredde>
+      <app:stigning>7.2</app:stigning>
+      <app:tverrfall>2.4</app:tverrfall>
+      <app:møteHvileplass>Nei</app:møteHvileplass>
+      <app:friHøyde>&gt;225 cm</app:friHøyde>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingRulleMan>Ikke tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:tilgjengvurderingRulleAuto>Ikke tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingElRullestol>Tilgjengelig</app:tilgjengvurderingElRullestol>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>43.8</app:segmentLengde>
+    </app:FriluftTurvei>
+  </wfs:member>
+  <wfs:member>
+    <app:FriluftTurvei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="friluftturvei.60852">
+      <app:førsteDatafangstdato>2018-07-11T07:56:00</app:førsteDatafangstdato>
+      <app:objektNr>5159</app:objektNr>
+      <app:kommune>3201</app:kommune>
+      <app:opphav>F0002_uu16</app:opphav>
+      <app:bildefil1>0002_FriluftTurvei_20180711095455.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>574c3f4d-b3fa-459c-9788-4cbd29be8a15</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-06-19 14:58:43.860033000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>3201</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'friluftturvei.60852_APP_GEOMETRI'-->
+        <gml:LineString gml:id="friluftturvei.60852_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.507878 59.968679 10.508075 59.968735 10.508279 59.968870</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:veitype>Grusvei</app:veitype>
+      <app:årstidsbruk>Sommerbruk</app:årstidsbruk>
+      <app:sperrebom>Ja</app:sperrebom>
+      <app:sperrebomTilgjengelig>Ja</app:sperrebomTilgjengelig>
+      <app:belysning>Ikke belysning</app:belysning>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:dekkeFasthet>Fast</app:dekkeFasthet>
+      <app:bredde>300</app:bredde>
+      <app:stigning>9.7</app:stigning>
+      <app:tverrfall>1.7</app:tverrfall>
+      <app:møteHvileplass>Nei</app:møteHvileplass>
+      <app:friHøyde>&gt;225 cm</app:friHøyde>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingRulleMan>Ikke tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:tilgjengvurderingRulleAuto>Ikke tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingElRullestol>Tilgjengelig</app:tilgjengvurderingElRullestol>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>31.5</app:segmentLengde>
+    </app:FriluftTurvei>
+  </wfs:member>
+  <wfs:member>
+    <app:FriluftTurvei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="friluftturvei.61724">
+      <app:førsteDatafangstdato>2018-07-11T07:38:15</app:førsteDatafangstdato>
+      <app:objektNr>5154</app:objektNr>
+      <app:kommune>3201</app:kommune>
+      <app:opphav>F0002_uu16</app:opphav>
+      <app:bildefil1>0002_FriluftTurvei_20180711093630.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>04a4d6b0-8fd6-4981-a1b3-68cac7929d20</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-06-19 14:58:43.860033000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>3201</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'friluftturvei.61724_APP_GEOMETRI'-->
+        <gml:LineString gml:id="friluftturvei.61724_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.507437 59.963779 10.507455 59.963891</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:veitype>Grusvei</app:veitype>
+      <app:årstidsbruk>Sommerbruk</app:årstidsbruk>
+      <app:sperrebom>Ja</app:sperrebom>
+      <app:sperrebomTilgjengelig>Ja</app:sperrebomTilgjengelig>
+      <app:belysning>Ikke belysning</app:belysning>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:dekkeFasthet>Fast</app:dekkeFasthet>
+      <app:bredde>90</app:bredde>
+      <app:stigning>1.4</app:stigning>
+      <app:tverrfall>0.1</app:tverrfall>
+      <app:møteHvileplass>Nei</app:møteHvileplass>
+      <app:friHøyde>&gt;225 cm</app:friHøyde>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingRulleMan>Tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:tilgjengvurderingRulleAuto>Ikke tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingElRullestol>Ikke tilgjengelig</app:tilgjengvurderingElRullestol>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+      <app:segmentLengde>12.5</app:segmentLengde>
+    </app:FriluftTurvei>
+  </wfs:member>
+  <wfs:member>
+    <app:FriluftTurvei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="friluftturvei.61927">
+      <app:datafangstdato>2022-08-08T13:22:38</app:datafangstdato>
+      <app:førsteDatafangstdato>2022-08-08T13:18:56</app:førsteDatafangstdato>
+      <app:kommune>3201</app:kommune>
+      <app:opphav>o0014_uu_fri</app:opphav>
+      <app:bildefil1>3024_FriluftTurvei_20220808131857.jpg</app:bildefil1>
+      <app:bildefil2>3024_FriluftTurvei_20220808131858.jpg</app:bildefil2>
+      <app:bildefil3>3024_FriluftTurvei_20220808131859.jpg</app:bildefil3>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>dadeb0da-59d6-493f-a2ce-f044e0f1daba</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-06-19 14:58:43.860033000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommentar>Den bergenske kongevei. Bomvei som er bilvei, men med få som kjører. Stedvis mindre bratt, men stort sett jevn stigning oppover. Lange bratte bakker.</app:kommentar>
+      <app:kommReel>3201</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'friluftturvei.61927_APP_GEOMETRI'-->
+        <gml:LineString gml:id="friluftturvei.61927_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.460336 59.967089 10.461339 59.967207 10.462176 59.967481 10.462820 59.967932 10.463541 59.968321 10.463871 59.968529 10.464311 59.968676</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:spesialFotrutetype>Kultursti</app:spesialFotrutetype>
+      <app:veitype>Grusvei</app:veitype>
+      <app:årstidsbruk>Sommerbruk</app:årstidsbruk>
+      <app:sperrebom>Ja</app:sperrebom>
+      <app:sperrebomTilgjengelig>Ja</app:sperrebomTilgjengelig>
+      <app:belysning>Ikke belysning</app:belysning>
+      <app:dekkeMateriale>Grus</app:dekkeMateriale>
+      <app:dekkeTilstand>Jevnt</app:dekkeTilstand>
+      <app:dekkeFasthet>Fast</app:dekkeFasthet>
+      <app:bredde>500</app:bredde>
+      <app:stigning>8.0</app:stigning>
+      <app:tverrfall>3.0</app:tverrfall>
+      <app:møteHvileplass>Nei</app:møteHvileplass>
+      <app:friHøyde>&gt;225 cm</app:friHøyde>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>God</app:ledelinjeKontrast>
+      <app:tilgjengvurderingRulleMan>Ikke tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:tilgjengvurderingRulleAuto>Ikke tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingElRullestol>Delvis tilgjengelig</app:tilgjengvurderingElRullestol>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+    </app:FriluftTurvei>
+  </wfs:member>
+  <wfs:member>
+    <app:FriluftTurvei xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="friluftturvei.61928">
+      <app:førsteDatafangstdato>2022-08-08T14:11:24</app:førsteDatafangstdato>
+      <app:kommune>3201</app:kommune>
+      <app:opphav>o0014_uu_fri</app:opphav>
+      <app:bildefil1>3024_FriluftTurvei_20220808141124.jpg</app:bildefil1>
+      <app:bildefil2>3024_FriluftTurvei_20220808141125.jpg</app:bildefil2>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>7cc3f259-bcfc-479d-bd74-e3f7affbcfda</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-06-19 14:58:43.860033000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommentar>Kartlagt for å se muligheter. Ikke muligheter her.</app:kommentar>
+      <app:kommReel>3201</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'friluftturvei.61928_APP_GEOMETRI'-->
+        <gml:LineString gml:id="friluftturvei.61928_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:posList>10.482318 59.964978 10.482469 59.964807 10.482581 59.964637 10.482683 59.964509 10.482769 59.964439</gml:posList>
+        </gml:LineString>
+      </app:geometri>
+      <app:spesialFotrutetype>Kultursti</app:spesialFotrutetype>
+      <app:veitype>Sti</app:veitype>
+      <app:årstidsbruk>Sommerbruk</app:årstidsbruk>
+      <app:sperrebom>Nei</app:sperrebom>
+      <app:belysning>Ikke belysning</app:belysning>
+      <app:dekkeMateriale>Gress</app:dekkeMateriale>
+      <app:dekkeTilstand>Ujevnt</app:dekkeTilstand>
+      <app:dekkeFasthet>Fast</app:dekkeFasthet>
+      <app:bredde>40</app:bredde>
+      <app:stigning>4.0</app:stigning>
+      <app:tverrfall>2.0</app:tverrfall>
+      <app:møteHvileplass>Nei</app:møteHvileplass>
+      <app:friHøyde>&gt;225 cm</app:friHøyde>
+      <app:ledelinje>Taktil og visuell</app:ledelinje>
+      <app:ledelinjeKontrast>Mindre god</app:ledelinjeKontrast>
+      <app:tilgjengvurderingRulleMan>Ikke tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:tilgjengvurderingRulleAuto>Ikke tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingElRullestol>Ikke tilgjengelig</app:tilgjengvurderingElRullestol>
+      <app:tilgjengvurderingSyn>Delvis tilgjengelig</app:tilgjengvurderingSyn>
+    </app:FriluftTurvei>
+  </wfs:member>
+</wfs:FeatureCollection>

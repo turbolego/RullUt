@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wfs:FeatureCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1 https://wfs.geonorge.no/skwms1/wfs.tilgjengelighet?SERVICE=WFS&amp;VERSION=2.0.0&amp;REQUEST=DescribeFeatureType&amp;OUTPUTFORMAT=text%2Fxml%3B+subtype%3Dgml%2F3.2.1&amp;TYPENAME=app:Toalett&amp;NAMESPACES=xmlns(app,https%3A%2F%2Fskjema.geonorge.no%2FSOSI%2Fproduktspesifikasjon%2FTilgjengelighet%2F1.3.1)" xmlns:wfs="http://www.opengis.net/wfs/2.0" timeStamp="2026-08-28T13:17:49Z" xmlns:gml="http://www.opengis.net/gml/3.2" numberMatched="unknown" numberReturned="0">
+  <!--NOTE: numberReturned attribute should be 'unknown' as well, but this would not validate against the current version of the WFS 2.0 schema (change upcoming). See change request (CR 144): https://portal.opengeospatial.org/files?artifact_id=43925.-->
+  <wfs:member>
+    <app:Toalett xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="toalett.2669">
+      <app:førsteDatafangstdato>2018-07-11T08:23:58</app:førsteDatafangstdato>
+      <app:objektNr>375</app:objektNr>
+      <app:kommune>3201</app:kommune>
+      <app:opphav>F0002_uu16</app:opphav>
+      <app:bildefil1>0002_FriluftToalett_20180711102201.jpg</app:bildefil1>
+      <app:bildefil2>0002_FriluftToalett_20180711101926.jpg</app:bildefil2>
+      <app:bildefil3>0002_FriluftToalett_20180711101938.jpg</app:bildefil3>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>3b835ed4-2d14-4fc9-a08d-e703715bf3e4</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-06-19 14:58:43.860033000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommentar>Mangler servant</app:kommentar>
+      <app:kommReel>3201</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'toalett.2669_APP_GEOMETRI'-->
+        <gml:Point gml:id="toalett.2669_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:pos>10.508782 59.969495</gml:pos>
+        </gml:Point>
+      </app:geometri>
+      <app:byggtype>Toalett</app:byggtype>
+      <app:rampe>
+        <app:Rampe>
+          <app:rampe>Ja</app:rampe>
+          <app:rampeBredde>130</app:rampeBredde>
+          <app:rampeTerskel>1.0</app:rampeTerskel>
+          <app:rampeStigning>5.0</app:rampeStigning>
+          <app:håndlist>Mangler</app:håndlist>
+          <app:rampeTilgjengelig>Delvis tilgjengelig</app:rampeTilgjengelig>
+        </app:Rampe>
+      </app:rampe>
+      <app:kontrastInngang>God</app:kontrastInngang>
+      <app:breddeInngang>90</app:breddeInngang>
+      <app:dørtype>Slagdør ut</app:dørtype>
+      <app:terskelhøyde>0.5</app:terskelhøyde>
+      <app:diameter>150</app:diameter>
+      <app:døråpner>Manuell</app:døråpner>
+      <app:belysningInne>Ja</app:belysningInne>
+      <app:servantTilgjengelig>Ikke vurdert</app:servantTilgjengelig>
+      <app:wcTilgjengelig>Tilgjengelig</app:wcTilgjengelig>
+      <app:tilgjengvurderingRulleMan>Delvis tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:tilgjengvurderingRulleAuto>Delvis tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingElRullestol>Tilgjengelig</app:tilgjengvurderingElRullestol>
+      <app:tilgjengvurderingSyn>Tilgjengelig</app:tilgjengvurderingSyn>
+    </app:Toalett>
+  </wfs:member>
+  <wfs:member>
+    <app:Toalett xmlns:app="https://skjema.geonorge.no/SOSI/produktspesifikasjon/Tilgjengelighet/1.3.1" gml:id="toalett.2698">
+      <app:førsteDatafangstdato>2018-07-09T10:56:31</app:førsteDatafangstdato>
+      <app:objektNr>396</app:objektNr>
+      <app:kommune>3201</app:kommune>
+      <app:opphav>F0002_uu16</app:opphav>
+      <app:bildefil1>0219_FriluftToalett_20180709125113.jpg</app:bildefil1>
+      <app:identifikasjon>
+        <app:Identifikasjon>
+          <app:lokalId>b45a6634-a8ff-431c-a637-e87aaed8779a</app:lokalId>
+          <app:navnerom>http://data.geonorge.no/SFKB/Tilgjengelighet/so</app:navnerom>
+          <app:versjonId>2025-06-19 14:58:43.860033000</app:versjonId>
+        </app:Identifikasjon>
+      </app:identifikasjon>
+      <app:kommReel>3201</app:kommReel>
+      <app:geometri>
+        <!--Inlined geometry 'toalett.2698_APP_GEOMETRI'-->
+        <gml:Point gml:id="toalett.2698_APP_GEOMETRI" srsName="EPSG:4326">
+          <gml:pos>10.562346 59.948155</gml:pos>
+        </gml:Point>
+      </app:geometri>
+      <app:byggtype>Toalett</app:byggtype>
+      <app:rampe>
+        <app:Rampe>
+          <app:rampe>Ja</app:rampe>
+          <app:rampeBredde>140</app:rampeBredde>
+          <app:rampeTerskel>1.0</app:rampeTerskel>
+          <app:rampeStigning>13.3</app:rampeStigning>
+          <app:håndlist>Høyre side</app:håndlist>
+          <app:håndlistHøydeØvre>83</app:håndlistHøydeØvre>
+          <app:håndlistHøydeNedre>75</app:håndlistHøydeNedre>
+          <app:rampeTilgjengelig>Ikke tilgjengelig</app:rampeTilgjengelig>
+        </app:Rampe>
+      </app:rampe>
+      <app:kontrastInngang>Dårlig</app:kontrastInngang>
+      <app:breddeInngang>92</app:breddeInngang>
+      <app:dørtype>Slagdør ut</app:dørtype>
+      <app:terskelhøyde>4.0</app:terskelhøyde>
+      <app:diameter>90</app:diameter>
+      <app:døråpner>Manuell</app:døråpner>
+      <app:belysningInne>Ja</app:belysningInne>
+      <app:servantTilgjengelig>Ikke tilgjengelig</app:servantTilgjengelig>
+      <app:wcTilgjengelig>Tilgjengelig</app:wcTilgjengelig>
+      <app:tilgjengvurderingRulleMan>Ikke tilgjengelig</app:tilgjengvurderingRulleMan>
+      <app:tilgjengvurderingRulleAuto>Ikke tilgjengelig</app:tilgjengvurderingRulleAuto>
+      <app:tilgjengvurderingElRullestol>Ikke tilgjengelig</app:tilgjengvurderingElRullestol>
+      <app:tilgjengvurderingSyn>Ikke tilgjengelig</app:tilgjengvurderingSyn>
+    </app:Toalett>
+  </wfs:member>
+</wfs:FeatureCollection>
