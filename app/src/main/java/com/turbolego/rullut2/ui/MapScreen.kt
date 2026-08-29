@@ -499,11 +499,12 @@ fun MapScreen(modifier: Modifier = Modifier) {
                 Pair(it.latitude, it.longitude)
             },
             onRouteRequest = { fromLat, fromLon, toLat, toLon ->
-                val result = withContext(Dispatchers.IO) {
-                    RouteEngine.findRoute(
+                val results = withContext(Dispatchers.IO) {
+                    RouteEngine.findRoutes(
                         context, fromLat, fromLon, toLat, toLon
                     )
                 }
+                val result = results.firstOrNull()
                 routeResult = result
                 if (result != null) {
                     drawRouteOnMap(map, style, result)
@@ -519,7 +520,11 @@ fun MapScreen(modifier: Modifier = Modifier) {
                         Toast.LENGTH_SHORT,
                     ).show()
                 }
-                result
+                results
+            },
+            onRouteSelected = { selected ->
+                routeResult = selected
+                drawRouteOnMap(map, style, selected)
             },
             onSearchPlace = { query ->
                 withContext(Dispatchers.IO) {

@@ -36,7 +36,8 @@ import kotlinx.coroutines.launch
 fun RoutePlannerModal(
     visible: Boolean,
     myLocation: Pair<Double, Double>?,
-    onRouteRequest: suspend (fromLat: Double, fromLon: Double, toLat: Double, toLon: Double) -> RouteResult?,
+    onRouteRequest: suspend (fromLat: Double, fromLon: Double, toLat: Double, toLon: Double) -> List<RouteResult>,
+    onRouteSelected: (RouteResult) -> Unit,
     onSearchPlace: suspend (query: String) -> List<PlaceResult>,
     onDismiss: () -> Unit,
 ) {
@@ -55,7 +56,8 @@ fun RoutePlannerModal(
     var toSearching by remember { mutableStateOf(false) }
 
     var loading by remember { mutableStateOf(false) }
-    var routeResult by remember { mutableStateOf<RouteResult?>(null) }
+    var routeOptions by remember { mutableStateOf<List<RouteResult>>(emptyList()) }
+    var selectedRouteIndex by remember { mutableStateOf(0) }
     var routeError by remember { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
 
@@ -273,12 +275,13 @@ fun RoutePlannerModal(
                     if (f != null && t != null) {
                         loading = true
                         routeError = null
-                        routeResult = null
+                        routeOptions = emptyList()
+                        selectedRouteIndex = 0
                         scope.launch {
-                            val result = onRouteRequest(f.first, f.second, t.first, t.second)
+                            val results = onRouteRequest(f.first, f.second, t.first, t.second)
                             loading = false
-                            if (result != null) {
-                                routeResult = result
+                            if (results.isNotEmpty()) {
+                                routeOptions = results
                             } else {
                                 routeError = Strings.routeNoRoute
                             }
@@ -313,11 +316,59 @@ fun RoutePlannerModal(
                 )
             }
 
-            if (routeResult != null) {
-                RouteResultDisplay(routeResult!!)
+            if (routeOptions.isNotEmpty()) {
+                Text(
+                    Strings.routeAlternatives,
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(top = 16.dp),
+                )
+                Text(
+                    Strings.routeAccessibilityPriority,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                routeOptions.forEachIndexed { index, result ->
+                    RouteOptionCard(result, index, index == selectedRouteIndex) {
+                        selectedRouteIndex = index
+                        onRouteSelected(result)
+                    }
+                }
+                RouteResultDisplay(routeOptions[selectedRouteIndex])
             }
 
             Spacer(Modifier.height(24.dp))
+        }
+    }
+}
+
+@Composable
+private fun RouteOptionCard(
+    result: RouteResult,
+    index: Int,
+    selected: Boolean,
+    onClick: () -> Unit,
+) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 8.dp)
+            .clickable(onClick = onClick)
+            .semantics { contentDescription = "${Strings.routeAlternative} ${index + 1}" },
+        shape = MaterialTheme.shapes.medium,
+        color = if (selected) MaterialTheme.colorScheme.primaryContainer
+        else MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.45f),
+        tonalElevation = if (selected) 3.dp else 0.dp,
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            RadioButton(selected = selected, onClick = onClick)
+            Column(modifier = Modifier.weight(1f)) {
+                Text("${Strings.routeAlternative} ${index + 1}", fontWeight = FontWeight.SemiBold)
+                Text("${result.distanceLabel} · ${result.durationLabel} · ${result.accessiblePct}% ${Strings.routeAccessibleShort}")
+            }
         }
     }
 }

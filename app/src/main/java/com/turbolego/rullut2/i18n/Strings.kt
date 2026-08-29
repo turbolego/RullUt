@@ -265,6 +265,26 @@ object Strings {
         Lang.EN -> "Route source"
     }
 
+    val routeAlternatives get() = when (lang) {
+        Lang.NB -> "Rutealternativer"
+        Lang.EN -> "Route options"
+    }
+
+    val routeAccessibilityPriority get() = when (lang) {
+        Lang.NB -> "Ruter er sortert etter tilgjengelighet først. Velg ruten du vil bruke."
+        Lang.EN -> "Routes are sorted by accessibility first. Choose the route you want to use."
+    }
+
+    val routeAlternative get() = when (lang) {
+        Lang.NB -> "Alternativ"
+        Lang.EN -> "Alternative"
+    }
+
+    val routeAccessibleShort get() = when (lang) {
+        Lang.NB -> "tilgjengelig"
+        Lang.EN -> "accessible"
+    }
+
     fun routeAccessible(pct: Int) = when (lang) {
         Lang.NB -> "Tilgjengelig: $pct%"
         Lang.EN -> "Accessible: $pct%"

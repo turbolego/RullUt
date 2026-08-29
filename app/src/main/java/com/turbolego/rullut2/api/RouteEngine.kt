@@ -3,90 +3,62 @@ package com.turbolego.rullut2.api
 import android.content.Context
 import android.util.Log
 import com.turbolego.rullut2.map.MapConfig
-import com.turbolego.rullut2.model.*
+import com.turbolego.rullut2.model.RouteResult
 
-/**
- * Route engine: computes accessible routes between two known points.
- *
- * Fallback chain (first available wins):
- *   1. WFS — builds a routing graph from Geonorge tilgjengelighet road data
- *      (app:TettstedVei / app:FriluftTurvei). Same data source as the
- *      Highscore feature; no third-party dependency. [WfsRouteApi]
- *   2. Overpass OSM — live OSM roads, custom Dijkstra. [OsmRouteApi]
- *   3. Valhalla — production pedestrian routing. [ValhallaRouteApi]
- *
- * The original Expo app had a pre-compiled WFS routing graph
- * (norge-routing-graph.dat) as the first tier. We rebuild the graph on demand
- * from live WFS data instead of shipping a ~14MB file that needs regeneration.
- */
+/** Accessible routing facade that ranks candidates by accessibility first. */
 object RouteEngine {
-
     private const val TAG = "RouteEngine"
 
-    /**
-     * Find an accessible route between two points.
-     * Tries WFS → Overpass OSM → Valhalla, then runs accessibility assessment.
-     */
+    /** Legacy convenience API: returns the best wheelchair route. */
     suspend fun findRoute(
-        context: Context,
-        fromLat: Double,
-        fromLon: Double,
-        toLat: Double,
-        toLon: Double,
-    ): RouteResult? {
-        // 1) WFS road network (primary — authoritative, no third-party server)
-        var path: Dijkstra.RoutePath? = null
-        var source = "wfs"
-        try {
-            path = WfsRouteApi.computeRoute(fromLat, fromLon, toLat, toLon)
-        } catch (e: Exception) {
-            Log.w(TAG, "WFS routing failed", e)
-        }
+        context: Context, fromLat: Double, fromLon: Double,
+        toLat: Double, toLon: Double,
+    ): RouteResult? = findRoutes(context, fromLat, fromLon, toLat, toLon).firstOrNull()
 
-        // 2) Overpass OSM fallback
-        if (path == null) {
-            try {
-                path = OsmRouteApi.computeRoute(fromLat, fromLon, toLat, toLon)
-                source = "osm"
-            } catch (e: Exception) {
-                Log.w(TAG, "Overpass routing failed", e)
-            }
-        }
-
-        // 3) Valhalla pedestrian API fallback
-        if (path == null) {
-            try {
-                path = ValhallaRouteApi.computeRoute(fromLat, fromLon, toLat, toLon)
-                source = "valhalla"
-            } catch (e: Exception) {
-                Log.w(TAG, "Valhalla routing failed", e)
-            }
-        }
-
-        if (path == null || path.coordinates.size < 2) {
-            return null
-        }
-
-        // Build GeoJSON for map rendering
-        val geojson = buildGeoJson(path.coordinates)
-
-        // Compute stats
-        val physDist = path.distanceMeters
-        val durationSec = physDist / MapConfig.WALKING_SPEED_MS
-
-        // Accessibility assessment on the route
-        val assessment = AccessibilityAssessment.assess(
-            context = context,
-            coordinates = path.coordinates,
-            source = source,
+    /**
+     * Computes every available candidate. Accessibility is assessed before
+     * sorting, so a longer green route beats a shorter inaccessible route.
+     */
+    suspend fun findRoutes(
+        context: Context, fromLat: Double, fromLon: Double,
+        toLat: Double, toLon: Double,
+    ): List<RouteResult> {
+        val candidates = mutableListOf<RouteResult>()
+        val sources = listOf(
+            "wfs" to suspend { WfsRouteApi.computeRoute(fromLat, fromLon, toLat, toLon) },
+            "osm" to suspend { OsmRouteApi.computeRoute(fromLat, fromLon, toLat, toLon) },
+            "valhalla" to suspend { ValhallaRouteApi.computeRoute(fromLat, fromLon, toLat, toLon) },
         )
+        for ((source, compute) in sources) {
+            try {
+                val path = compute()
+                if (path != null && path.coordinates.size >= 2) {
+                    candidates += assessPath(context, path, source)
+                }
+            } catch (e: Exception) {
+                Log.w(TAG, "$source routing failed", e)
+            }
+        }
+        return candidates.distinctBy { it.routeSource }.sortedWith(
+            compareByDescending<RouteResult> { it.accessiblePct }
+                .thenByDescending { it.partiallyAccessiblePct }
+                .thenBy { it.notAccessiblePct }
+                .thenBy { it.distanceMeters },
+        )
+    }
 
+    private suspend fun assessPath(
+        context: Context, path: Dijkstra.RoutePath, source: String,
+    ): RouteResult {
+        val distance = path.distanceMeters
+        val duration = distance / MapConfig.WALKING_SPEED_MS
+        val assessment = AccessibilityAssessment.assess(context, path.coordinates, source)
         return RouteResult(
-            geojson = geojson,
-            distanceMeters = physDist,
-            durationSeconds = durationSec,
-            distanceLabel = formatDistance(physDist),
-            durationLabel = formatDuration(durationSec),
+            geojson = buildGeoJson(path.coordinates),
+            distanceMeters = distance,
+            durationSeconds = duration,
+            distanceLabel = formatDistance(distance),
+            durationLabel = formatDuration(duration),
             segments = assessment.segments,
             accessiblePct = assessment.accessiblePct,
             partiallyAccessiblePct = assessment.partiallyAccessiblePct,
@@ -96,15 +68,11 @@ object RouteEngine {
         )
     }
 
-    /**
-     * Build a GeoJSON FeatureCollection string for the route path.
-     */
     private fun buildGeoJson(coordinates: List<Pair<Double, Double>>): String {
         val coordsArray = org.json.JSONArray()
         for ((lng, lat) in coordinates) {
             coordsArray.put(org.json.JSONArray().apply { put(lng); put(lat) })
         }
-
         return org.json.JSONObject().apply {
             put("type", "FeatureCollection")
             put("features", org.json.JSONArray().apply {
@@ -120,19 +88,11 @@ object RouteEngine {
         }.toString()
     }
 
-    /**
-     * Format distance in meters to a human-readable label.
-     */
-    private fun formatDistance(meters: Double): String {
-        return when {
-            meters < 1000 -> "${meters.toInt()} m"
-            else -> "%.1f km".format(meters / 1000.0)
-        }
+    private fun formatDistance(meters: Double): String = when {
+        meters < 1000 -> "${meters.toInt()} m"
+        else -> "%.1f km".format(meters / 1000.0)
     }
 
-    /**
-     * Format duration in seconds to a human-readable label.
-     */
     private fun formatDuration(seconds: Double): String {
         val totalSec = seconds.toInt()
         val hours = totalSec / 3600
