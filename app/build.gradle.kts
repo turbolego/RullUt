@@ -112,7 +112,7 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.2.1")
 
     // Core KTX
-    implementation("androidx.core:core-ktx:1.19.0")
+    implementation("androidx.core:core-ktx:1.19.1")
 
     // Google Play Services (location — FusedLocationProviderClient)
     implementation("com.google.android.gms:play-services-location:21.4.0")
