@@ -94,7 +94,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.11.0")
 
     // Navigation
-    implementation("androidx.navigation:navigation-compose:2.10.0")
+    implementation("androidx.navigation:navigation-compose:2.10.2")
 
     // MapLibre Native (open-source, BSD license, no API key required)
     implementation("org.maplibre.gl:android-sdk:13.6.0")
